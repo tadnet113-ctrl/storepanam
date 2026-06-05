@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmation de commande - Le Paname Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .confirmation-container {
+            max-width: 600px;
+            width: 100%;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .confirmation-header {
+            background: linear-gradient(135deg, #28a745, #34ce57);
+            padding: 2rem;
+            color: white;
+        }
+        .confirmation-header i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .confirmation-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .confirmation-body {
+            padding: 2rem;
+        }
+        .order-details {
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .order-details h3 {
+            margin-bottom: 1rem;
+            color: #D4AF37;
+        }
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #D4AF37, #F4D03F);
+            color: #1a1a1a;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: transform 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #D4AF37;
+            color: #D4AF37;
+        }
+        .btn-outline:hover {
+            background: #D4AF37;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <div class="confirmation-header">
+            <i class="fas fa-check-circle"></i>
+            <h1>Commande confirmée !</h1>
+            <p>Merci pour votre confiance</p>
+        </div>
+        <div class="confirmation-body">
+            <div class="order-details" id="orderDetails">
+                <h3><i class="fas fa-receipt"></i> Détails de la commande</h3>
+                <div class="detail-row">
+                    <span>Numéro de commande:</span>
+                    <strong id="orderId">-</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Date:</span>
+                    <strong id="orderDate">-</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Moyen de paiement:</span>
+                    <strong id="paymentMethod">-</strong>
+                </div>
+                <div class="detail-row">
+                    <span>Montant total:</span>
+                    <strong id="orderAmount" style="color:#D4AF37;">-</strong>
+                </div>
+            </div>
+            
+            <a href="../index.html" class="btn">
+                <i class="fas fa-home"></i> Retour à l'accueil
+            </a>
+            <a href="../paname-store.html" class="btn btn-outline">
+                <i class="fas fa-shopping-bag"></i> Continuer mes achats
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function loadOrderConfirmation() {
+            const lastTransaction = localStorage.getItem('last_transaction');
+            if (lastTransaction) {
+                const transaction = JSON.parse(lastTransaction);
+                document.getElementById('orderId').innerHTML = transaction.id;
+                document.getElementById('orderDate').innerHTML = new Date(transaction.createdAt).toLocaleString();
+                document.getElementById('paymentMethod').innerHTML = transaction.method;
+                document.getElementById('orderAmount').innerHTML = transaction.totalAmount.toLocaleString() + ' Fcfa';
+            } else {
+                document.getElementById('orderId').innerHTML = 'CMD-' + Date.now();
+                document.getElementById('orderDate').innerHTML = new Date().toLocaleString();
+                document.getElementById('paymentMethod').innerHTML = 'Non spécifié';
+                document.getElementById('orderAmount').innerHTML = '-';
+            }
+        }
+        
+        loadOrderConfirmation();
+    </script>
+</body>
+</html>

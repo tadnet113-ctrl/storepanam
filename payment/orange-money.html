@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paiement Orange Money - Le Paname Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .payment-container {
+            max-width: 500px;
+            width: 100%;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .payment-header {
+            background: linear-gradient(135deg, #FF6600, #FF8533);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+        .payment-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .payment-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .payment-header p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        .payment-body {
+            padding: 2rem;
+        }
+        .amount-box {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .amount-box .label {
+            font-size: 0.875rem;
+            color: #6c757d;
+        }
+        .amount-box .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FF6600;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #FF6600;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #FF6600, #FF8533);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255,102,0,0.3);
+        }
+        .btn-back {
+            width: 100%;
+            padding: 0.8rem;
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-back:hover {
+            background: #f8f9fa;
+        }
+        .info-text {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+        .notification {
+            background: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid;
+        }
+        .notification.show { transform: translateX(0); }
+        .notification-success { border-left-color: #28a745; }
+        .notification-error { border-left-color: #dc3545; }
+        .notification-info { border-left-color: #17a2b8; }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <i class="fas fa-mobile-alt"></i>
+            <h1>Orange Money</h1>
+            <p>Paiement mobile sécurisé</p>
+        </div>
+        <div class="payment-body">
+            <div class="amount-box">
+                <div class="label">Montant à payer</div>
+                <div class="value" id="amountValue">0 Fcfa</div>
+            </div>
+            
+            <div class="form-group">
+                <label><i class="fas fa-phone"></i> Numéro Orange Money</label>
+                <input type="tel" id="phoneNumber" placeholder="6XXXXXXXX ou 2XXXXXXXX" autocomplete="off">
+                <small style="color: #6c757d; display: block; margin-top: 0.3rem;">Exemple: 657715482</small>
+            </div>
+            
+            <button class="btn-pay" id="payBtn">
+                <i class="fas fa-check-circle"></i> Confirmer le paiement
+            </button>
+            
+            <button class="btn-back" onclick="window.location.href='../cart.html'">
+                <i class="fas fa-arrow-left"></i> Retour au panier
+            </button>
+            
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i> Traitement en cours...
+            </div>
+            
+            <div class="info-text">
+                <i class="fas fa-lock"></i> Paiement 100% sécurisé<br>
+                Vous recevrez une confirmation par SMS
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script src="../payment/payment.js"></script>
+    <script>
+        let transactionAmount = 0;
+        
+        function showNotification(message, type) {
+            const container = document.getElementById('notificationContainer');
+            const n = document.createElement('div');
+            n.className = `notification notification-${type}`;
+            const icon = type === 'success' ? 'check-circle' : (type === 'error' ? 'exclamation-circle' : 'info-circle');
+            n.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>`;
+            container.appendChild(n);
+            setTimeout(() => n.classList.add('show'), 10);
+            setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 4000);
+        }
+        
+        function loadAmount() {
+            const transaction = JSON.parse(localStorage.getItem('current_transaction'));
+            if (transaction && transaction.totalAmount) {
+                transactionAmount = transaction.totalAmount;
+                document.getElementById('amountValue').innerHTML = transactionAmount.toLocaleString() + ' Fcfa';
+            } else {
+                const total = window.Payment?.getCartTotal() || 0;
+                transactionAmount = total;
+                document.getElementById('amountValue').innerHTML = total.toLocaleString() + ' Fcfa';
+            }
+        }
+        
+        async function processPayment() {
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            
+            if (!phoneNumber) {
+                showNotification('Veuillez entrer votre numéro Orange Money', 'error');
+                return;
+            }
+            
+            const phoneRegex = /^(6|2)[0-9]{8}$/;
+            if (!phoneRegex.test(phoneNumber)) {
+                showNotification('Numéro invalide. Format: 6XXXXXXXX ou 2XXXXXXXX', 'error');
+                return;
+            }
+            
+            const payBtn = document.getElementById('payBtn');
+            const loading = document.getElementById('loading');
+            
+            payBtn.style.display = 'none';
+            loading.style.display = 'block';
+            
+            try {
+                const result = await window.Payment.finalizePayment('ORANGE_MONEY', { phone: phoneNumber });
+                if (result) {
+                    showNotification('Paiement effectué avec succès ! Redirection...', 'success');
+                }
+            } catch (error) {
+                showNotification(error.message || 'Erreur lors du paiement', 'error');
+                payBtn.style.display = 'block';
+                loading.style.display = 'none';
+            }
+        }
+        
+        document.getElementById('payBtn').addEventListener('click', processPayment);
+        document.getElementById('phoneNumber').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') processPayment();
+        });
+        
+        loadAmount();
+    </script>
+</body>
+</html>

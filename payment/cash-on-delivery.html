@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>Paiement à la livraison - Le Paname Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .payment-container {
+            max-width: 550px;
+            width: 100%;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeInUp 0.5s ease;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .payment-header {
+            background: linear-gradient(135deg, #28a745, #34ce57);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .payment-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: rgba(255,255,255,0.1);
+            transform: rotate(25deg);
+            pointer-events: none;
+        }
+        .payment-header i {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: bounce 1s ease infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .payment-header h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .payment-header p {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+        .payment-body {
+            padding: 2rem;
+        }
+        .amount-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 1.2rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border: 1px solid #dee2e6;
+        }
+        .amount-box .label {
+            font-size: 0.875rem;
+            color: #6c757d;
+            margin-bottom: 0.3rem;
+        }
+        .amount-box .value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #28a745;
+        }
+        .amount-box .delivery-fee {
+            font-size: 0.8rem;
+            color: #6c757d;
+            margin-top: 0.3rem;
+        }
+        .delivery-info {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 1.2rem;
+            border-radius: 0.75rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #28a745;
+        }
+        .delivery-info h3 {
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            color: #1e7e34;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .delivery-info p {
+            font-size: 0.875rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .delivery-info p i {
+            color: #28a745;
+            width: 20px;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: #2c3e50;
+        }
+        .form-group label i {
+            color: #28a745;
+            margin-right: 0.3rem;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 0.5rem;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40,167,69,0.1);
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .btn-pay {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #28a745, #34ce57);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .btn-pay:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(40,167,69,0.4);
+        }
+        .btn-pay:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-back {
+            width: 100%;
+            padding: 0.8rem;
+            background: transparent;
+            color: #6c757d;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        .btn-back:hover {
+            background: #f8f9fa;
+            border-color: #28a745;
+            color: #28a745;
+        }
+        .info-text {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-align: center;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+            padding: 0.5rem;
+        }
+        .loading i {
+            animation: spin 1s linear infinite;
+            color: #28a745;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .order-summary {
+            background: #f8f9fa;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .order-summary h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+            color: #2c3e50;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 0.5rem;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: #6c757d;
+        }
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 700;
+            color: #28a745;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #dee2e6;
+        }
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 10000;
+        }
+        .notification {
+            background: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid;
+            max-width: 350px;
+        }
+        .notification.show { transform: translateX(0); }
+        .notification-success { border-left-color: #28a745; }
+        .notification-error { border-left-color: #dc3545; }
+        .notification-info { border-left-color: #17a2b8; }
+        @media (max-width: 480px) {
+            body { padding: 1rem; }
+            .payment-container { border-radius: 0.75rem; }
+            .payment-header { padding: 1.5rem; }
+            .payment-header i { font-size: 2.5rem; }
+            .payment-header h1 { font-size: 1.2rem; }
+            .payment-body { padding: 1.2rem; }
+            .amount-box .value { font-size: 1.5rem; }
+            .row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <i class="fas fa-money-bill-wave"></i>
+            <h1>Paiement à la livraison</h1>
+            <p>Payez à la réception de votre commande</p>
+        </div>
+        <div class="payment-body">
+            <div class="amount-box">
+                <div class="label">Montant total à payer à la livraison</div>
+                <div class="value" id="amountValue">0 Fcfa</div>
+                <div class="delivery-fee" id="deliveryFee"></div>
+            </div>
+            
+            <div class="delivery-info">
+                <h3><i class="fas fa-truck"></i> Informations de livraison</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Livraison à domicile à Yaoundé et ses environs</p>
+                <p><i class="fas fa-clock"></i> Délai de livraison: 24h à 48h ouvrées</p>
+                <p><i class="fas fa-phone"></i> Un livreur vous contactera avant la livraison</p>
+                <p><i class="fas fa-check-circle"></i> Paiement en espèces à la réception uniquement</p>
+            </div>
+            
+            <div class="order-summary" id="orderSummary">
+                <h4><i class="fas fa-receipt"></i> Récapitulatif de votre commande</h4>
+                <div id="orderItemsList"></div>
+            </div>
+            
+            <form id="deliveryForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Nom complet *</label>
+                    <input type="text" id="fullName" placeholder="Jean Dupont" required>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-phone"></i> Téléphone *</label>
+                        <input type="tel" id="phone" placeholder="6XXXXXXXX" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Email</label>
+                        <input type="email" id="email" placeholder="votre@email.com">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-map-pin"></i> Adresse de livraison *</label>
+                    <input type="text" id="address" placeholder="Quartier, rue, numéro..." required>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-city"></i> Ville *</label>
+                        <input type="text" id="city" value="Yaoundé" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-code-branch"></i> Code postal</label>
+                        <input type="text" id="postalCode" placeholder="Optional">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-info-circle"></i> Instructions de livraison</label>
+                    <textarea id="instructions" rows="2" placeholder="Point de repère, gardien, code interphone..."></textarea>
+                </div>
+                
+                <button type="submit" class="btn-pay" id="confirmBtn">
+                    <i class="fas fa-check-circle"></i> Confirmer la commande
+                </button>
+            </form>
+            
+            <button class="btn-back" onclick="window.location.href='cart.html'">
+                <i class="fas fa-arrow-left"></i> Retour au panier
+            </button>
+            
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner fa-pulse"></i> Confirmation en cours...
+            </div>
+            
+            <div class="info-text">
+                <i class="fas fa-shield-alt"></i> Commandez en toute confiance<br>
+                Paiement sécurisé à la livraison - Aucun frais supplémentaire
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script>
+        // ==================== GESTION DU PAIEMENT ====================
+        
+        let transaction = null;
+        let cartItems = [];
+        
+        function showNotification(message, type) {
+            const container = document.getElementById('notificationContainer');
+            const n = document.createElement('div');
+            n.className = `notification notification-${type}`;
+            const icon = type === 'success' ? 'check-circle' : (type === 'error' ? 'exclamation-circle' : 'info-circle');
+            n.innerHTML = `<i class="fas fa-${icon}"></i><span>${message}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>`;
+            container.appendChild(n);
+            setTimeout(() => n.classList.add('show'), 10);
+            setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 4000);
+        }
+        
+        function formatPrice(price) {
+            return price.toLocaleString() + ' Fcfa';
+        }
+        
+        function loadTransaction() {
+            const savedTransaction = localStorage.getItem('current_transaction');
+            if (savedTransaction) {
+                transaction = JSON.parse(savedTransaction);
+                if (transaction && transaction.totalAmount) {
+                    document.getElementById('amountValue').innerHTML = formatPrice(transaction.totalAmount);
+                    const deliveryFee = transaction.deliveryFee || 0;
+                    if (deliveryFee > 0) {
+                        document.getElementById('deliveryFee').innerHTML = `Frais de livraison: ${formatPrice(deliveryFee)}`;
+                    } else {
+                        document.getElementById('deliveryFee').innerHTML = `Livraison gratuite inclus`;
+                    }
+                    cartItems = transaction.orderData?.items || [];
+                    displayOrderSummary();
+                    return;
+                }
+            }
+            
+            // Charger depuis le panier localStorage
+            const cart = JSON.parse(localStorage.getItem('paname_cart') || '{"items":[], "total":0}');
+            cartItems = cart.items || [];
+            const subtotal = cart.total || 0;
+            const deliveryFee = subtotal >= 5000 ? 0 : 1500;
+            const total = subtotal + deliveryFee;
+            
+            document.getElementById('amountValue').innerHTML = formatPrice(total);
+            if (deliveryFee > 0) {
+                document.getElementById('deliveryFee').innerHTML = `Frais de livraison: ${formatPrice(deliveryFee)}`;
+            } else {
+                document.getElementById('deliveryFee').innerHTML = `Livraison gratuite inclus`;
+            }
+            
+            displayOrderSummary();
+        }
+        
+        function displayOrderSummary() {
+            const container = document.getElementById('orderItemsList');
+            if (!container) return;
+            
+            if (!cartItems || cartItems.length === 0) {
+                container.innerHTML = '<p style="color:#6c757d; font-size:0.8rem;">Aucun article dans votre panier</p>';
+                return;
+            }
+            
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = subtotal >= 5000 ? 0 : 1500;
+            const total = subtotal + deliveryFee;
+            
+            container.innerHTML = `
+                ${cartItems.slice(0, 3).map(item => `
+                    <div class="order-item">
+                        <span>${item.name} x${item.quantity}</span>
+                        <span>${formatPrice(item.price * item.quantity)}</span>
+                    </div>
+                `).join('')}
+                ${cartItems.length > 3 ? `<div class="order-item"><span>+ ${cartItems.length - 3} autre(s) article(s)</span><span></span></div>` : ''}
+                <div class="order-item">
+                    <span>Sous-total</span>
+                    <span>${formatPrice(subtotal)}</span>
+                </div>
+                <div class="order-item">
+                    <span>Livraison</span>
+                    <span>${deliveryFee === 0 ? 'Gratuite' : formatPrice(deliveryFee)}</span>
+                </div>
+                <div class="order-total">
+                    <span>Total à payer à la livraison</span>
+                    <span>${formatPrice(total)}</span>
+                </div>
+            `;
+        }
+        
+        function validateForm() {
+            const fullName = document.getElementById('fullName').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            
+            if (!fullName) {
+                showNotification('Veuillez entrer votre nom complet', 'error');
+                return false;
+            }
+            if (!phone) {
+                showNotification('Veuillez entrer votre numéro de téléphone', 'error');
+                return false;
+            }
+            const phoneRegex = /^(6|2)[0-9]{8}$/;
+            if (!phoneRegex.test(phone)) {
+                showNotification('Numéro de téléphone invalide (ex: 6XXXXXXXX ou 2XXXXXXXX)', 'error');
+                return false;
+            }
+            if (!address) {
+                showNotification('Veuillez entrer votre adresse de livraison', 'error');
+                return false;
+            }
+            if (!city) {
+                showNotification('Veuillez entrer votre ville', 'error');
+                return false;
+            }
+            return true;
+        }
+        
+        async function confirmOrder() {
+            if (!validateForm()) return;
+            
+            if (!cartItems || cartItems.length === 0) {
+                showNotification('Votre panier est vide', 'error');
+                return;
+            }
+            
+            const confirmBtn = document.getElementById('confirmBtn');
+            const loading = document.getElementById('loading');
+            const form = document.getElementById('deliveryForm');
+            
+            confirmBtn.disabled = true;
+            form.style.opacity = '0.5';
+            loading.style.display = 'block';
+            
+            // Collecter les informations de livraison
+            const deliveryInfo = {
+                fullName: document.getElementById('fullName').value.trim(),
+                phone: document.getElementById('phone').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                city: document.getElementById('city').value.trim(),
+                postalCode: document.getElementById('postalCode').value.trim(),
+                instructions: document.getElementById('instructions').value.trim()
+            };
+            
+            const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const deliveryFee = subtotal >= 5000 ? 0 : 1500;
+            const total = subtotal + deliveryFee;
+            
+            // Créer la transaction
+            const order = {
+                id: 'COD_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                date: new Date().toISOString(),
+                items: cartItems,
+                subtotal: subtotal,
+                deliveryFee: deliveryFee,
+                total: total,
+                deliveryInfo: deliveryInfo,
+                status: 'pending',
+                paymentMethod: 'cash_on_delivery'
+            };
+            
+            // Sauvegarder la commande
+            const orders = JSON.parse(localStorage.getItem('paname_orders') || '[]');
+            orders.unshift(order);
+            localStorage.setItem('paname_orders', JSON.stringify(orders));
+            
+            // Vider le panier
+            localStorage.setItem('paname_cart', JSON.stringify({ items: [], total: 0 }));
+            localStorage.removeItem('current_transaction');
+            
+            // Sauvegarder la dernière commande pour la confirmation
+            localStorage.setItem('last_transaction', JSON.stringify({
+                id: order.id,
+                totalAmount: total,
+                method: 'Paiement à la livraison',
+                createdAt: order.date,
+                deliveryInfo: deliveryInfo
+            }));
+            
+            setTimeout(() => {
+                showNotification('Commande confirmée ! Livraison sous 24-48h', 'success');
+                setTimeout(() => {
+                    window.location.href = 'confirmation.html';
+                }, 2000);
+            }, 1000);
+        }
+        
+        document.getElementById('deliveryForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            confirmOrder();
+        });
+        
+        // Vérifier si l'API Payment est disponible et initialiser
+        if (window.Payment && window.Payment.finalizePayment) {
+            // Utiliser l'API si disponible
+            window.Payment.finalizePayment('CASH_ON_DELIVERY', {});
+        }
+        
+        // Initialiser
+        loadTransaction();
+        
+        console.log('🚚 Page Paiement à la livraison - Prête');
+        console.log('💰 Montant affiché dynamiquement depuis le panier');
+    </script>
+</body>
+</html>

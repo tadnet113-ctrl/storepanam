@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Statistiques - Paname Service Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f0f2f5; }
+        .admin-container { display: flex; min-height: 100vh; }
+        .sidebar { width: 280px; background: linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%); color: white; flex-shrink: 0; }
+        .sidebar-header { padding: 1.5rem; text-align: center; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        .sidebar-header img { height: 45px; margin-bottom: 0.5rem; }
+        .sidebar-header h3 { color: #D4AF37; font-size: 1rem; }
+        .sidebar-menu { padding: 1.5rem 0; }
+        .menu-item { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1.5rem; color: #e9ecef; text-decoration: none; transition: all 0.3s; border-left: 3px solid transparent; }
+        .menu-item:hover, .menu-item.active { background: rgba(212, 175, 55, 0.1); border-left-color: #D4AF37; color: #D4AF37; }
+        .menu-item i { width: 24px; }
+        .main-content { flex: 1; padding: 1.5rem; overflow-x: auto; }
+        .page-header { margin-bottom: 1.5rem; }
+        .page-header h1 { font-size: 1.5rem; font-weight: 600; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: white; padding: 1.5rem; border-radius: 0.75rem; text-align: center; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .stat-card .number { font-size: 2rem; font-weight: 800; color: #D4AF37; }
+        .stat-card .label { font-size: 0.8rem; color: #6c757d; margin-top: 0.3rem; }
+        .stat-card .trend { font-size: 0.7rem; margin-top: 0.3rem; }
+        .trend-up { color: #28a745; }
+        .trend-down { color: #dc3545; }
+        .charts-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 1.5rem; }
+        .chart-card { background: white; padding: 1.5rem; border-radius: 0.75rem; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .chart-card h3 { margin-bottom: 1rem; font-size: 1.1rem; }
+        canvas { max-height: 300px; width: 100%; }
+        .top-products { background: white; border-radius: 0.75rem; padding: 1.5rem; }
+        .top-products h3 { margin-bottom: 1rem; }
+        .top-product-item { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem 0; border-bottom: 1px solid #e9ecef; }
+        .top-product-name { font-weight: 500; }
+        .top-product-sales { color: #D4AF37; font-weight: 600; }
+        @media (max-width: 992px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .charts-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .sidebar { position: fixed; left: -280px; z-index: 100; height: 100%; } .sidebar.open { left: 0; } }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header"><img src="../assets/logoPANSERV.png" alt="Logo"><h3>Paname Admin</h3></div>
+            <nav class="sidebar-menu">
+                <a href="dashboard.html" class="menu-item"><i class="fas fa-chart-line"></i> Dashboard</a>
+                <a href="products.html" class="menu-item"><i class="fas fa-box"></i> Produits</a>
+                <a href="orders.html" class="menu-item"><i class="fas fa-shopping-cart"></i> Commandes</a>
+                <a href="users.html" class="menu-item"><i class="fas fa-users"></i> Utilisateurs</a>
+                <a href="stats.html" class="menu-item active"><i class="fas fa-chart-bar"></i> Statistiques</a>
+                <hr style="margin: 1rem; border-color: rgba(255,255,255,0.1);">
+                <a href="../index.html" class="menu-item"><i class="fas fa-home"></i> Retour au site</a>
+                <a href="#" class="menu-item" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <div class="page-header"><h1><i class="fas fa-chart-bar"></i> Statistiques avancées</h1></div>
+            
+            <div class="stats-grid">
+                <div class="stat-card"><div class="number" id="totalRevenue">0 Fcfa</div><div class="label">Chiffre d'affaires total</div><div class="trend trend-up" id="revenueTrend"><i class="fas fa-arrow-up"></i> +0%</div></div>
+                <div class="stat-card"><div class="number" id="totalOrders">0</div><div class="label">Commandes totales</div><div class="trend trend-up" id="ordersTrend"><i class="fas fa-arrow-up"></i> +0%</div></div>
+                <div class="stat-card"><div class="number" id="avgOrderValue">0 Fcfa</div><div class="label">Panier moyen</div></div>
+                <div class="stat-card"><div class="number" id="conversionRate">0%</div><div class="label">Taux de conversion</div></div>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-card"><h3><i class="fas fa-chart-line"></i> Évolution des ventes (30 jours)</h3><canvas id="salesChart"></canvas></div>
+                <div class="chart-card"><h3><i class="fas fa-chart-pie"></i> Répartition par catégorie</h3><canvas id="categoryChart"></canvas></div>
+            </div>
+            
+            <div class="charts-grid">
+                <div class="chart-card"><h3><i class="fas fa-credit-card"></i> Méthodes de paiement</h3><canvas id="paymentChart"></canvas></div>
+                <div class="chart-card"><h3><i class="fas fa-chart-line"></i> Commandes par jour</h3><canvas id="ordersChart"></canvas></div>
+            </div>
+            
+            <div class="top-products"><h3><i class="fas fa-trophy"></i> Top 5 des produits les plus vendus</h3><div id="topProductsList"></div></div>
+        </main>
+    </div>
+    
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script>
+        // Données simulées
+        const salesData = [1250000, 980000, 2100000, 1870000, 1650000, 2340000, 1980000, 2450000, 2870000, 2560000, 2980000, 3100000, 2890000, 3250000, 3420000, 2980000, 3560000, 3870000, 3650000, 3980000, 4120000, 3890000, 4250000, 3980000, 4320000, 4560000, 4450000, 4780000, 4980000, 5120000];
+        const categoryData = { 'High-Tech': 45000000, 'Alimentation': 12500000, 'Santé': 8500000, 'Auto-Moto': 18500000, 'Bijoux': 6500000 };
+        const paymentData = { 'Orange Money': 35, 'MTN Money': 28, 'PayPal': 15, 'Carte Bancaire': 12, 'Livraison': 10 };
+        const ordersByDay = [12, 15, 18, 22, 25, 28, 32, 35, 38, 42, 45, 48, 52, 55, 58, 62, 65, 68, 72, 75, 78, 82, 85, 88, 92, 95, 98, 102, 105, 108];
+        
+        const topProducts = [
+            { name: 'Ordinateur Portable Ultrabook', sales: 185 },
+            { name: 'iPhone 15 Pro', sales: 156 },
+            { name: 'Souris Gamer RGB', sales: 234 },
+            { name: 'Casque Audio Bluetooth', sales: 189 },
+            { name: 'Smart TV 55" 4K', sales: 98 }
+        ];
+        
+        function formatPrice(p) { return p.toLocaleString() + ' Fcfa'; }
+        function showNotification(msg, type) { const c = document.getElementById('notificationContainer'); const n = document.createElement('div'); n.className = `notification notification-${type}`; n.innerHTML = `<i class="fas fa-${type==='success'?'check-circle':'exclamation-circle'}"></i><span>${msg}</span><button onclick="this.parentElement.remove()">×</button>`; c.appendChild(n); setTimeout(() => n.classList.add('show'), 10); setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 3000); }
+        
+        function initCharts() {
+            const totalRevenue = salesData.reduce((a,b)=>a+b,0);
+            document.getElementById('totalRevenue').innerHTML = formatPrice(totalRevenue);
+            document.getElementById('totalOrders').innerHTML = ordersByDay.reduce((a,b)=>a+b,0);
+            document.getElementById('avgOrderValue').innerHTML = formatPrice(totalRevenue / ordersByDay.reduce((a,b)=>a+b,0));
+            document.getElementById('conversionRate').innerHTML = (Math.random() * 10 + 2).toFixed(1) + '%';
+            
+            new Chart(document.getElementById('salesChart'), { type: 'line', data: { labels: Array.from({length:30},(_,i)=>`J-${29-i}`), datasets: [{ label: 'Ventes (Fcfa)', data: salesData, borderColor: '#D4AF37', backgroundColor: 'rgba(212,175,55,0.1)', fill: true, tension: 0.4 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } } });
+            
+            new Chart(document.getElementById('categoryChart'), { type: 'doughnut', data: { labels: Object.keys(categoryData), datasets: [{ data: Object.values(categoryData), backgroundColor: ['#D4AF37', '#28a745', '#17a2b8', '#ffc107', '#dc3545'] }] }, options: { responsive: true, plugins: { legend: { position: 'bottom' } } } });
+            
+            new Chart(document.getElementById('paymentChart'), { type: 'pie', data: { labels: Object.keys(paymentData), datasets: [{ data: Object.values(paymentData), backgroundColor: ['#FF6600', '#FFCC00', '#003087', '#1a1a1a', '#28a745'] }] }, options: { responsive: true, plugins: { legend: { position: 'bottom' } } } });
+            
+            new Chart(document.getElementById('ordersChart'), { type: 'bar', data: { labels: Array.from({length:30},(_,i)=>`J-${29-i}`), datasets: [{ label: 'Nombre de commandes', data: ordersByDay, backgroundColor: '#D4AF37', borderRadius: 8 }] }, options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } } });
+            
+            document.getElementById('topProductsList').innerHTML = topProducts.map((p,i) => `<div class="top-product-item"><div class="top-product-name">${i+1}. ${p.name}</div><div class="top-product-sales">${p.sales} ventes</div></div>`).join('');
+        }
+        
+        function checkAdmin() { const isAdmin = localStorage.getItem('paname_admin_session'); if(!isAdmin) { window.location.href = '../index.html'; } }
+        document.getElementById('logoutBtn').addEventListener('click', () => { localStorage.removeItem('paname_admin_session'); window.location.href = '../index.html'; });
+        
+        initCharts(); checkAdmin();
+        console.log('📊 Admin Stats - Tableau de bord statistiques');
+    </script>
+</body>
+</html>

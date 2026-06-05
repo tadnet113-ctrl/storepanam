@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="description" content="Paname Travel - Agence de voyage agréée à Yaoundé, Cameroun. Visa, passeport, billets d'avion, assurance voyage et circuits touristiques.">
+    <meta name="keywords" content="agence voyage, visa, passeport, billet avion, assurance voyage, circuits touristiques, Yaoundé, Cameroun">
+    <meta name="author" content="Le Paname Service">
+    <meta name="theme-color" content="#D4AF37">
+    
+    <title>Paname Travel - Agence de Voyage Agréée | Le Paname Service</title>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ========== CSS IDENTIQUE AU FICHIER INDEX ========== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-black: #0a0a0a; --secondary-black: #111111; --dark-gray: #1a1a1a;
+            --gold: #D4AF37; --gold-light: #F4D03F; --gold-dark: #B8960C;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+            --white: #ffffff; --white-off: #f8f9fa; --gray-light: #e9ecef;
+            --gray-medium: #6c757d; --text-dark: #212529; --text-gray: #495057;
+            --success: #28a745; --danger: #dc3545;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04); --shadow: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.12); --gold-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --header-height: 60px; --container-padding: 1rem; --container-max-width: 1280px;
+            --border-radius: 0.5rem; --border-radius-lg: 0.75rem; --border-radius-full: 9999px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); color: var(--text-dark); background-color: var(--white); line-height: 1.6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: var(--container-max-width); margin: 0 auto; padding: 0 var(--container-padding); width: 100%; }
+
+        /* Header Top - Bannière défilante (identique index) */
+        .header-top { background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%); color: var(--white); padding: 0.5rem 0; border-bottom: 2px solid var(--gold); overflow: hidden; }
+        .header-top .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+        .scrolling-banner { flex: 1; overflow: hidden; position: relative; height: 36px; }
+        .scrolling-content { display: flex; animation: scrollBanner 20s linear infinite; white-space: nowrap; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
+        .scrolling-content:hover { animation-play-state: paused; }
+        .banner-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0 1.5rem; font-size: 0.75rem; color: var(--white); }
+        .banner-item i { color: var(--gold); font-size: 0.875rem; }
+        .banner-item strong { color: var(--gold); }
+        @keyframes scrollBanner { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .customer-service { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .service-item { display: flex; align-items: center; gap: 0.5rem; }
+        .service-item i { font-size: 0.875rem; color: var(--gold); }
+        .service-info h4 { font-size: 0.625rem; font-weight: 500; opacity: 0.8; }
+        .service-info a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.688rem; transition: var(--transition); }
+        .service-info a:hover { color: var(--gold); }
+
+        /* Header Main */
+        .header-main { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        .header-main .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 70px; padding: 0.5rem var(--container-padding); }
+        .logo { flex-shrink: 0; }
+        .logo img { height: 45px; width: auto; transition: var(--transition); }
+        .logo img:hover { transform: scale(1.02); }
+        .admin-badge-header { background: var(--gold-gradient); padding: 0.2rem 0.6rem; border-radius: var(--border-radius-full); font-size: 0.6rem; font-weight: 700; color: var(--primary-black); margin-left: 0.5rem; display: none; }
+        .admin-badge-header.show { display: inline-block; }
+        .search-wrapper { flex: 1; max-width: 450px; margin: 0 auto; }
+        .search-form { display: flex; border: 2px solid var(--gray-light); border-radius: var(--border-radius-full); overflow: hidden; transition: var(--transition); width: 100%; background: var(--white); }
+        .search-form:focus-within { border-color: var(--gold); box-shadow: var(--gold-shadow); }
+        .search-input { flex: 1; padding: 0.7rem 1.2rem; border: none; outline: none; font-size: 0.875rem; min-width: 0; width: 100%; }
+        .search-btn { background: var(--gold-gradient); border: none; padding: 0.7rem 1.5rem; cursor: pointer; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem; font-size: 0.813rem; white-space: nowrap; flex-shrink: 0; }
+        .search-btn span { display: inline; }
+        .search-btn:hover { opacity: 0.9; }
+        .header-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        .action-btn { position: relative; width: 42px; height: 42px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--gray-light); cursor: pointer; transition: var(--transition); color: var(--text-dark); font-size: 1.125rem; text-decoration: none; }
+        .action-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-black); transform: translateY(-2px); }
+        .cart-badge, .wishlist-badge { position: absolute; top: -5px; right: -5px; background: var(--gold-gradient); color: var(--primary-black); font-size: 0.563rem; font-weight: 800; min-width: 16px; height: 16px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; padding: 0 3px; border: 1px solid var(--white); }
+
+        /* Navigation */
+        .nav-wrapper { background: var(--white); border-bottom: 1px solid var(--gray-light); position: sticky; top: 70px; z-index: 999; }
+        .nav-container { display: flex; align-items: center; justify-content: flex-end; padding: 0.5rem var(--container-padding); position: relative; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; background: none; border: none; z-index: 2001; position: relative; margin-right: auto; }
+        .hamburger span { display: block; width: 26px; height: 2.5px; background: var(--primary-black); border-radius: 2px; transition: var(--transition); transform-origin: center; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .main-nav { flex: 1; display: flex; justify-content: flex-end; }
+        .nav-list { display: flex; list-style: none; gap: 0; flex-wrap: wrap; margin: 0; padding: 0; }
+        .nav-item { position: relative; }
+        .nav-link { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.75rem 1rem; color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.813rem; transition: var(--transition); border-bottom: 2px solid transparent; }
+        .nav-link:hover, .nav-link.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+        .dropdown-menu { position: absolute; top: 100%; left: 0; background: var(--white); min-width: 220px; box-shadow: var(--shadow-lg); border-radius: var(--border-radius); opacity: 0; visibility: hidden; transform: translateY(-10px); transition: var(--transition); z-index: 100; border: 1px solid var(--gray-light); }
+        .nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .dropdown-item { display: block; padding: 0.7rem 1.2rem; color: var(--text-dark); text-decoration: none; transition: var(--transition); font-size: 0.813rem; }
+        .dropdown-item:hover { background: rgba(212, 175, 55, 0.1); color: var(--gold-dark); padding-left: 1.5rem; }
+        .admin-only { display: none; }
+
+        /* Mobile Overlay & Sidebar (identique index) */
+        .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1999; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
+        .menu-overlay.active { display: block; opacity: 1; }
+        .mobile-sidebar { position: fixed; top: 0; left: -100%; width: 85%; max-width: 380px; height: 100vh; height: 100dvh; background: var(--white); box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1); overflow: hidden; display: flex; flex-direction: column; }
+        .mobile-sidebar.active { left: 0; }
+        .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.2rem; background: var(--primary-black); color: var(--gold); flex-shrink: 0; border-bottom: 2px solid var(--gold); }
+        .sidebar-header h3 { font-size: 1.1rem; font-family: var(--font-serif); display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+        .sidebar-close { background: rgba(255,255,255,0.1); border: none; font-size: 1.25rem; color: var(--gold); cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); flex-shrink: 0; }
+        .sidebar-close:hover { background: var(--gold); color: var(--primary-black); }
+        .sidebar-search { padding: 1rem 1.2rem; border-bottom: 1px solid var(--gray-light); flex-shrink: 0; }
+        .sidebar-search .search-form { border: 1px solid var(--gray-light); display: flex; border-radius: var(--border-radius-full); overflow: hidden; width: 100%; }
+        .sidebar-search .search-input { flex: 1; padding: 0.6rem 1rem; border: none; outline: none; font-size: 0.85rem; min-width: 0; width: 100%; }
+        .sidebar-search .search-btn { background: var(--gold-gradient); border: none; padding: 0.6rem 1rem; cursor: pointer; color: var(--primary-black); font-size: 0.9rem; flex-shrink: 0; }
+        .sidebar-nav-scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; padding: 0.5rem 0; }
+        .sidebar-nav { list-style: none; padding: 0; margin: 0; }
+        .sidebar-nav-item { border-bottom: 1px solid var(--gray-light); }
+        .sidebar-nav-link { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.2rem; color: var(--text-dark); text-decoration: none; transition: var(--transition); font-weight: 500; cursor: pointer; font-size: 0.9rem; width: 100%; }
+        .sidebar-nav-link:hover, .sidebar-nav-link:active { background: rgba(212, 175, 55, 0.08); color: var(--gold-dark); }
+        .sidebar-nav-link span { display: flex; align-items: center; gap: 0.85rem; flex: 1; }
+        .sidebar-nav-link span i { width: 26px; color: var(--gold-dark); font-size: 1rem; text-align: center; }
+        .sidebar-nav-link .chevron { font-size: 0.75rem; transition: transform 0.3s ease; color: var(--gray-medium); flex-shrink: 0; }
+        .sidebar-nav-link.expanded .chevron { transform: rotate(90deg); color: var(--gold-dark); }
+        .sidebar-submenu { list-style: none; padding: 0; margin: 0; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; background: var(--white-off); border-left: 3px solid var(--gold); margin-left: 1.5rem; border-radius: 0 0.5rem 0.5rem 0; }
+        .sidebar-submenu.active { max-height: 600px; }
+        .sidebar-submenu-item { border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .sidebar-submenu-link { display: block; padding: 0.75rem 1rem 0.75rem 2rem; color: var(--text-gray); text-decoration: none; font-size: 0.85rem; transition: var(--transition); }
+        .sidebar-submenu-link:hover, .sidebar-submenu-link:active { color: var(--gold-dark); background: rgba(212, 175, 55, 0.05); padding-left: 2.2rem; }
+        .sidebar-submenu-link::before { content: ''; display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); margin-right: 8px; opacity: 0.6; vertical-align: middle; }
+        .sidebar-footer { padding: 1rem 1.2rem; border-top: 1px solid var(--gray-light); background: var(--white-off); flex-shrink: 0; }
+        .sidebar-auth-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.7rem; border-radius: var(--border-radius); background: var(--primary-black); color: var(--gold); border: none; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: var(--transition); margin-bottom: 0.75rem; }
+        .sidebar-auth-btn:hover { background: var(--gold); color: var(--primary-black); }
+        .sidebar-contact { margin-top: 0.75rem; }
+        .sidebar-contact-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; color: var(--text-gray); font-size: 0.8rem; }
+        .sidebar-contact-item i { color: var(--gold-dark); width: 20px; font-size: 0.85rem; text-align: center; }
+        .sidebar-social { display: flex; gap: 10px; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--gray-light); }
+        .sidebar-social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--gray-light); display: flex; align-items: center; justify-content: center; color: var(--gold-dark); text-decoration: none; transition: var(--transition); font-size: 0.9rem; }
+        .sidebar-social-link:hover { background: var(--primary-black); border-color: var(--primary-black); color: var(--gold); }
+
+        /* Hero Section */
+        .store-hero { background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%); padding: 3rem 0; position: relative; overflow: hidden; }
+        .hero-content { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 1; }
+        .hero-text h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: var(--white); font-family: var(--font-serif); }
+        .hero-text h1 span { color: var(--gold); }
+        .hero-text p { font-size: 1rem; color: var(--gray-light); margin-bottom: 2rem; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: var(--gold-gradient); color: var(--primary-black); text-decoration: none; border-radius: var(--border-radius-full); font-weight: 700; transition: var(--transition); border: none; cursor: pointer; font-size: 0.875rem; }
+        .btn-outline { background: transparent; border: 2px solid var(--gold); color: var(--gold); }
+        .btn-outline:hover { background: var(--gold-gradient); color: var(--primary-black); }
+        .btn:hover { transform: translateY(-2px); box-shadow: var(--gold-shadow); }
+        .hero-image img { width: 100%; border-radius: var(--border-radius-xl); box-shadow: var(--shadow-lg); border: 3px solid var(--gold); }
+
+        /* Trust Badges */
+        .trust-section { padding: 2rem 0; background: var(--white-off); border-bottom: 1px solid var(--gray-light); }
+        .trust-grid { display: flex; justify-content: center; align-items: center; gap: 2rem; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--text-gray); }
+        .trust-item i { color: var(--gold); font-size: 1.2rem; }
+
+        /* Stats Section */
+        .stats-section { padding: 3rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .stat-card { text-align: center; padding: 2rem; background: var(--white); border-radius: var(--border-radius-lg); border: 1px solid var(--gray-light); transition: var(--transition); }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .stat-number { font-size: 2.5rem; font-weight: 800; color: var(--gold-dark); font-family: var(--font-serif); margin-bottom: 0.5rem; }
+        .stat-label { font-size: 0.875rem; color: var(--text-gray); }
+
+        /* Services Section */
+        .services-section { padding: 3rem 0; background: var(--white-off); }
+        .section-header { text-align: center; margin-bottom: 2rem; }
+        .section-title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; font-family: var(--font-serif); position: relative; padding-bottom: 0.5rem; display: inline-block; }
+        .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--gold-gradient); }
+        .section-subtitle { text-align: center; color: var(--text-gray); max-width: 700px; margin: 0 auto 2rem; font-size: 1rem; }
+        .services-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .service-card { background: var(--white); border-radius: var(--border-radius-lg); padding: 2rem 1.5rem; text-align: center; transition: var(--transition); border: 1px solid var(--gray-light); cursor: pointer; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 3px; background: var(--gold-gradient); transition: left 0.3s ease; }
+        .service-card:hover::before { left: 0; }
+        .service-card:hover { transform: translateY(-5px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .service-icon { width: 70px; height: 70px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+        .service-icon i { font-size: 2rem; color: var(--primary-black); }
+        .service-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .service-card p { font-size: 0.875rem; color: var(--text-gray); }
+
+        /* Destinations Section */
+        .destinations-section { padding: 3rem 0; }
+        .destinations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+        .destination-card { background: var(--white); border-radius: var(--border-radius-lg); overflow: hidden; transition: var(--transition); border: 1px solid var(--gray-light); }
+        .destination-card:hover { transform: translateY(-5px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .destination-image { position: relative; height: 220px; }
+        .destination-image img { width: 100%; height: 100%; object-fit: cover; }
+        .destination-price { position: absolute; bottom: 10px; right: 10px; background: var(--gold-gradient); padding: 0.3rem 0.8rem; border-radius: var(--border-radius-full); font-weight: 700; font-size: 0.8rem; }
+        .destination-info { padding: 1rem; }
+        .destination-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .destination-location { font-size: 0.8rem; color: var(--gray-medium); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.3rem; }
+        .destination-days { font-size: 0.75rem; color: var(--text-gray); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.3rem; }
+
+        /* Visa Section */
+        .visa-section { padding: 3rem 0; background: var(--white-off); }
+        .visa-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+        .visa-card { background: var(--white); border-radius: var(--border-radius-lg); padding: 1.5rem 1rem; text-align: center; transition: var(--transition); border: 1px solid var(--gray-light); cursor: pointer; }
+        .visa-card:hover { transform: translateY(-5px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .visa-flag { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .visa-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .visa-card p { font-size: 0.65rem; color: var(--gray-medium); }
+
+        /* Offers Section */
+        .offers-section { padding: 3rem 0; }
+        .offers-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .offer-card { background: var(--white); border-radius: var(--border-radius-lg); overflow: hidden; transition: var(--transition); border: 1px solid var(--gray-light); position: relative; }
+        .offer-card:hover { transform: translateY(-5px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .offer-image { height: 180px; overflow: hidden; position: relative; }
+        .offer-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .offer-card:hover .offer-image img { transform: scale(1.05); }
+        .offer-info { padding: 1rem; }
+        .offer-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .offer-price { font-size: 1.2rem; font-weight: 700; color: var(--gold-dark); margin-bottom: 0.5rem; }
+        .offer-old-price { font-size: 0.8rem; color: var(--gray-medium); text-decoration: line-through; margin-left: 0.5rem; }
+        .offer-badge { position: absolute; top: 10px; left: 10px; background: var(--danger); color: white; padding: 0.2rem 0.6rem; border-radius: var(--border-radius-full); font-size: 0.7rem; font-weight: 700; }
+
+        /* Testimonials Section */
+        .testimonials-section { padding: 3rem 0; background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%); }
+        .testimonials-section .section-title { color: var(--white); }
+        .testimonials-section .section-subtitle { color: var(--gray-light); }
+        .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+        .testimonial-card { background: rgba(255, 255, 255, 0.05); border-radius: var(--border-radius-lg); padding: 1.5rem; border: 1px solid rgba(212, 175, 55, 0.3); transition: var(--transition); }
+        .testimonial-card:hover { transform: translateY(-5px); border-color: var(--gold); }
+        .testimonial-text { font-size: 0.875rem; color: var(--gray-light); line-height: 1.7; margin-bottom: 1rem; font-style: italic; }
+        .testimonial-author { display: flex; align-items: center; gap: 0.75rem; }
+        .testimonial-avatar { width: 45px; height: 45px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary-black); }
+        .testimonial-name { font-weight: 700; color: var(--gold); font-size: 0.875rem; }
+        .testimonial-title { font-size: 0.7rem; color: var(--gray-medium); }
+
+        /* Contact Section */
+        .contact-section { padding: 3rem 0; }
+        .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .contact-info h3, .contact-form h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--gold-dark); }
+        .contact-details { margin: 1.5rem 0; }
+        .contact-detail-item { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+        .contact-detail-item i { width: 40px; height: 40px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--primary-black); }
+        .contact-form { background: var(--white); padding: 1.5rem; border-radius: var(--border-radius-lg); border: 1px solid var(--gray-light); box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 1rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.8rem 1rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: 0.875rem; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); box-shadow: var(--gold-shadow); }
+
+        /* Footer (identique index) */
+        .footer { background: var(--primary-black); color: var(--white); padding: 3rem 0 0; margin-top: auto; border-top: 3px solid var(--gold); }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        .footer-about p { color: var(--gray-light); margin: 1rem 0; font-size: 0.813rem; line-height: 1.6; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem; }
+        .footer-title { font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; position: relative; padding-bottom: 0.5rem; color: var(--gold); }
+        .footer-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background: var(--gold-gradient); }
+        .footer-links { list-style: none; }
+        .footer-link { margin-bottom: 0.7rem; }
+        .footer-link a { color: var(--gray-light); text-decoration: none; transition: var(--transition); font-size: 0.813rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .footer-link a:hover { color: var(--gold); transform: translateX(5px); }
+        .footer-bottom .contact-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.7rem; color: var(--gray-light); font-size: 0.813rem; }
+        .footer-bottom .contact-item i { color: var(--gold); width: 20px; }
+        .social-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+        .social-link { width: 36px; height: 36px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); text-decoration: none; transition: var(--transition); }
+        .social-link:hover { background: var(--gold); color: var(--primary-black); transform: translateY(-3px); }
+        .footer-bottom { padding: 1.5rem 0; }
+        .footer-bottom .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .copyright { font-size: 0.75rem; color: var(--gray-light); }
+        .copyright a { color: var(--gold); text-decoration: none; }
+        .payment-methods { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .payment-methods img { height: 30px; width: auto; background: var(--white); padding: 0.25rem 0.5rem; border-radius: var(--border-radius); }
+
+        /* Floating Buttons */
+        .floating-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 0.5rem; z-index: 998; }
+        .whatsapp-btn { width: 50px; height: 50px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); transition: var(--transition); }
+        .whatsapp-btn img { width: 28px; height: 28px; }
+        .back-to-top { width: 50px; height: 50px; border-radius: 50%; background: var(--gold-gradient); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--primary-black); font-size: 1.125rem; cursor: pointer; opacity: 0; visibility: hidden; transition: var(--transition); }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-3px); }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 3000; opacity: 0; visibility: hidden; transition: var(--transition); }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--white); border-radius: var(--border-radius-lg); padding: 2rem; max-width: 440px; width: 90%; position: relative; transform: scale(0.95); transition: var(--transition); }
+        .modal.active .modal-content { transform: scale(1); }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.25rem; cursor: pointer; }
+        .auth-tabs { display: flex; gap: 1rem; margin: 1rem 0 1.5rem; border-bottom: 2px solid var(--gray-light); }
+        .auth-tab { flex: 1; padding: 0.7rem; background: none; border: none; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; font-size: 0.875rem; }
+        .auth-tab.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.35rem; font-weight: 500; font-size: 0.813rem; }
+        .form-group input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: 0.875rem; }
+        .auth-submit { width: 100%; padding: 0.8rem; background: var(--gold-gradient); border: none; border-radius: var(--border-radius); font-weight: 700; cursor: pointer; margin-top: 0.5rem; }
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 0.5rem; }
+        .notification { background: var(--white); padding: 0.8rem 1.2rem; border-radius: var(--border-radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 0.75rem; transform: translateX(400px); transition: transform 0.3s ease; max-width: 360px; border-left: 4px solid; }
+        .notification.show { transform: translateX(0); }
+        .notification-success { border-left-color: var(--success); }
+        .notification-error { border-left-color: var(--danger); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .services-grid { grid-template-columns: repeat(2, 1fr); }
+            .offers-grid { grid-template-columns: repeat(2, 1fr); }
+            .visa-grid { grid-template-columns: repeat(3, 1fr); }
+            .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .contact-wrapper { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 860px) {
+            .hamburger { display: flex; }
+            .main-nav { display: none; }
+            .header-main .container { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 0.5rem var(--container-padding); }
+            .header-main .container .logo { order: 1; align-self: flex-start; }
+            .header-main .container .header-actions { order: 2; align-self: flex-end; margin-top: -50px; }
+            .header-main .container .search-wrapper { order: 3; max-width: 100%; width: 100%; margin: 0; }
+            .search-btn span { display: none; }
+            .search-btn { padding: 0.6rem 1rem; }
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .services-grid { grid-template-columns: 1fr; }
+            .offers-grid { grid-template-columns: 1fr; }
+            .visa-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .destinations-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-title::after { left: 50%; transform: translateX(-50%); }
+            .footer-links { text-align: center; }
+            .footer-link a { justify-content: center; }
+            .footer-bottom .contact-item { justify-content: center; }
+            .social-links { justify-content: center; }
+            .header-actions { gap: 0.5rem; }
+            .action-btn { width: 38px; height: 38px; font-size: 1rem; }
+            .header-top .container { flex-direction: column; text-align: center; }
+            .customer-service { justify-content: center; flex-wrap: wrap; }
+            .mobile-sidebar { max-width: 100%; width: 100%; }
+            .scrolling-banner { width: 100%; }
+            .trust-grid { gap: 1rem; }
+        }
+        @media (max-width: 480px) {
+            .header-main .container { padding: 0.4rem 0.75rem; }
+            .header-main .container .header-actions { margin-top: -42px; }
+            .visa-grid { grid-template-columns: 1fr; }
+            .header-actions { gap: 0.4rem; }
+            .action-btn { width: 35px; height: 35px; font-size: 0.9rem; }
+            .logo img { height: 38px; }
+            .search-wrapper { max-width: 100%; min-width: 100%; }
+            .search-input { font-size: 0.75rem; }
+            .sidebar-header h3 { font-size: 1rem; }
+            .sidebar-nav-link { font-size: 0.85rem; padding: 0.8rem 1rem; }
+            .sidebar-submenu-link { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== HEADER TOP - BANNIÈRE DÉFILANTE (IDENTIQUE INDEX) ========== -->
+    <div class="header-top">
+        <div class="container">
+            <div class="scrolling-banner">
+                <div class="scrolling-content">
+                    <span class="banner-item"><i class="fas fa-truck"></i> Livraison gratuite dès <strong>5000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-percent"></i> <strong>-30%</strong> sur Paname Wedding</span>
+                    <span class="banner-item"><i class="fas fa-shield-alt"></i> Paiement <strong>100% sécurisé</strong></span>
+                    <span class="banner-item"><i class="fas fa-clock"></i> Livraison <strong>24h-48h</strong> à Yaoundé</span>
+                    <span class="banner-item"><i class="fas fa-gift"></i> Cadeau surprise dès <strong>10000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-truck"></i> Livraison gratuite dès <strong>5000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-percent"></i> <strong>-30%</strong> sur Paname Wedding</span>
+                    <span class="banner-item"><i class="fas fa-shield-alt"></i> Paiement <strong>100% sécurisé</strong></span>
+                    <span class="banner-item"><i class="fas fa-clock"></i> Livraison <strong>24h-48h</strong> à Yaoundé</span>
+                    <span class="banner-item"><i class="fas fa-gift"></i> Cadeau surprise dès <strong>10000 Fcfa</strong></span>
+                </div>
+            </div>
+            <div class="customer-service">
+                <div class="service-item">
+                    <i class="fas fa-headset"></i>
+                    <div class="service-info">
+                        <h4>Service Client</h4>
+                        <p><a href="tel:+237657715482">+237 657 71 54 82</a></p>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="service-info">
+                        <h4>Email</h4>
+                        <p><a href="mailto:lepanameservice@gmail.com">lepanameservice@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HEADER MAIN ========== -->
+    <div class="header-main">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img src="assets/logoPANSERV.png" alt="Le Paname Service"></a>
+                <span class="admin-badge-header" id="adminBadge"><i class="fas fa-shield-alt"></i> ADMIN</span>
+            </div>
+            <div class="search-wrapper">
+                <form class="search-form" id="desktopSearchForm">
+                    <input type="search" class="search-input" placeholder="Rechercher une destination (Paris, Dubaï, 850000)..." id="desktopSearchInput">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i><span>Rechercher</span></button>
+                </form>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn" id="adminDashboardBtn" style="display: none;" aria-label="Tableau de bord admin"><i class="fas fa-chart-line"></i></button>
+                <button class="action-btn" id="adminLogoutBtn" style="display: none;" aria-label="Déconnexion admin"><i class="fas fa-sign-out-alt"></i></button>
+                <button class="action-btn" data-modal="auth" aria-label="Mon compte"><i class="far fa-user"></i></button>
+                <a href="pages/wishlist.htm" class="action-btn" aria-label="Liste de souhaits"><i class="far fa-heart"></i><span class="wishlist-badge">0</span></a>
+                <a href="pages/cart.html" class="action-btn" aria-label="Panier"><i class="fas fa-shopping-bag"></i><span class="cart-badge">0</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== NAVIGATION (IDENTIQUE INDEX) ========== -->
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Accueil</a></li>
+                    <li class="nav-item"><a href="pages/panamestore.html" class="nav-link">Paname Store</a></li>
+                    <li class="nav-item"><a href="pages/panamemarket.html" class="nav-link">Paname Market</a></li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Services <i class="fas fa-chevron-down"></i></a>
+                        <div class="dropdown-menu">
+                            <a href="pages/panamewedding.html" class="dropdown-item">Paname Wedding</a>
+                            <a href="pages/panamehouse.html" class="dropdown-item">Paname House</a>
+                            <a href="pages/panametravel.html" class="dropdown-item">Paname Travel</a>
+                            <a href="pages/panameevent.html" class="dropdown-item">Paname Event</a>
+                            <a href="pages/panameproduction.html" class="dropdown-item">Paname Production</a>
+                            <a href="pages/panamesecurity.html" class="dropdown-item">Paname Security</a>
+                            <a href="pages/panameluxury.html" class="dropdown-item">Paname Luxury</a>
+                            <a href="pages/livraisonexpress.html" class="dropdown-item">Livraison Express</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a href="pages/sante.html" class="nav-link">Santé</a></li>
+                    <li class="nav-item"><a href="pages/auto_moto.html" class="nav-link">Auto-Moto</a></li>
+                    <li class="nav-item"><a href="pages/montres-bijoux.html" class="nav-link">Montres & Bijoux</a></li>
+                    <li class="nav-item"><a href="pages/contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item admin-only" id="adminNavLink" style="display: none;"><a href="pages/dashboard.html" class="nav-link"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ========== OVERLAY + MOBILE SIDEBAR (IDENTIQUE INDEX) ========== -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-crown"></i> Le Paname Service</h3>
+            <button class="sidebar-close" id="sidebarCloseBtn" aria-label="Fermer le menu"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-search">
+            <form class="search-form" id="mobileSearchForm">
+                <input type="search" class="search-input" placeholder="Rechercher une destination..." id="mobileSearchInput">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="sidebar-nav-scroll">
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><span><i class="fas fa-home"></i> Accueil</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/panamestore.html" class="sidebar-nav-link"><span><i class="fas fa-laptop"></i> Paname Store</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/panamemarket.html" class="sidebar-nav-link"><span><i class="fas fa-shopping-cart"></i> Paname Market</span></a></li>
+                <li class="sidebar-nav-item">
+                    <div class="sidebar-nav-link" onclick="toggleSubmenu(this)" role="button" tabindex="0"><span><i class="fas fa-concierge-bell"></i> Services</span><i class="fas fa-chevron-right chevron"></i></div>
+                    <ul class="sidebar-submenu">
+                        <li class="sidebar-submenu-item"><a href="pages/panamewedding.html" class="sidebar-submenu-link">Paname Wedding</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/panamehouse.html" class="sidebar-submenu-link">Paname House</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/panametravel.html" class="sidebar-submenu-link">Paname Travel</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/panameevent.html" class="sidebar-submenu-link">Paname Event</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/panameproduction.html" class="sidebar-submenu-link">Paname Production</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/panamesecurity.html" class="sidebar-submenu-link">Paname Security</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/panameluxury.html" class="sidebar-submenu-link">Paname Luxury</a></li>
+                        <li class="sidebar-submenu-item"><a href="pages/livraisonexpress.html" class="sidebar-submenu-link">Livraison Express</a></li>
+                    </ul>
+                </li>
+                <li class="sidebar-nav-item"><a href="pages/sante.html" class="sidebar-nav-link"><span><i class="fas fa-heartbeat"></i> Santé</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/auto_moto.html" class="sidebar-nav-link"><span><i class="fas fa-car"></i> Auto-Moto</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/montres-bijoux.html" class="sidebar-nav-link"><span><i class="fas fa-gem"></i> Montres & Bijoux</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/contact.html" class="sidebar-nav-link"><span><i class="fas fa-envelope"></i> Contact</span></a></li>
+                <li class="sidebar-nav-item admin-only" id="mobileAdminNavLink" style="display: none;"><a href="pages/dashboard.html" class="sidebar-nav-link"><span><i class="fas fa-chart-line"></i> Dashboard</span></a></li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <button class="sidebar-auth-btn" data-modal="auth"><i class="far fa-user"></i><span>Mon compte</span></button>
+            <div class="sidebar-contact">
+                <div class="sidebar-contact-item"><i class="fas fa-phone"></i><span>+237 657 71 54 82</span></div>
+                <div class="sidebar-contact-item"><i class="fas fa-phone"></i><span>+237 676 39 18 16</span></div>
+                <div class="sidebar-contact-item"><i class="fas fa-envelope"></i><span>lepanameservice@gmail.com</span></div>
+                <div class="sidebar-contact-item"><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroun</span></div>
+            </div>
+            <div class="sidebar-social">
+                <a href="https://www.facebook.com/profile.php?id=61557575415489" class="sidebar-social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/lepanameservice237" class="sidebar-social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/+237657715482" class="sidebar-social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@lepanameservice237" class="sidebar-social-link"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HERO SECTION ========== -->
+    <section class="store-hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1><span>Paname Travel</span><br>Votre aventure commence ici</h1>
+                    <p>Agence de voyage agréée à Yaoundé. Visa, passeport, billets d'avion, assurances et circuits touristiques. Démarches simplifiées, départs garantis.</p>
+                    <div class="hero-buttons">
+                        <a href="#services" class="btn"><i class="fas fa-plane"></i> Nos services</a>
+                        <a href="#contact" class="btn btn-outline"><i class="fas fa-headset"></i> Assistance</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=600" alt="Paname Travel">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== TRUST BADGES ========== -->
+    <section class="trust-section">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item"><i class="fas fa-check-circle"></i> Agrément N° 001/MT/2025</div>
+                <div class="trust-item"><i class="fas fa-shield-alt"></i> Garantie financière</div>
+                <div class="trust-item"><i class="fas fa-lock"></i> Paiement sécurisé</div>
+                <div class="trust-item"><i class="fas fa-headset"></i> Support 24/7</div>
+                <div class="trust-item"><i class="fas fa-star"></i> 4.9/5 sur 1500 avis</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== STATS SECTION ========== -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number">10+</div><div class="stat-label">Années d'expérience</div></div>
+                <div class="stat-card"><div class="stat-number">5000+</div><div class="stat-label">Clients satisfaits</div></div>
+                <div class="stat-card"><div class="stat-number">50+</div><div class="stat-label">Destinations</div></div>
+                <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">Assistance</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== SERVICES SECTION ========== -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <div class="section-header"><h2 class="section-title">Nos services</h2><p class="section-subtitle">Des prestations complètes pour tous vos voyages</p></div>
+            <div class="services-grid">
+                <div class="service-card" onclick="openService('Visa & Passeport')"><div class="service-icon"><i class="fas fa-passport"></i></div><h3>Visa & Passeport</h3><p>Assistance complète pour toutes vos démarches administratives</p></div>
+                <div class="service-card" onclick="openService('Billets d\'avion')"><div class="service-icon"><i class="fas fa-plane"></i></div><h3>Billets d'avion</h3><p>Meilleurs prix garantis sur toutes les destinations</p></div>
+                <div class="service-card" onclick="openService('Assurance voyage')"><div class="service-icon"><i class="fas fa-shield-alt"></i></div><h3>Assurance voyage</h3><p>Protection complète pour voyager sereinement</p></div>
+                <div class="service-card" onclick="openService('Circuits touristiques')"><div class="service-icon"><i class="fas fa-umbrella-beach"></i></div><h3>Circuits touristiques</h3><p>Découvrez les plus belles destinations du monde</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== DESTINATIONS POPULAIRES ========== -->
+    <section class="destinations-section">
+        <div class="container">
+            <div class="section-header"><h2 class="section-title">Destinations populaires</h2><p class="section-subtitle">Les voyages les plus demandés par nos clients</p></div>
+            <div class="destinations-grid" id="destinationsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ========== DESTINATIONS VISA ========== -->
+    <section class="visa-section">
+        <div class="container">
+            <div class="section-header"><h2 class="section-title">Assistance visa</h2><p class="section-subtitle">Nous vous aidons à obtenir votre visa pour ces destinations</p></div>
+            <div class="visa-grid" id="visaGrid"></div>
+        </div>
+    </section>
+
+    <!-- ========== OFFRES SPÉCIALES ========== -->
+    <section class="offers-section">
+        <div class="container">
+            <div class="section-header"><h2 class="section-title">Offres spéciales</h2><p class="section-subtitle">Profitez de nos promotions exclusives</p></div>
+            <div class="offers-grid" id="offersGrid"></div>
+        </div>
+    </section>
+
+    <!-- ========== TESTIMONIALS ========== -->
+    <section class="testimonials-section">
+        <div class="container">
+            <div class="section-header"><h2 class="section-title">Ils nous font confiance</h2><p class="section-subtitle">Ce que nos clients disent de nous</p></div>
+            <div class="testimonials-grid" id="testimonialsGrid"></div>
+        </div>
+    </section>
+
+    <!-- ========== CONTACT SECTION ========== -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <div class="section-header"><h2 class="section-title">Contactez-nous</h2><p class="section-subtitle">Parlez-nous de votre projet de voyage</p></div>
+            <div class="contact-wrapper">
+                <div class="contact-info"><h3>Informations</h3><div class="contact-details"><div class="contact-detail-item"><i class="fas fa-phone-alt"></i><div><strong>Téléphone</strong><br><a href="tel:+237657715482">+237 657 71 54 82</a></div></div><div class="contact-detail-item"><i class="fab fa-whatsapp"></i><div><strong>WhatsApp</strong><br><a href="https://wa.me/+237657715482">+237 657 71 54 82</a></div></div><div class="contact-detail-item"><i class="fas fa-envelope"></i><div><strong>Email</strong><br><a href="mailto:lepanameservice@gmail.com">lepanameservice@gmail.com</a></div></div><div class="contact-detail-item"><i class="fas fa-map-marker-alt"></i><div><strong>Adresse</strong><br>Yaoundé, Cameroun</div></div></div></div>
+                <div class="contact-form"><h3>Demande de devis</h3><form id="travelForm"><div class="form-group"><input type="text" id="nom" placeholder="Votre nom *" required></div><div class="form-group"><input type="email" id="email" placeholder="Votre email *" required></div><div class="form-group"><input type="tel" id="tel" placeholder="Votre téléphone *" required></div><div class="form-group"><select id="service"><option value="">Service souhaité</option><option>Visa & Passeport</option><option>Billet d'avion</option><option>Assurance voyage</option><option>Circuit touristique</option></select></div><div class="form-group"><textarea rows="4" id="message" placeholder="Votre message (destination, dates...)"></textarea></div><button type="submit" class="btn" style="width:100%"><i class="fas fa-paper-plane"></i> Envoyer</button></form></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== FOOTER (IDENTIQUE INDEX) ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo"><img src="assets/logoPANSERV.png" alt="Le Paname Service"></div>
+                    <p>Le Paname Service - Votre partenaire de confiance pour tous vos besoins en high-tech, sécurité, événementiel, alimentation et bien plus encore.</p>
+                    <div class="contact-item"><a href="https://maps.app.goo.gl/CzziPJ2yLc8sPuuv7" style="color:var(--gray-light);text-decoration:none;"><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroun</span></a></div>
+                </div>
+                <div>
+                    <h4 class="footer-title">E-commerce</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li class="footer-link"><a href="pages/panamestore.html"><i class="fas fa-chevron-right"></i> Paname Store</a></li>
+                        <li class="footer-link"><a href="pages/panamemarket.html"><i class="fas fa-chevron-right"></i> Paname Market</a></li>
+                        <li class="footer-link"><a href="pages/sante.html"><i class="fas fa-chevron-right"></i> Santé</a></li>
+                        <li class="footer-link"><a href="pages/auto_moto.html"><i class="fas fa-chevron-right"></i> Auto-Moto</a></li>
+                        <li class="footer-link"><a href="pages/montres-bijoux.html"><i class="fas fa-chevron-right"></i> Montres & Bijoux</a></li>
+                        <li class="footer-link"><a href="pages/contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Nos services</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="pages/panamewedding.html"><i class="fas fa-chevron-right"></i> Paname Wedding</a></li>
+                        <li class="footer-link"><a href="pages/panamehouse.html"><i class="fas fa-chevron-right"></i> Paname House</a></li>
+                        <li class="footer-link"><a href="pages/panametravel.html"><i class="fas fa-chevron-right"></i> Paname Travel</a></li>
+                        <li class="footer-link"><a href="pages/panameevent.html"><i class="fas fa-chevron-right"></i> Paname Event</a></li>
+                        <li class="footer-link"><a href="pages/panameproduction.html"><i class="fas fa-chevron-right"></i> Paname Production</a></li>
+                        <li class="footer-link"><a href="pages/panamesecurity.html"><i class="fas fa-chevron-right"></i> Paname Security</a></li>
+                        <li class="footer-link"><a href="pages/livraisonexpress.html"><i class="fas fa-chevron-right"></i> Livraison Express</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact</h4>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+237 657 71 54 82</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+237 676 39 18 16</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>lepanameservice@gmail.com</span></div>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61557575415489" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/lepanameservice237?igsh=cWc3bjNxNXA4dTc0" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+237657715482" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@lepanameservice237?_r=1&_t=ZS-96NsU31nxdE" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="copyright">&copy; 2025 <a href="index.html">Le Paname Service</a>. Tous droits réservés.</div>
+                    <div class="payment-methods">
+                        <img src="assets/om.jpg" alt="Orange Money">
+                        <img src="assets/momo.jpg" alt="MTN Mobile Money">
+                        <img src="assets/paypal.jpg" alt="PayPal">
+                        <img src="assets/image/payment-1.png" alt="Visa">
+                        <img src="assets/image/payment-2.png" alt="Mastercard">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== FLOATING BUTTONS ========== -->
+    <div class="floating-buttons">
+        <a href="https://wa.me/+237657715482" class="whatsapp-btn" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a>
+        <a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a>
+    </div>
+
+    <!-- ========== MODAL AUTH ========== -->
+    <div class="modal" id="authModal">
+        <div class="modal-content">
+            <button class="modal-close" data-modal-close><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <h2>Bienvenue</h2>
+                <p>Connectez-vous ou créez un compte</p>
+            </div>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Connexion</button>
+                <button class="auth-tab" data-tab="register">Inscription</button>
+                <button class="auth-tab" data-tab="admin"><i class="fas fa-shield-alt"></i> Admin</button>
+            </div>
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Mot de passe</label><input type="password" required></div>
+                <button type="submit" class="auth-submit">Se connecter</button>
+            </form>
+            <form class="auth-form" id="registerForm">
+                <div class="form-group"><label>Nom complet</label><input type="text" required></div>
+                <div class="form-group"><label>Email</label><input type="email" required></div>
+                <div class="form-group"><label>Téléphone</label><input type="tel" required></div>
+                <div class="form-group"><label>Mot de passe</label><input type="password" required></div>
+                <div class="form-group"><label>Confirmer le mot de passe</label><input type="password" required></div>
+                <button type="submit" class="auth-submit">S'inscrire</button>
+            </form>
+            <form class="auth-form" id="adminForm">
+                <div class="form-group"><label>Email administrateur</label><input type="email" id="adminEmail" placeholder="admin@lepaname.com" required></div>
+                <div class="form-group"><label>Mot de passe</label><input type="password" id="adminPassword" placeholder="••••••••" required></div>
+                <button type="submit" class="auth-submit"><i class="fas fa-sign-in-alt"></i> Se connecter</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script>
+        // ==================== CONFIGURATION ADMIN (IDENTIQUE INDEX) ====================
+        const ADMIN_CONFIG = {
+            email: 'admin@lepaname.com',
+            password: 'Admin123!',
+            sessionKey: 'paname_admin_session',
+            sessionDuration: 24 * 60 * 60 * 1000
+        };
+
+        function isAdminLoggedIn() {
+            const session = localStorage.getItem(ADMIN_CONFIG.sessionKey);
+            if (!session) return false;
+            try {
+                const sessionData = JSON.parse(session);
+                if (Date.now() > sessionData.expires) { logoutAdmin(); return false; }
+                return true;
+            } catch (e) { return false; }
+        }
+
+        function loginAdmin(email, password) {
+            if (email === ADMIN_CONFIG.email && password === ADMIN_CONFIG.password) {
+                localStorage.setItem(ADMIN_CONFIG.sessionKey, JSON.stringify({ loggedIn: true, email: email, expires: Date.now() + ADMIN_CONFIG.sessionDuration }));
+                return true;
+            }
+            return false;
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem(ADMIN_CONFIG.sessionKey);
+            updateAdminUI();
+            showNotification('Déconnexion du mode administrateur', 'success');
+        }
+
+        function updateAdminUI() {
+            const isAdmin = isAdminLoggedIn();
+            const adminElements = [
+                document.getElementById('adminBadge'), document.getElementById('adminDashboardBtn'),
+                document.getElementById('adminLogoutBtn'), document.getElementById('adminNavLink'),
+                document.getElementById('mobileAdminNavLink')
+            ];
+            adminElements.forEach(el => { if (el) { el.style.display = isAdmin ? (el.tagName === 'SPAN' ? 'inline-block' : (el.tagName === 'BUTTON' ? 'flex' : 'block')) : 'none'; } });
+            document.querySelectorAll('.admin-only').forEach(el => { el.style.display = isAdmin ? 'block' : 'none'; });
+        }
+
+        // Données des destinations
+        const destinations = [
+            { id: 'dest-001', name: 'Paris, France', location: 'France', days: '7 jours / 6 nuits', price: '850 000 Fcfa', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400', keywords: 'paris france voyage tour eiffel' },
+            { id: 'dest-002', name: 'Dubaï, Émirats', location: 'Émirats Arabes Unis', days: '5 jours / 4 nuits', price: '750 000 Fcfa', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400', keywords: 'dubaï émirats voyage burj khalifa' },
+            { id: 'dest-003', name: 'Istanbul, Turquie', location: 'Turquie', days: '6 jours / 5 nuits', price: '650 000 Fcfa', image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400', keywords: 'istanbul turquie voyage' },
+            { id: 'dest-004', name: 'New York, USA', location: 'États-Unis', days: '8 jours / 7 nuits', price: '1 200 000 Fcfa', image: 'https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=400', keywords: 'new york usa voyage statue liberté' }
+        ];
+
+        // Visas
+        const visas = [
+            { country: 'France', flag: '🇫🇷', type: 'Schengen', keywords: 'france visa schengen' },
+            { country: 'États-Unis', flag: '🇺🇸', type: 'ESTA / Visa', keywords: 'usa états-unis visa esta' },
+            { country: 'Canada', flag: '🇨🇦', type: 'Visa tourisme', keywords: 'canada visa tourisme' },
+            { country: 'Royaume-Uni', flag: '🇬🇧', type: 'Visa UK', keywords: 'royaume-uni angleterre visa uk' },
+            { country: 'Allemagne', flag: '🇩🇪', type: 'Schengen', keywords: 'allemagne visa schengen' },
+            { country: 'Italie', flag: '🇮🇹', type: 'Schengen', keywords: 'italie visa schengen' },
+            { country: 'Espagne', flag: '🇪🇸', type: 'Schengen', keywords: 'espagne visa schengen' },
+            { country: 'Belgique', flag: '🇧🇪', type: 'Schengen', keywords: 'belgique visa schengen' },
+            { country: 'Suisse', flag: '🇨🇭', type: 'Schengen', keywords: 'suisse visa schengen' },
+            { country: 'Pays-Bas', flag: '🇳🇱', type: 'Schengen', keywords: 'pays-bas hollande visa schengen' },
+            { country: 'Portugal', flag: '🇵🇹', type: 'Schengen', keywords: 'portugal visa schengen' },
+            { country: 'Grèce', flag: '🇬🇷', type: 'Schengen', keywords: 'grèce visa schengen' }
+        ];
+
+        // Offres spéciales
+        const offers = [
+            { id: 'offer-001', name: 'Douala → Paris', price: '870 €', oldPrice: '1 050 €', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400', badge: '-17%', keywords: 'douala paris billet avion' },
+            { id: 'offer-002', name: 'Yaoundé → Dubaï', price: '570 €', oldPrice: '750 €', image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400', badge: '-24%', keywords: 'yaoundé dubaï billet avion' },
+            { id: 'offer-003', name: 'Douala → Istanbul', price: '370 €', oldPrice: '520 €', image: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=400', badge: '-29%', keywords: 'douala istanbul billet avion' },
+            { id: 'offer-004', name: 'Yaoundé → New York', price: '890 €', oldPrice: '1 200 €', image: 'https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?w=400', badge: '-26%', keywords: 'yaoundé new york billet avion usa' }
+        ];
+
+        // Témoignages
+        const testimonials = [
+            { name: 'Marie B.', title: 'Voyage à Paris', text: 'Service excellent, équipe très professionnelle. Mon visa a été obtenu en 5 jours. Je recommande vivement !' },
+            { name: 'Jean K.', title: 'Circuit à Dubaï', text: 'Un accompagnement parfait du début à la fin. Les tarifs sont très compétitifs. Merci Paname Travel !' },
+            { name: 'Sophie M.', title: 'Billet New York', text: 'Rapidité, efficacité et conseils personnalisés. Je voyage toujours avec eux.' }
+        ];
+
+        let cartCount = 0, wishlistCount = 0;
+
+        function updateCartCount() { 
+            const savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cartCount = savedCart.reduce((sum, item) => sum + item.quantity, 0);
+            document.querySelectorAll('.cart-badge').forEach(el => { el.textContent = cartCount; el.style.display = cartCount > 0 ? 'flex' : 'none'; }); 
+        }
+        function updateWishlistCount() { 
+            document.querySelectorAll('.wishlist-badge').forEach(el => { el.textContent = wishlistCount; el.style.display = wishlistCount > 0 ? 'flex' : 'none'; }); 
+        }
+        function showNotification(title, msg, type) {
+            const container = document.getElementById('notificationContainer');
+            const n = document.createElement('div');
+            n.className = `notification notification-${type}`;
+            n.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><div><strong>${title}</strong><p style="font-size:0.75rem;">${msg}</p></div><button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>`;
+            container.appendChild(n);
+            setTimeout(() => n.classList.add('show'), 10);
+            setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 4000);
+        }
+
+        // Fonction de recherche
+        function searchTravel(query) {
+            if (!query || query.trim() === '') {
+                renderDestinations();
+                renderOffers();
+                renderVisas();
+                showNotification('Recherche', 'Affichage de toutes les destinations', 'success');
+                return;
+            }
+            
+            const searchTerm = query.toLowerCase().trim();
+            
+            const filteredDestinations = destinations.filter(d => 
+                d.name.toLowerCase().includes(searchTerm) || 
+                d.location.toLowerCase().includes(searchTerm) ||
+                d.price.toLowerCase().includes(searchTerm) ||
+                (d.keywords && d.keywords.toLowerCase().includes(searchTerm))
+            );
+            
+            const filteredOffers = offers.filter(o => 
+                o.name.toLowerCase().includes(searchTerm) ||
+                o.price.toLowerCase().includes(searchTerm) ||
+                (o.keywords && o.keywords.toLowerCase().includes(searchTerm))
+            );
+            
+            const filteredVisas = visas.filter(v => 
+                v.country.toLowerCase().includes(searchTerm) ||
+                v.type.toLowerCase().includes(searchTerm)
+            );
+            
+            renderDestinations(filteredDestinations);
+            renderOffers(filteredOffers);
+            renderVisas(filteredVisas);
+            
+            const totalFound = filteredDestinations.length + filteredOffers.length + filteredVisas.length;
+            if (totalFound > 0) {
+                showNotification('Recherche', `${totalFound} résultat(s) trouvé(s) pour "${query}"`, 'success');
+            } else {
+                showNotification('Recherche', `Aucun résultat trouvé pour "${query}"`, 'error');
+            }
+        }
+
+        function renderDestinations(destList = null) {
+            const grid = document.getElementById('destinationsGrid');
+            if (!grid) return;
+            const data = destList || destinations;
+            if (data.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-medium);">Aucune destination trouvée</div>`;
+                return;
+            }
+            grid.innerHTML = data.map(d => `
+                <div class="destination-card">
+                    <div class="destination-image"><img src="${d.image}" alt="${d.name}"><span class="destination-price">${d.price}</span></div>
+                    <div class="destination-info"><h3 class="destination-title">${d.name}</h3><div class="destination-location"><i class="fas fa-map-marker-alt"></i> ${d.location}</div><div class="destination-days"><i class="fas fa-calendar-alt"></i> ${d.days}</div><button class="btn" style="width:100%; margin-top:0.5rem;" onclick="bookDestination('${d.name}')"><i class="fas fa-suitcase"></i> Réserver</button></div>
+                </div>
+            `).join('');
+        }
+
+        function renderVisas(visaList = null) {
+            const grid = document.getElementById('visaGrid');
+            if (!grid) return;
+            const data = visaList || visas;
+            if (data.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-medium);">Aucun visa trouvé</div>`;
+                return;
+            }
+            grid.innerHTML = data.map(v => `
+                <div class="visa-card" onclick="openVisa('${v.country}')"><div class="visa-flag">${v.flag}</div><h4>${v.country}</h4><p>${v.type}</p></div>
+            `).join('');
+        }
+
+        function renderOffers(offerList = null) {
+            const grid = document.getElementById('offersGrid');
+            if (!grid) return;
+            const data = offerList || offers;
+            if (data.length === 0) {
+                grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-medium);">Aucune offre trouvée</div>`;
+                return;
+            }
+            grid.innerHTML = data.map(o => `
+                <div class="offer-card" style="position:relative;"><div class="offer-image"><img src="${o.image}" alt="${o.name}"><span class="offer-badge">${o.badge}</span></div><div class="offer-info"><h3 class="offer-title">${o.name}</h3><div class="offer-price">${o.price}<span class="offer-old-price">${o.oldPrice}</span></div><button class="btn" style="width:100%" onclick="bookOffer('${o.name}')"><i class="fas fa-plane"></i> Réserver</button></div></div>
+            `).join('');
+        }
+
+        function renderTestimonials() {
+            const grid = document.getElementById('testimonialsGrid');
+            if (!grid) return;
+            grid.innerHTML = testimonials.map(t => `
+                <div class="testimonial-card"><div class="testimonial-text">"${t.text}"</div><div class="testimonial-author"><div class="testimonial-avatar"><i class="fas fa-user"></i></div><div><div class="testimonial-name">${t.name}</div><div class="testimonial-title">${t.title}</div></div></div></div>
+            `).join('');
+        }
+
+        function openService(service) { document.getElementById('service').value = service; document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); showNotification('Service sélectionné', `${service} - Remplissez le formulaire`, 'success'); }
+        function openVisa(destination) { document.getElementById('service').value = `Visa ${destination}`; document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); showNotification('Visa sélectionné', `Assistance visa pour ${destination} - Remplissez le formulaire`, 'success'); }
+        function bookDestination(destination) { document.getElementById('service').value = `Circuit: ${destination}`; document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); showNotification('Destination sélectionnée', `${destination} - Remplissez le formulaire`, 'success'); }
+        function bookOffer(offer) { document.getElementById('service').value = `Billet: ${offer}`; document.getElementById('contact').scrollIntoView({ behavior: 'smooth' }); showNotification('Offre sélectionnée', `${offer} - Remplissez le formulaire`, 'success'); }
+
+        document.getElementById('travelForm')?.addEventListener('submit', e => { e.preventDefault(); showNotification('Demande envoyée !', 'Nous vous contacterons sous 24h', 'success'); e.target.reset(); });
+
+        // Recherche Desktop
+        document.getElementById('desktopSearchForm')?.addEventListener('submit', function(e) { e.preventDefault(); searchTravel(document.getElementById('desktopSearchInput').value.trim()); });
+        document.getElementById('mobileSearchForm')?.addEventListener('submit', function(e) { e.preventDefault(); const q = document.getElementById('mobileSearchInput').value.trim(); if (q) { searchTravel(q); closeSidebar(); } });
+
+        // Formulaire admin
+        document.getElementById('adminForm')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            if (loginAdmin(email, password)) {
+                showNotification('Connexion administrateur réussie !', 'success');
+                updateAdminUI();
+                closeModal();
+                setTimeout(() => window.location.reload(), 1500);
+            } else {
+                showNotification('Email ou mot de passe administrateur incorrect', 'error');
+            }
+        });
+
+        // Boutons admin
+        document.getElementById('adminDashboardBtn')?.addEventListener('click', () => { window.location.href = 'pages/dashboard.html'; });
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', () => { if (confirm('Voulez-vous vous déconnecter du mode administrateur ?')) { logoutAdmin(); } });
+
+        // Mobile Sidebar
+        const hamburgerBtn = document.getElementById('hamburgerBtn'), mobileSidebar = document.getElementById('mobileSidebar'), menuOverlay = document.getElementById('menuOverlay'), sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        function openSidebar() { mobileSidebar?.classList.add('active'); menuOverlay?.classList.add('active'); hamburgerBtn?.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeSidebar() { mobileSidebar?.classList.remove('active'); menuOverlay?.classList.remove('active'); hamburgerBtn?.classList.remove('active'); document.body.style.overflow = ''; document.querySelectorAll('.sidebar-nav-link.expanded').forEach(l => { l.classList.remove('expanded'); const s = l.nextElementSibling; if(s) s.classList.remove('active'); }); }
+        hamburgerBtn?.addEventListener('click', () => { mobileSidebar.classList.contains('active') ? closeSidebar() : openSidebar(); });
+        sidebarCloseBtn?.addEventListener('click', closeSidebar);
+        menuOverlay?.addEventListener('click', closeSidebar);
+        window.toggleSubmenu = function(el) { const sub = el.nextElementSibling; const isExp = el.classList.contains('expanded'); document.querySelectorAll('.sidebar-nav-link.expanded').forEach(l => { if(l !== el) { l.classList.remove('expanded'); const s = l.nextElementSibling; if(s) s.classList.remove('active'); } }); if(isExp) { el.classList.remove('expanded'); if(sub) sub.classList.remove('active'); } else { el.classList.add('expanded'); if(sub) sub.classList.add('active'); } };
+
+        // Modal
+        const modal = document.getElementById('authModal'), modalTriggers = document.querySelectorAll('[data-modal="auth"]'), modalClose = document.querySelector('[data-modal-close]');
+        function openModal() { modal?.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal() { modal?.classList.remove('active'); document.body.style.overflow = ''; }
+        modalTriggers.forEach(t => t.addEventListener('click', openModal)); modalClose?.addEventListener('click', closeModal); modal?.addEventListener('click', e => { if(e.target === modal) closeModal(); });
+        
+        document.querySelectorAll('.auth-tab').forEach(tab => { tab.addEventListener('click', () => { const target = tab.dataset.tab; document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active')); tab.classList.add('active'); document.getElementById(`${target}Form`)?.classList.add('active'); }); });
+        
+        document.getElementById('loginForm')?.addEventListener('submit', e => { e.preventDefault(); showNotification('Connexion', 'Connexion réussie !', 'success'); setTimeout(closeModal, 1500); });
+        document.getElementById('registerForm')?.addEventListener('submit', e => { e.preventDefault(); const pwds = e.target.querySelectorAll('input[type="password"]'); if(pwds[0] && pwds[1] && pwds[0].value !== pwds[1].value) { showNotification('Erreur', 'Mots de passe différents', 'error'); return; } showNotification('Inscription', 'Compte créé !', 'success'); document.querySelector('[data-tab="login"]').click(); });
+
+        // BACK TO TOP
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => { if(backToTop) backToTop.classList.toggle('visible', window.scrollY > 300); });
+        backToTop?.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // KEYBOARD & SWIPE
+        document.addEventListener('keydown', e => { if(e.key === 'Escape') { closeModal(); closeSidebar(); } });
+        let touchStartX = 0;
+        if(mobileSidebar) {
+            mobileSidebar.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+            mobileSidebar.addEventListener('touchend', (e) => { if(touchStartX - e.changedTouches[0].screenX > 80) closeSidebar(); });
+        }
+
+        // INIT
+        renderDestinations();
+        renderVisas();
+        renderOffers();
+        renderTestimonials();
+        updateCartCount(); 
+        updateWishlistCount();
+        updateAdminUI();
+        
+        window.searchTravel = searchTravel;
+        
+        console.log('✈️ Paname Travel - Dashboard administrateur intégré !');
+        console.log('🔐 Identifiants admin: admin@lepaname.com / Admin123!');
+        console.log('🔍 Tapez: Paris, Dubaï, USA, France, visa, billet, 850000...');
+    </script>
+</body>
+</html>

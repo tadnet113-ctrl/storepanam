@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Commandes - Le Paname Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+            color: #D4AF37;
+        }
+        .page-header p {
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid #e9ecef;
+        }
+        .stat-card .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #D4AF37;
+        }
+        .stat-card .label {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+        .orders-container {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+        .order-card {
+            border-bottom: 1px solid #e9ecef;
+            padding: 1rem;
+            transition: all 0.3s;
+        }
+        .order-card:hover {
+            background: #f8f9fa;
+        }
+        .order-card:last-child {
+            border-bottom: none;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .order-id {
+            font-weight: 700;
+            font-size: 0.875rem;
+            color: #D4AF37;
+        }
+        .order-date {
+            font-size: 0.75rem;
+            color: #6c757d;
+            margin-left: 0.5rem;
+        }
+        .order-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .status-pending { background: #fff3cd; color: #856404; }
+        .status-confirmed { background: #cfe2ff; color: #084298; }
+        .status-shipped { background: #cfe2ff; color: #084298; }
+        .status-delivered { background: #d1e7dd; color: #0f5132; }
+        .status-cancelled { background: #f8d7da; color: #721c24; }
+        .order-items {
+            margin-bottom: 0.75rem;
+            padding-left: 0.5rem;
+            border-left: 2px solid #D4AF37;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #495057;
+            margin-bottom: 0.25rem;
+        }
+        .order-item-more {
+            font-size: 0.7rem;
+            color: #6c757d;
+            margin-top: 0.25rem;
+        }
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+        .order-total {
+            font-weight: 700;
+            color: #D4AF37;
+        }
+        .order-payment {
+            font-size: 0.7rem;
+            color: #6c757d;
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #D4AF37;
+            color: #1a1a1a;
+            text-decoration: none;
+            border-radius: 2rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212,175,55,0.3);
+        }
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .order-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>Mes Commandes</h1>
+            <p>Consultez l'historique de toutes vos commandes</p>
+        </div>
+        
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card"><div class="number" id="totalOrders">0</div><div class="label">Commandes</div></div>
+            <div class="stat-card"><div class="number" id="totalAmount">0 Fcfa</div><div class="label">Montant total</div></div>
+            <div class="stat-card"><div class="number" id="pendingOrders">0</div><div class="label">En attente</div></div>
+            <div class="stat-card"><div class="number" id="deliveredOrders">0</div><div class="label">Livrées</div></div>
+        </div>
+        
+        <div class="orders-container" id="ordersContainer"></div>
+        
+        <div style="text-align: center;">
+            <button class="btn-back" onclick="window.location.href='index.html'">
+                <i class="fas fa-home"></i> Retour à l'accueil
+            </button>
+        </div>
+    </div>
+
+    <script src="orders-manager.js"></script>
+    <script>
+        function displayStats() {
+            if (!window.OrdersManager) return;
+            const stats = window.OrdersManager.getOrderStats();
+            document.getElementById('totalOrders').innerHTML = stats.totalOrders;
+            document.getElementById('totalAmount').innerHTML = window.OrdersManager.formatPrice(stats.totalAmount);
+            document.getElementById('pendingOrders').innerHTML = stats.pendingOrders;
+            document.getElementById('deliveredOrders').innerHTML = stats.completedOrders;
+        }
+        
+        function displayOrdersList() {
+            if (!window.OrdersManager) return;
+            window.OrdersManager.displayOrders('ordersContainer');
+        }
+        
+        displayStats();
+        displayOrdersList();
+        
+        console.log('📋 Page Mes Commandes - Chargée');
+    </script>
+</body>
+</html>

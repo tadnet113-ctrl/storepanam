@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="description" content="Administration - Le Paname Service | Gestion complète du site">
+    <meta name="author" content="Le Paname Service">
+    <meta name="theme-color" content="#D4AF37">
+    <meta name="robots" content="noindex, nofollow">
+    
+    <title>Administration - Le Paname Service</title>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-black: #0a0a0a; --secondary-black: #111111; --dark-gray: #1a1a1a;
+            --gold: #D4AF37; --gold-light: #F4D03F; --gold-dark: #B8960C;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+            --white: #ffffff; --white-off: #f8f9fa; --gray-light: #e9ecef;
+            --gray-medium: #6c757d; --text-dark: #212529; --text-gray: #495057;
+            --success: #28a745; --danger: #dc3545; --warning: #ffc107; --info: #17a2b8;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.04); --shadow: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.12); --gold-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --container-padding: 1rem; --container-max-width: 1400px;
+            --border-radius: 0.5rem; --border-radius-lg: 0.75rem; --border-radius-xl: 1rem; --border-radius-full: 9999px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); color: var(--text-dark); background-color: var(--white-off); line-height: 1.6; overflow-x: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: var(--container-max-width); margin: 0 auto; padding: 0 var(--container-padding); width: 100%; }
+
+        /* ========== HEADER TOP ========== */
+        .header-top {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+            color: var(--white);
+            padding: 0.5rem 0;
+            border-bottom: 2px solid var(--gold);
+            overflow: hidden;
+        }
+        .header-top .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .scrolling-banner {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            height: 36px;
+        }
+        
+        .scrolling-content {
+            display: flex;
+            animation: scrollBanner 20s linear infinite;
+            white-space: nowrap;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            align-items: center;
+        }
+        
+        .scrolling-content:hover { animation-play-state: paused; }
+        
+        .banner-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0 1.5rem;
+            font-size: 0.75rem;
+            color: var(--white);
+        }
+        
+        .banner-item i { color: var(--gold); font-size: 0.875rem; }
+        .banner-item strong { color: var(--gold); }
+        
+        @keyframes scrollBanner {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        .customer-service {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-shrink: 0;
+        }
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .service-item i { font-size: 0.875rem; color: var(--gold); }
+        .service-info h4 { font-size: 0.625rem; font-weight: 500; opacity: 0.8; }
+        .service-info a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.688rem;
+            transition: var(--transition);
+        }
+        .service-info a:hover { color: var(--gold); }
+        
+        /* ========== HEADER MAIN ========== */
+        .header-main { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        .header-main .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 70px; padding: 0.5rem var(--container-padding); }
+        .logo { flex-shrink: 0; }
+        .logo img { height: 45px; width: auto; transition: var(--transition); }
+        .logo img:hover { transform: scale(1.02); }
+        .admin-badge-header { background: var(--gold-gradient); padding: 0.2rem 0.6rem; border-radius: var(--border-radius-full); font-size: 0.6rem; font-weight: 700; color: var(--primary-black); margin-left: 0.5rem; display: inline-block; }
+        
+        .search-wrapper { flex: 1; max-width: 450px; margin: 0 auto; }
+        .search-form { display: flex; border: 2px solid var(--gray-light); border-radius: var(--border-radius-full); overflow: hidden; transition: var(--transition); width: 100%; background: var(--white); }
+        .search-form:focus-within { border-color: var(--gold); box-shadow: var(--gold-shadow); }
+        .search-input { flex: 1; padding: 0.7rem 1.2rem; border: none; outline: none; font-size: 0.875rem; min-width: 0; width: 100%; }
+        .search-btn { background: var(--gold-gradient); border: none; padding: 0.7rem 1.5rem; cursor: pointer; font-weight: 600; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem; font-size: 0.813rem; white-space: nowrap; flex-shrink: 0; }
+        .search-btn span { display: inline; }
+        .search-btn:hover { opacity: 0.9; }
+        
+        .header-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        .action-btn { position: relative; width: 42px; height: 42px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--gray-light); cursor: pointer; transition: var(--transition); color: var(--text-dark); font-size: 1.125rem; text-decoration: none; }
+        .action-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-black); transform: translateY(-2px); }
+        .cart-badge, .wishlist-badge { position: absolute; top: -5px; right: -5px; background: var(--gold-gradient); color: var(--primary-black); font-size: 0.563rem; font-weight: 800; min-width: 16px; height: 16px; border-radius: var(--border-radius-full); display: flex; align-items: center; justify-content: center; padding: 0 3px; border: 1px solid var(--white); }
+        
+        /* ========== MENU PRINCIPAL ========== */
+        .nav-wrapper { background: var(--white); border-bottom: 1px solid var(--gray-light); position: sticky; top: 70px; z-index: 999; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem var(--container-padding); position: relative; flex-wrap: wrap; gap: 1rem; }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 0;
+            flex-wrap: wrap;
+            margin: 0;
+            padding: 0;
+        }
+        .nav-item { position: relative; }
+        .nav-link { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.75rem 1rem; color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.813rem; transition: var(--transition); border-bottom: 2px solid transparent; }
+        .nav-link:hover, .nav-link.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+        
+        /* ========== DEUX RECTANGLES DANS LE MENU ========== */
+        .menu-rectangles {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .large-rectangle {
+            background: transparent;
+            border-radius: var(--border-radius);
+            padding: 0.5rem 1rem;
+        }
+        
+        .social-icons-row {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+        
+        .social-icons-row a {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(212, 175, 55, 0.1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gold);
+            transition: var(--transition);
+            font-size: 0.8rem;
+            text-decoration: none;
+        }
+        
+        .social-icons-row a:hover {
+            background: var(--gold);
+            color: var(--primary-black);
+            transform: translateY(-2px);
+        }
+        
+        .small-rectangle {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gold);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .small-rectangle:hover {
+            border-color: var(--gold-light);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        
+        .rectangle-header {
+            padding: 0.6rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(212, 175, 55, 0.1);
+            gap: 1rem;
+        }
+        
+        .rectangle-header span {
+            color: var(--gold);
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .rectangle-header i { font-size: 0.85rem; }
+        
+        .hamburger-mini {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            cursor: pointer;
+        }
+        
+        .hamburger-mini span {
+            width: 18px;
+            height: 2px;
+            background: var(--gold);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+        
+        /* ========== MENU LATÉRAL PREMIUM POUR SERVICES ========== */
+        .services-sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+        
+        .services-sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .services-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, var(--white-off) 100%);
+            box-shadow: var(--shadow-lg);
+            z-index: 3001;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .services-sidebar.active {
+            right: 0;
+        }
+        
+        .services-sidebar-header {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%);
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--gold);
+        }
+        
+        .services-sidebar-header h3 {
+            color: var(--gold);
+            font-size: 1.3rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-family: var(--font-serif);
+        }
+        
+        .services-sidebar-header h3 i { font-size: 1.4rem; }
+        
+        .close-sidebar-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            color: var(--gold);
+            font-size: 1.2rem;
+        }
+        
+        .close-sidebar-btn:hover {
+            background: var(--gold);
+            color: var(--primary-black);
+            transform: rotate(90deg);
+        }
+        
+        .services-sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        .service-category-sidebar {
+            margin-bottom: 2rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(212, 175, 55, 0.1);
+        }
+        
+        .service-category-sidebar h4 {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), transparent);
+            color: var(--gold-dark);
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0;
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .service-category-sidebar h4 i { font-size: 1.1rem; }
+        
+        .service-category-sidebar ul {
+            list-style: none;
+            padding: 0.5rem 0;
+        }
+        
+        .service-category-sidebar ul li { margin-bottom: 0; }
+        
+        .service-category-sidebar ul li a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.8rem 1.2rem;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+        
+        .service-category-sidebar ul li a i {
+            width: 24px;
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+        
+        .service-category-sidebar ul li a:hover {
+            background: rgba(212, 175, 55, 0.08);
+            color: var(--gold-dark);
+            border-left-color: var(--gold);
+            padding-left: 1.5rem;
+        }
+        
+        .services-sidebar-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--gray-light);
+            background: var(--white-off);
+            text-align: center;
+        }
+        
+        .services-sidebar-footer p {
+            font-size: 0.75rem;
+            color: var(--gray-medium);
+        }
+        
+        .services-sidebar-footer .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .services-sidebar-footer .contact-info a {
+            color: var(--gold-dark);
+            text-decoration: none;
+            font-size: 0.7rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .services-sidebar-footer .contact-info a:hover { color: var(--gold); }
+        
+        /* ========== MOBILE SIDEBAR ========== */
+        .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1999; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
+        .menu-overlay.active { display: block; opacity: 1; }
+        .mobile-sidebar { position: fixed; top: 0; left: -100%; width: 85%; max-width: 380px; height: 100vh; background: var(--white); box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s ease; overflow: hidden; display: flex; flex-direction: column; }
+        .mobile-sidebar.active { left: 0; }
+        .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.2rem; background: var(--primary-black); color: var(--gold); flex-shrink: 0; border-bottom: 2px solid var(--gold); }
+        .sidebar-header h3 { font-size: 1.1rem; font-family: var(--font-serif); display: flex; align-items: center; gap: 0.5rem; margin: 0; }
+        .sidebar-close { background: rgba(255,255,255,0.1); border: none; font-size: 1.25rem; color: var(--gold); cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .sidebar-close:hover { background: var(--gold); color: var(--primary-black); }
+        .sidebar-search { padding: 1rem 1.2rem; border-bottom: 1px solid var(--gray-light); flex-shrink: 0; }
+        .sidebar-search .search-form { border: 1px solid var(--gray-light); display: flex; border-radius: var(--border-radius-full); overflow: hidden; width: 100%; }
+        .sidebar-search .search-input { flex: 1; padding: 0.6rem 1rem; border: none; outline: none; font-size: 0.85rem; }
+        .sidebar-search .search-btn { background: var(--gold-gradient); border: none; padding: 0.6rem 1rem; cursor: pointer; color: var(--primary-black); font-size: 0.9rem; }
+        .sidebar-nav-scroll { flex: 1; overflow-y: auto; padding: 0.5rem 0; }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav-item { border-bottom: 1px solid var(--gray-light); }
+        .sidebar-nav-link { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.2rem; color: var(--text-dark); text-decoration: none; transition: var(--transition); font-weight: 500; cursor: pointer; font-size: 0.9rem; width: 100%; }
+        .sidebar-nav-link span { display: flex; align-items: center; gap: 0.85rem; flex: 1; }
+        .sidebar-nav-link span i { width: 26px; color: var(--gold-dark); font-size: 1rem; }
+        .sidebar-footer { padding: 1rem 1.2rem; border-top: 1px solid var(--gray-light); background: var(--white-off); }
+        .sidebar-auth-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.7rem; border-radius: var(--border-radius); background: var(--primary-black); color: var(--gold); border: none; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: var(--transition); margin-bottom: 0.75rem; }
+        .sidebar-auth-btn:hover { background: var(--gold); color: var(--primary-black); }
+        .sidebar-contact { margin-top: 0.75rem; }
+        .sidebar-contact-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; color: var(--text-gray); font-size: 0.8rem; }
+        .sidebar-contact-item i { color: var(--gold-dark); width: 20px; }
+        .sidebar-social { display: flex; gap: 10px; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--gray-light); flex-wrap: wrap; }
+        .sidebar-social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--gray-light); display: flex; align-items: center; justify-content: center; color: var(--gold-dark); text-decoration: none; transition: var(--transition); font-size: 0.9rem; }
+        .sidebar-social-link:hover { background: var(--primary-black); border-color: var(--primary-black); color: var(--gold); }
+        
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; background: none; border: none; z-index: 2001; }
+        .hamburger span { display: block; width: 26px; height: 2.5px; background: var(--primary-black); border-radius: 2px; transition: var(--transition); transform-origin: center; }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .main-nav { flex: 1; display: flex; justify-content: flex-start; }
+
+        /* Dashboard Layout */
+        .dashboard-container { display: flex; flex-direction: column; }
+        .dashboard-sidebar { display: none; }
+        .dashboard-sidebar-mobile { background: var(--white); border-bottom: 1px solid var(--gray-light); padding: 0.5rem 0; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        .dashboard-nav-mobile { display: flex; gap: 0.5rem; padding: 0.5rem 1rem; list-style: none; }
+        .dashboard-nav-mobile-item { flex-shrink: 0; }
+        .dashboard-nav-mobile-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--white-off); border-radius: var(--border-radius-full); color: var(--text-gray); text-decoration: none; font-size: 0.75rem; font-weight: 500; transition: var(--transition); white-space: nowrap; }
+        .dashboard-nav-mobile-link i { font-size: 0.8rem; }
+        .dashboard-nav-mobile-link.active { background: var(--gold-gradient); color: var(--primary-black); }
+        .dashboard-main { flex: 1; padding: 1rem; }
+        .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+        .dashboard-header h1 { font-size: 1.2rem; font-weight: 700; font-family: var(--font-serif); }
+        .dashboard-header h1 span { color: var(--gold-dark); }
+        .date-info { font-size: 0.7rem; color: var(--text-gray); }
+
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 1rem; }
+        .stat-card { background: var(--white); border-radius: var(--border-radius-lg); padding: 1rem; border: 1px solid var(--gray-light); transition: var(--transition); }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .stat-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
+        .stat-card-header i { font-size: 1.5rem; color: var(--gold-dark); opacity: 0.7; }
+        .stat-card-value { font-size: 1.3rem; font-weight: 800; color: var(--gold-dark); }
+        .stat-card-label { font-size: 0.65rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.3px; }
+
+        /* Charts */
+        .charts-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin-bottom: 1rem; }
+        .chart-card { background: var(--white); border-radius: var(--border-radius-lg); padding: 1rem; border: 1px solid var(--gray-light); }
+        .chart-card h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem; }
+        .chart-card h3 i { color: var(--gold); }
+        canvas { max-height: 200px; width: 100% !important; }
+
+        /* Tables */
+        .table-container { background: var(--white); border-radius: var(--border-radius-lg); border: 1px solid var(--gray-light); overflow-x: auto; margin-bottom: 1rem; }
+        .table-header { display: flex; justify-content: space-between; align-items: center; padding: 0.75rem; border-bottom: 1px solid var(--gray-light); flex-wrap: wrap; gap: 0.5rem; }
+        .table-header h3 { font-size: 0.85rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+        .table-header h3 i { color: var(--gold); }
+        .search-input-sm { padding: 0.4rem 0.6rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius-full); font-size: 0.7rem; width: 180px; }
+        .data-table { width: 100%; border-collapse: collapse; min-width: 500px; }
+        .data-table th { text-align: left; padding: 0.6rem 0.8rem; background: var(--white-off); font-weight: 600; font-size: 0.65rem; text-transform: uppercase; color: var(--text-gray); border-bottom: 1px solid var(--gray-light); }
+        .data-table td { padding: 0.6rem 0.8rem; font-size: 0.7rem; border-bottom: 1px solid var(--gray-light); }
+        .status-badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: var(--border-radius-full); font-size: 0.6rem; font-weight: 600; }
+        .status-paid { background: rgba(40, 167, 69, 0.15); color: var(--success); }
+        .status-pending { background: rgba(255, 193, 7, 0.15); color: var(--warning); }
+        .status-shipped { background: rgba(23, 162, 184, 0.15); color: var(--info); }
+        .action-btns { display: flex; gap: 0.3rem; }
+        .action-btn-sm { background: none; border: none; cursor: pointer; color: var(--gray-medium); transition: var(--transition); padding: 0.2rem; font-size: 0.8rem; }
+        .action-btn-sm:hover { color: var(--gold); }
+
+        /* Buttons */
+        .btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--gold-gradient); color: var(--primary-black); text-decoration: none; border-radius: var(--border-radius-full); font-weight: 600; transition: var(--transition); border: none; cursor: pointer; font-size: 0.75rem; }
+        .btn:hover { transform: translateY(-2px); box-shadow: var(--gold-shadow); }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; z-index: 3002; opacity: 0; visibility: hidden; transition: var(--transition); }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--white); border-radius: var(--border-radius-lg); padding: 1.5rem; max-width: 90%; width: 100%; max-height: 80vh; overflow-y: auto; position: relative; transform: scale(0.95); transition: var(--transition); }
+        .modal.active .modal-content { transform: scale(1); }
+        .modal-close { position: absolute; top: 0.8rem; right: 0.8rem; background: none; border: none; font-size: 1rem; cursor: pointer; }
+        .form-group { margin-bottom: 0.8rem; }
+        .form-group label { display: block; margin-bottom: 0.25rem; font-weight: 500; font-size: 0.75rem; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: 0.8rem; }
+        .btn-submit { width: 100%; padding: 0.7rem; background: var(--gold-gradient); border: none; border-radius: var(--border-radius); font-weight: 600; cursor: pointer; margin-top: 0.5rem; font-size: 0.8rem; }
+
+        /* Footer */
+        .footer { background: var(--primary-black); color: var(--white); padding: 3rem 0 0; margin-top: auto; border-top: 3px solid var(--gold); }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+        .footer-about p { color: var(--gray-light); margin: 1rem 0; font-size: 0.813rem; line-height: 1.6; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem; }
+        .footer-title { font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; position: relative; padding-bottom: 0.5rem; color: var(--gold); }
+        .footer-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background: var(--gold-gradient); }
+        .footer-links { list-style: none; }
+        .footer-link { margin-bottom: 0.7rem; }
+        .footer-link a { color: var(--gray-light); text-decoration: none; transition: var(--transition); font-size: 0.813rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .footer-link a:hover { color: var(--gold); transform: translateX(5px); }
+        .contact-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.7rem; color: var(--gray-light); font-size: 0.813rem; }
+        .contact-item i { color: var(--gold); width: 20px; }
+        .contact-item a { color: var(--gray-light); text-decoration: none; }
+        .contact-item a:hover { color: var(--gold); }
+        .social-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+        .social-link { width: 36px; height: 36px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); text-decoration: none; transition: var(--transition); }
+        .social-link:hover { background: var(--gold); color: var(--primary-black); transform: translateY(-3px); }
+        .footer-bottom { padding: 1.5rem 0; }
+        .footer-bottom .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .copyright { font-size: 0.75rem; color: var(--gray-light); }
+        .copyright a { color: var(--gold); text-decoration: none; }
+        .payment-methods { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .payment-methods img { height: 30px; width: auto; background: var(--white); padding: 0.25rem 0.5rem; border-radius: var(--border-radius); }
+
+        /* Notification */
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; display: flex; flex-direction: column; gap: 0.5rem; }
+        .notification { background: var(--white); padding: 0.8rem 1.2rem; border-radius: var(--border-radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 0.75rem; transform: translateX(400px); transition: transform 0.3s ease; max-width: 360px; border-left: 4px solid; }
+        .notification.show { transform: translateX(0); }
+        .notification-success { border-left-color: var(--success); }
+        .notification-error { border-left-color: var(--danger); }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .dashboard-sidebar-mobile { display: none; }
+            .dashboard-sidebar { display: block; width: 260px; background: var(--white); border-right: 1px solid var(--gray-light); flex-shrink: 0; position: sticky; top: calc(70px + 70px); height: calc(100vh - 200px); overflow-y: auto; }
+            .dashboard-container { flex-direction: row; }
+            .dashboard-main { padding: 1.5rem; }
+            .stats-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+            .charts-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+            .footer-grid { grid-template-columns: repeat(4, 1fr); text-align: left; }
+            .footer-title::after { left: 0; transform: none; }
+            .footer-bottom .container { flex-direction: row; justify-content: space-between; }
+            .contact-item, .footer-link a { justify-content: flex-start; }
+            .social-links { justify-content: flex-start; }
+        }
+
+        @media (max-width: 992px) {
+            .menu-rectangles { width: 100%; justify-content: space-between; margin-top: 0.5rem; }
+            .large-rectangle { min-width: auto; flex: 1; }
+            .small-rectangle { min-width: auto; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 860px) {
+            .hamburger { display: flex; }
+            .main-nav { display: none; }
+            .header-main .container { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+            .header-main .container .logo { order: 1; align-self: flex-start; }
+            .header-main .container .header-actions { order: 2; align-self: flex-end; margin-top: -50px; }
+            .header-main .container .search-wrapper { order: 3; max-width: 100%; width: 100%; margin: 0; }
+            .search-btn span { display: none; }
+            .search-btn { padding: 0.6rem 1rem; }
+            .header-actions { gap: 0.5rem; }
+            .action-btn { width: 38px; height: 38px; font-size: 1rem; }
+            .header-top .container { flex-direction: column; text-align: center; }
+            .customer-service { justify-content: center; flex-wrap: wrap; }
+            .mobile-sidebar { max-width: 100%; width: 100%; }
+            .menu-rectangles { flex-direction: column; }
+            .small-rectangle, .large-rectangle { width: 100%; }
+            .social-icons-row { justify-content: center; }
+            .services-sidebar { max-width: 100%; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-title::after { left: 50%; transform: translateX(-50%); }
+            .footer-links { text-align: center; }
+            .footer-link a { justify-content: center; }
+            .contact-item { justify-content: center; }
+            .social-links { justify-content: center; }
+        }
+
+        @media (max-width: 480px) {
+            .header-main .container { padding: 0.4rem 0.75rem; }
+            .header-main .container .header-actions { margin-top: -42px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .header-actions { gap: 0.4rem; }
+            .action-btn { width: 35px; height: 35px; font-size: 0.9rem; }
+            .logo img { height: 38px; }
+            .search-input { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- ========== HEADER TOP ========== -->
+    <div class="header-top">
+        <div class="container">
+            <div class="scrolling-banner">
+                <div class="scrolling-content">
+                    <span class="banner-item"><i class="fas fa-truck"></i> Livraison gratuite dès <strong>5000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-percent"></i> <strong>-30%</strong> sur Paname Wedding</span>
+                    <span class="banner-item"><i class="fas fa-shield-alt"></i> Paiement <strong>100% sécurisé</strong></span>
+                    <span class="banner-item"><i class="fas fa-clock"></i> Livraison <strong>24h-48h</strong> à Yaoundé</span>
+                    <span class="banner-item"><i class="fas fa-gift"></i> Cadeau surprise dès <strong>10000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-truck"></i> Livraison gratuite dès <strong>5000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-percent"></i> <strong>-30%</strong> sur Paname Wedding</span>
+                    <span class="banner-item"><i class="fas fa-shield-alt"></i> Paiement <strong>100% sécurisé</strong></span>
+                    <span class="banner-item"><i class="fas fa-clock"></i> Livraison <strong>24h-48h</strong> à Yaoundé</span>
+                    <span class="banner-item"><i class="fas fa-gift"></i> Cadeau surprise dès <strong>10000 Fcfa</strong></span>
+                </div>
+            </div>
+            <div class="customer-service">
+                <div class="service-item">
+                    <i class="fas fa-headset"></i>
+                    <div class="service-info">
+                        <h4>Service Client</h4>
+                        <p><a href="tel:+237657715482">+237 657 71 54 82</a> / <a href="tel:+237676391816">+237 676 39 18 16</a></p>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="service-info">
+                        <h4>Email</h4>
+                        <p><a href="mailto:lepanameservice@gmail.com">lepanameservice@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== HEADER MAIN ========== -->
+    <div class="header-main">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img src="assets/logoPANSERV.png" alt="Le Paname Service"></a>
+                <span class="admin-badge-header"><i class="fas fa-shield-alt"></i> ADMIN</span>
+            </div>
+            <div class="search-wrapper">
+                <form class="search-form" id="desktopSearchForm">
+                    <input type="search" class="search-input" placeholder="Rechercher dans le dashboard..." id="desktopSearchInput">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i><span>Rechercher</span></button>
+                </form>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i></button>
+                <a href="pages/wishlist.htm" class="action-btn"><i class="far fa-heart"></i><span class="wishlist-badge">0</span></a>
+                <a href="pages/cart.html" class="action-btn"><i class="fas fa-shopping-bag"></i><span class="cart-badge">0</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MENU AVEC LES DEUX RECTANGLES ========== -->
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button>
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="index.html" class="nav-link">Accueil</a></li>
+                    <li class="nav-item"><a href="pages/panamestore.html" class="nav-link">Paname Store</a></li>
+                    <li class="nav-item"><a href="pages/panamemarket.html" class="nav-link">Paname Market</a></li>
+                    <li class="nav-item"><a href="pages/sante.html" class="nav-link">Santé</a></li>
+                    <li class="nav-item"><a href="pages/auto_moto.html" class="nav-link">Auto-Moto</a></li>
+                    <li class="nav-item"><a href="pages/montres-bijoux.html" class="nav-link">Montres & Bijoux</a></li>
+                    <li class="nav-item"><a href="pages/contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="dashboard.html" class="nav-link active">Dashboard</a></li>
+                </ul>
+            </nav>
+            
+            <div class="menu-rectangles">
+                <div class="large-rectangle">
+                    <div class="social-icons-row">
+                        <a href="https://www.facebook.com/profile.php?id=61557575415489" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/lepanameservice237" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+237657715482" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@lepanameservice237" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="small-rectangle" id="openServicesSidebar">
+                    <div class="rectangle-header">
+                        <span><i class="fas fa-concierge-bell"></i> Nos Services</span>
+                        <div class="hamburger-mini">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MENU LATÉRAL PREMIUM POUR SERVICES ========== -->
+    <div class="services-sidebar-overlay" id="servicesSidebarOverlay"></div>
+    <div class="services-sidebar" id="servicesSidebar">
+        <div class="services-sidebar-header">
+            <h3><i class="fas fa-crown"></i> Le Paname Service</h3>
+            <button class="close-sidebar-btn" id="closeServicesSidebar"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="services-sidebar-content">
+            <div class="service-category-sidebar">
+                <h4><i class="fas fa-ring"></i> Événementiel</h4>
+                <ul>
+                    <li><a href="pages/panamewedding.html"><i class="fas fa-chevron-right"></i> Paname Wedding</a></li>
+                    <li><a href="pages/panameevent.html"><i class="fas fa-chevron-right"></i> Paname Event</a></li>
+                    <li><a href="pages/panameproduction.html"><i class="fas fa-chevron-right"></i> Paname Production</a></li>
+                </ul>
+            </div>
+            <div class="service-category-sidebar">
+                <h4><i class="fas fa-home"></i> Habitat & Voyage</h4>
+                <ul>
+                    <li><a href="pages/panamehouse.html"><i class="fas fa-chevron-right"></i> Paname House</a></li>
+                    <li><a href="pages/panametravel.html"><i class="fas fa-chevron-right"></i> Paname Travel</a></li>
+                    <li><a href="pages/livraisonexpress.html"><i class="fas fa-chevron-right"></i> Livraison Express</a></li>
+                </ul>
+            </div>
+            <div class="service-category-sidebar">
+                <h4><i class="fas fa-shield-alt"></i> Sécurité & Luxe</h4>
+                <ul>
+                    <li><a href="pages/panamesecurity.html"><i class="fas fa-chevron-right"></i> Paname Security</a></li>
+                    <li><a href="pages/panameluxury.html"><i class="fas fa-chevron-right"></i> Paname Luxury</a></li>
+                </ul>
+            </div>
+            <div class="service-category-sidebar">
+                <h4><i class="fas fa-headset"></i> Support & Assistance</h4>
+                <ul>
+                    <li><a href="pages/contact.html"><i class="fas fa-chevron-right"></i> Contactez-nous</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Devis en ligne</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="services-sidebar-footer">
+            <p><i class="fas fa-clock"></i> Disponible 24h/24 et 7j/7</p>
+            <div class="contact-info">
+                <a href="tel:+237657715482"><i class="fas fa-phone"></i> +237 657 71 54 82</a>
+                <a href="mailto:lepanameservice@gmail.com"><i class="fas fa-envelope"></i> lepanameservice@gmail.com</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== MOBILE SIDEBAR ========== -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-crown"></i> Le Paname Service</h3>
+            <button class="sidebar-close" id="sidebarCloseBtn"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="sidebar-search">
+            <form class="search-form" id="mobileSearchForm">
+                <input type="search" class="search-input" placeholder="Rechercher dans le dashboard..." id="mobileSearchInput">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+        <div class="sidebar-nav-scroll">
+            <ul class="sidebar-nav">
+                <li class="sidebar-nav-item"><a href="index.html" class="sidebar-nav-link"><span><i class="fas fa-home"></i> Accueil</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/panamestore.html" class="sidebar-nav-link"><span><i class="fas fa-laptop"></i> Paname Store</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/panamemarket.html" class="sidebar-nav-link"><span><i class="fas fa-shopping-cart"></i> Paname Market</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/sante.html" class="sidebar-nav-link"><span><i class="fas fa-heartbeat"></i> Santé</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/auto_moto.html" class="sidebar-nav-link"><span><i class="fas fa-car"></i> Auto-Moto</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/montres-bijoux.html" class="sidebar-nav-link"><span><i class="fas fa-gem"></i> Montres & Bijoux</span></a></li>
+                <li class="sidebar-nav-item"><a href="pages/contact.html" class="sidebar-nav-link"><span><i class="fas fa-envelope"></i> Contact</span></a></li>
+                <li class="sidebar-nav-item"><a href="dashboard.html" class="sidebar-nav-link active"><span><i class="fas fa-chart-line"></i> Dashboard</span></a></li>
+            </ul>
+        </div>
+        <div class="sidebar-footer">
+            <button class="sidebar-auth-btn" id="mobileLogoutBtn"><i class="fas fa-sign-out-alt"></i><span>Déconnexion</span></button>
+            <div class="sidebar-contact">
+                <div class="sidebar-contact-item"><i class="fas fa-phone"></i><span>+237 657 71 54 82</span></div>
+                <div class="sidebar-contact-item"><i class="fas fa-phone"></i><span>+237 676 39 18 16</span></div>
+                <div class="sidebar-contact-item"><i class="fas fa-envelope"></i><span>lepanameservice@gmail.com</span></div>
+                <div class="sidebar-contact-item"><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroun</span></div>
+            </div>
+            <div class="sidebar-social">
+                <a href="https://www.facebook.com/profile.php?id=61557575415489" class="sidebar-social-link"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.instagram.com/lepanameservice237" class="sidebar-social-link"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/+237657715482" class="sidebar-social-link"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@lepanameservice237" class="sidebar-social-link"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== DASHBOARD LAYOUT ========== -->
+    <div class="dashboard-container">
+        <!-- Desktop Sidebar -->
+        <div class="dashboard-sidebar">
+            <div style="padding:1.2rem; border-bottom:1px solid var(--gray-light);">
+                <h3 style="font-size:1rem;"><i class="fas fa-chart-line"></i> Navigation</h3>
+            </div>
+            <ul style="list-style:none; padding:0.5rem 0;">
+                <li style="margin-bottom:0.2rem;"><a href="#" class="dashboard-nav-link" data-section="overview" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-tachometer-alt" style="width:22px;"></i> Vue d'ensemble</a></li>
+                <li><a href="#" class="dashboard-nav-link" data-section="orders" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-shopping-cart" style="width:22px;"></i> Commandes</a></li>
+                <li><a href="#" class="dashboard-nav-link" data-section="products" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-box" style="width:22px;"></i> Produits</a></li>
+                <li><a href="#" class="dashboard-nav-link" data-section="customers" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-users" style="width:22px;"></i> Clients</a></li>
+                <li><a href="#" class="dashboard-nav-link" data-section="messages" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-envelope" style="width:22px;"></i> Messages</a></li>
+                <li><a href="#" class="dashboard-nav-link" data-section="appointments" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-calendar-check" style="width:22px;"></i> Rendez-vous</a></li>
+                <li><a href="#" class="dashboard-nav-link" data-section="settings" style="display:flex; align-items:center; gap:0.75rem; padding:0.7rem 1.2rem; text-decoration:none; color:var(--text-gray); font-size:0.8rem; transition:var(--transition); border-left:3px solid transparent;"><i class="fas fa-cog" style="width:22px;"></i> Paramètres</a></li>
+            </ul>
+        </div>
+
+        <!-- Mobile Navigation Bar -->
+        <div class="dashboard-sidebar-mobile">
+            <ul class="dashboard-nav-mobile">
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link active" data-section="overview"><i class="fas fa-tachometer-alt"></i> Vue</a></li>
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link" data-section="orders"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link" data-section="products"><i class="fas fa-box"></i> Produits</a></li>
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link" data-section="customers"><i class="fas fa-users"></i> Clients</a></li>
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link" data-section="messages"><i class="fas fa-envelope"></i> Messages</a></li>
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link" data-section="appointments"><i class="fas fa-calendar-check"></i> RDV</a></li>
+                <li class="dashboard-nav-mobile-item"><a href="#" class="dashboard-nav-mobile-link" data-section="settings"><i class="fas fa-cog"></i> Param</a></li>
+            </ul>
+        </div>
+
+        <div class="dashboard-main">
+            <!-- Section Vue d'ensemble -->
+            <div id="section-overview">
+                <div class="dashboard-header">
+                    <h1><span>Tableau de bord</span> - Vue d'ensemble</h1>
+                    <div class="date-info" id="currentDate"></div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-card-header"><span class="stat-card-value" id="totalSales">0</span><i class="fas fa-chart-line"></i></div><div class="stat-card-label">Chiffre d'affaires (Fcfa)</div></div>
+                    <div class="stat-card"><div class="stat-card-header"><span class="stat-card-value" id="totalOrders">0</span><i class="fas fa-shopping-cart"></i></div><div class="stat-card-label">Commandes</div></div>
+                    <div class="stat-card"><div class="stat-card-header"><span class="stat-card-value" id="totalProducts">0</span><i class="fas fa-box"></i></div><div class="stat-card-label">Produits</div></div>
+                    <div class="stat-card"><div class="stat-card-header"><span class="stat-card-value" id="totalCustomers">0</span><i class="fas fa-users"></i></div><div class="stat-card-label">Clients</div></div>
+                </div>
+                <div class="charts-grid">
+                    <div class="chart-card"><h3><i class="fas fa-chart-bar"></i> Ventes mensuelles</h3><canvas id="salesChart" height="200"></canvas></div>
+                    <div class="chart-card"><h3><i class="fas fa-chart-pie"></i> Répartition des ventes</h3><canvas id="categoryChart" height="200"></canvas></div>
+                </div>
+                <div class="table-container">
+                    <div class="table-header"><h3><i class="fas fa-clock"></i> Dernières commandes</h3><a href="#" class="dashboard-nav-mobile-link" data-section="orders" style="padding:0.3rem 0.8rem; font-size:0.7rem;">Voir tout <i class="fas fa-arrow-right"></i></a></div>
+                    <table class="data-table"><thead><tr><th>N° Commande</th><th>Client</th><th>Montant</th><th>Statut</th><th>Date</th></tr></thead><tbody id="recentOrdersList"></tbody></table>
+                </div>
+            </div>
+
+            <!-- Section Commandes -->
+            <div id="section-orders" style="display:none;">
+                <div class="dashboard-header"><h1><span>Gestion</span> - Commandes</h1></div>
+                <div class="table-container"><div class="table-header"><h3><i class="fas fa-list"></i> Toutes les commandes</h3><input type="text" class="search-input-sm" id="searchOrders" placeholder="Rechercher..."></div><table class="data-table"><thead><tr><th>ID</th><th>Client</th><th>Montant</th><th>Statut</th><th>Date</th><th>Actions</th></tr></thead><tbody id="ordersList"></tbody></table></div>
+            </div>
+
+            <!-- Section Produits -->
+            <div id="section-products" style="display:none;">
+                <div class="dashboard-header"><h1><span>Gestion</span> - Produits</h1><button class="btn" id="addProductBtn"><i class="fas fa-plus"></i> Ajouter</button></div>
+                <div class="table-container"><div class="table-header"><h3><i class="fas fa-box"></i> Catalogue produits</h3><input type="text" class="search-input-sm" id="searchProducts" placeholder="Rechercher..."></div><table class="data-table"><thead><tr><th>ID</th><th>Nom</th><th>Catégorie</th><th>Prix</th><th>Stock</th><th>Actions</th></tr></thead><tbody id="productsList"></tbody></table></div>
+            </div>
+
+            <!-- Section Clients -->
+            <div id="section-customers" style="display:none;">
+                <div class="dashboard-header"><h1><span>Gestion</span> - Clients</h1></div>
+                <div class="table-container"><div class="table-header"><h3><i class="fas fa-users"></i> Liste des clients</h3><input type="text" class="search-input-sm" id="searchCustomers" placeholder="Rechercher..."></div><table class="data-table"><thead><tr><th>ID</th><th>Nom</th><th>Email</th><th>Téléphone</th><th>Commandes</th></tr></thead><tbody id="customersList"></tbody></table></div>
+            </div>
+
+            <!-- Section Messages -->
+            <div id="section-messages" style="display:none;">
+                <div class="dashboard-header"><h1><span>Gestion</span> - Messages</h1></div>
+                <div class="table-container"><div class="table-header"><h3><i class="fas fa-envelope"></i> Messages reçus</h3><input type="text" class="search-input-sm" id="searchMessages" placeholder="Rechercher..."></div><table class="data-table"><thead><tr><th>ID</th><th>Nom</th><th>Email</th><th>Sujet</th><th>Date</th><th>Actions</th></tr></thead><tbody id="messagesList"></tbody></table></div>
+            </div>
+
+            <!-- Section Rendez-vous -->
+            <div id="section-appointments" style="display:none;">
+                <div class="dashboard-header"><h1><span>Gestion</span> - Rendez-vous</h1></div>
+                <div class="table-container"><div class="table-header"><h3><i class="fas fa-calendar-check"></i> Demandes de rendez-vous</h3></div><table class="data-table"><thead><tr><th>ID</th><th>Nom</th><th>Service</th><th>Date</th><th>Statut</th><th>Actions</th></tr></thead><tbody id="appointmentsList"></tbody></table></div>
+            </div>
+
+            <!-- Section Paramètres -->
+            <div id="section-settings" style="display:none;">
+                <div class="dashboard-header"><h1><span>Configuration</span> - Paramètres</h1></div>
+                <div class="form-container" style="background:white; border-radius:var(--border-radius-lg); padding:1.2rem; border:1px solid var(--gray-light);"><h3 style="margin-bottom:1rem;">Informations du site</h3><form id="siteSettingsForm"><div class="form-group"><label>Nom du site</label><input type="text" id="siteName" value="Le Paname Service"></div><div class="form-group"><label>Téléphone</label><input type="tel" id="sitePhone" value="+237 657 71 54 82"></div><div class="form-group"><label>Email</label><input type="email" id="siteEmail" value="lepanameservice@gmail.com"></div><div class="form-group"><label>Adresse</label><input type="text" id="siteAddress" value="Yaoundé, Cameroun - Montée Mvan Santa Lucia"></div><button type="submit" class="btn-submit"><i class="fas fa-save"></i> Enregistrer</button></form></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Produit -->
+    <div class="modal" id="productModal"><div class="modal-content"><button class="modal-close" data-modal-close><i class="fas fa-times"></i></button><h2 id="productModalTitle">Ajouter un produit</h2><form id="productForm"><div class="form-group"><label>Nom</label><input type="text" id="productName" required></div><div class="form-group"><label>Catégorie</label><select id="productCategory" required><option value="">Sélectionner</option><option value="Informatique">Informatique</option><option value="Maison">Maison</option><option value="Santé">Santé</option><option value="Mode">Mode</option><option value="Bijoux">Bijoux</option></select></div><div class="form-group"><label>Prix (Fcfa)</label><input type="number" id="productPrice" required></div><div class="form-group"><label>Ancien prix</label><input type="number" id="productOldPrice"></div><div class="form-group"><label>Stock</label><input type="number" id="productStock" value="10"></div><button type="submit" class="btn-submit">Enregistrer</button></form></div></div>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about">
+                    <div class="footer-logo"><img src="assets/logoPANSERV.png" alt="Le Paname Service"></div>
+                    <p>Le Paname Service - Votre partenaire de confiance pour tous vos besoins en high-tech, sécurité, événementiel, alimentation et bien plus encore.</p>
+                    <div class="contact-item"><a href="https://maps.app.goo.gl/CzziPJ2yLc8sPuuv7"><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroun</span></a></div>
+                </div>
+                <div>
+                    <h4 class="footer-title">E-commerce</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li>
+                        <li class="footer-link"><a href="pages/panamestore.html"><i class="fas fa-chevron-right"></i> Paname Store</a></li>
+                        <li class="footer-link"><a href="pages/panamemarket.html"><i class="fas fa-chevron-right"></i> Paname Market</a></li>
+                        <li class="footer-link"><a href="pages/sante.html"><i class="fas fa-chevron-right"></i> Santé</a></li>
+                        <li class="footer-link"><a href="pages/auto_moto.html"><i class="fas fa-chevron-right"></i> Auto-Moto</a></li>
+                        <li class="footer-link"><a href="pages/montres-bijoux.html"><i class="fas fa-chevron-right"></i> Montres & Bijoux</a></li>
+                        <li class="footer-link"><a href="pages/contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Nos services</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="pages/panamewedding.html"><i class="fas fa-chevron-right"></i> Paname Wedding</a></li>
+                        <li class="footer-link"><a href="pages/panamehouse.html"><i class="fas fa-chevron-right"></i> Paname House</a></li>
+                        <li class="footer-link"><a href="pages/panametravel.html"><i class="fas fa-chevron-right"></i> Paname Travel</a></li>
+                        <li class="footer-link"><a href="pages/panameevent.html"><i class="fas fa-chevron-right"></i> Paname Event</a></li>
+                        <li class="footer-link"><a href="pages/panameproduction.html"><i class="fas fa-chevron-right"></i> Paname Production</a></li>
+                        <li class="footer-link"><a href="pages/panamesecurity.html"><i class="fas fa-chevron-right"></i> Paname Security</a></li>
+                        <li class="footer-link"><a href="pages/livraisonexpress.html"><i class="fas fa-chevron-right"></i> Livraison Express</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact</h4>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+237 657 71 54 82</span></div>
+                    <div class="contact-item"><i class="fas fa-phone"></i><span>+237 676 39 18 16</span></div>
+                    <div class="contact-item"><i class="fas fa-envelope"></i><span>lepanameservice@gmail.com</span></div>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/profile.php?id=61557575415489" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/lepanameservice237" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+237657715482" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@lepanameservice237" class="social-link"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container">
+                    <div class="copyright">&copy; 2025 <a href="index.html">Le Paname Service</a>. Tous droits réservés.</div>
+                    <div class="payment-methods">
+                        <img src="assets/om.jpg" alt="Orange Money">
+                        <img src="assets/momo.jpg" alt="MTN Mobile Money">
+                        <img src="assets/paypal.jpg" alt="PayPal">
+                        <img src="assets/image/payment-1.png" alt="Visa">
+                        <img src="assets/image/payment-2.png" alt="Mastercard">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script>
+        // Données simulées
+        let products = [
+            { id: 1, name: 'Ordinateur Portable Ultrabook', category: 'Informatique', price: 450000, oldPrice: 550000, stock: 12 },
+            { id: 2, name: 'Canapé 3 places', category: 'Maison', price: 250000, oldPrice: 320000, stock: 5 },
+            { id: 3, name: 'Tensiomètre Digital', category: 'Santé', price: 35000, oldPrice: 45000, stock: 8 },
+            { id: 4, name: 'Montre Rolex Submariner', category: 'Mode', price: 1250000, oldPrice: 1500000, stock: 3 },
+            { id: 5, name: 'Sac Louis Vuitton', category: 'Mode', price: 950000, oldPrice: 1200000, stock: 4 }
+        ];
+        let orders = [
+            { id: 'CMD-001', customer: 'Jean Dupont', amount: 450000, status: 'paid', date: '2025-05-15' },
+            { id: 'CMD-002', customer: 'Marie Claire', amount: 250000, status: 'shipped', date: '2025-05-14' },
+            { id: 'CMD-003', customer: 'Paul Biya', amount: 35000, status: 'pending', date: '2025-05-13' },
+            { id: 'CMD-004', customer: 'Sophie Laurent', amount: 1250000, status: 'paid', date: '2025-05-12' }
+        ];
+        let customers = [
+            { id: 1, name: 'Jean Dupont', email: 'jean@email.com', phone: '+237 6XX XXX XXX', orders: 3 },
+            { id: 2, name: 'Marie Claire', email: 'marie@email.com', phone: '+237 6XX XXX XXX', orders: 2 },
+            { id: 3, name: 'Paul Biya', email: 'paul@email.com', phone: '+237 6XX XXX XXX', orders: 1 }
+        ];
+        let messages = [
+            { id: 1, name: 'Client Test', email: 'test@email.com', subject: 'Question produit', date: '2025-05-15' },
+            { id: 2, name: 'Autre Client', email: 'autre@email.com', subject: 'Commande non livrée', date: '2025-05-14' }
+        ];
+        let appointments = [
+            { id: 1, name: 'Jean Dupont', service: 'Wedding Planning', date: '2025-05-20', status: 'pending' },
+            { id: 2, name: 'Marie Claire', service: 'Livraison Express', date: '2025-05-22', status: 'pending' }
+        ];
+
+        let salesChart, categoryChart;
+        let editingProductId = null;
+
+        function showNotification(msg, type = 'success') {
+            const container = document.getElementById('notificationContainer');
+            const n = document.createElement('div');
+            n.className = `notification notification-${type}`;
+            const icons = { success: 'check-circle', error: 'exclamation-circle' };
+            n.innerHTML = `<i class="fas fa-${icons[type]}"></i><span>${msg}</span><button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;"><i class="fas fa-times"></i></button>`;
+            container.appendChild(n);
+            setTimeout(() => n.classList.add('show'), 10);
+            setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 4000);
+        }
+
+        function formatNumber(n) { return n.toLocaleString(); }
+
+        function updateStats() {
+            document.getElementById('totalSales').innerText = formatNumber(orders.reduce((s, o) => s + o.amount, 0));
+            document.getElementById('totalOrders').innerText = orders.length;
+            document.getElementById('totalProducts').innerText = products.length;
+            document.getElementById('totalCustomers').innerText = customers.length;
+        }
+
+        function updateCharts() {
+            const monthlySales = { Jan: 0, Fév: 0, Mar: 0, Avr: 0, Mai: 0, Juin: 0 };
+            orders.forEach(o => { let m = new Date(o.date).toLocaleString('fr', { month: 'short' }); if (monthlySales[m] !== undefined) monthlySales[m] += o.amount; });
+            if (salesChart) salesChart.destroy();
+            salesChart = new Chart(document.getElementById('salesChart'), { type: 'bar', data: { labels: Object.keys(monthlySales), datasets: [{ label: 'Ventes (Fcfa)', data: Object.values(monthlySales), backgroundColor: 'rgba(212, 175, 55, 0.7)' }] }, options: { responsive: true, maintainAspectRatio: true } });
+            
+            const categorySales = { Informatique: 450000, Maison: 250000, Santé: 35000, Mode: 2200000 };
+            if (categoryChart) categoryChart.destroy();
+            categoryChart = new Chart(document.getElementById('categoryChart'), { type: 'pie', data: { labels: Object.keys(categorySales), datasets: [{ data: Object.values(categorySales), backgroundColor: ['#D4AF37', '#F4D03F', '#B8960C', '#C9A234'] }] }, options: { responsive: true, maintainAspectRatio: true } });
+        }
+
+        function renderAll() {
+            document.getElementById('recentOrdersList').innerHTML = orders.slice(0, 5).map(o => `<tr><td style="font-weight:600;">${o.id}</td><td>${o.customer}</td><td>${formatNumber(o.amount)} Fcfa</td><td><span class="status-badge status-${o.status}">${o.status === 'paid' ? 'Payée' : o.status === 'shipped' ? 'Expédiée' : 'En attente'}</span></td><td>${o.date}</td>`).join('');
+            document.getElementById('ordersList').innerHTML = orders.map(o => `<tr><td>${o.id}</td><td>${o.customer}</td><td>${formatNumber(o.amount)} Fcfa</td><td><span class="status-badge status-${o.status}">${o.status === 'paid' ? 'Payée' : o.status === 'shipped' ? 'Expédiée' : 'En attente'}</span></td><td>${o.date}</td><td class="action-btns"><button class="action-btn-sm" onclick="updateOrderStatus('${o.id}', 'paid')" title="Marquer comme payée"><i class="fas fa-check-circle"></i></button><button class="action-btn-sm" onclick="updateOrderStatus('${o.id}', 'shipped')" title="Marquer comme expédiée"><i class="fas fa-truck"></i></button></td>`).join('');
+            document.getElementById('productsList').innerHTML = products.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.category}</td><td>${formatNumber(p.price)} Fcfa</td><td>${p.stock}</td><td class="action-btns"><button class="action-btn-sm" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button><button class="action-btn-sm" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>`).join('');
+            document.getElementById('customersList').innerHTML = customers.map(c => `<tr><td>${c.id}</td><td>${c.name}</td><td>${c.email}</td><td>${c.phone}</td><td>${c.orders}</td>`).join('');
+            document.getElementById('messagesList').innerHTML = messages.map(m => `<td><td>${m.id}</td><td>${m.name}</td><td>${m.email}</td><td>${m.subject}</td><td>${m.date}</td><td class="action-btns"><button class="action-btn-sm" onclick="deleteMessage(${m.id})"><i class="fas fa-trash"></i></button></td>`).join('');
+            document.getElementById('appointmentsList').innerHTML = appointments.map(a => `<tr><td>${a.id}</td><td>${a.name}</td><td>${a.service}</td><td>${a.date}</td><td><span class="status-badge status-pending">En attente</span></td><td class="action-btns"><button class="action-btn-sm" onclick="confirmAppointment(${a.id})"><i class="fas fa-check"></i></button><button class="action-btn-sm" onclick="deleteAppointment(${a.id})"><i class="fas fa-times"></i></button></td>`).join('');
+        }
+
+        window.updateOrderStatus = function(id, status) { let o = orders.find(o => o.id === id); if (o) { o.status = status; showNotification(`Commande ${id} mise à jour`); renderAll(); updateStats(); updateCharts(); } };
+        window.editProduct = function(id) { let p = products.find(p => p.id === id); if (p) { editingProductId = id; document.getElementById('productModalTitle').innerText = 'Modifier le produit'; document.getElementById('productName').value = p.name; document.getElementById('productCategory').value = p.category; document.getElementById('productPrice').value = p.price; document.getElementById('productOldPrice').value = p.oldPrice || ''; document.getElementById('productStock').value = p.stock; document.getElementById('productModal').classList.add('active'); } };
+        window.deleteProduct = function(id) { if (confirm('Supprimer ce produit ?')) { products = products.filter(p => p.id !== id); renderAll(); updateStats(); showNotification('Produit supprimé'); } };
+        window.deleteMessage = function(id) { messages = messages.filter(m => m.id !== id); renderAll(); showNotification('Message supprimé'); };
+        window.confirmAppointment = function(id) { appointments = appointments.filter(a => a.id !== id); renderAll(); showNotification('Rendez-vous confirmé'); };
+        window.deleteAppointment = function(id) { appointments = appointments.filter(a => a.id !== id); renderAll(); showNotification('Rendez-vous annulé'); };
+
+        function showSection(section) {
+            document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+            document.getElementById(`section-${section}`).style.display = 'block';
+            document.querySelectorAll('.dashboard-nav-link').forEach(l => { l.style.background = 'transparent'; l.style.borderLeftColor = 'transparent'; l.style.color = 'var(--text-gray)'; });
+            document.querySelectorAll('.dashboard-nav-mobile-link').forEach(l => l.classList.remove('active'));
+            document.querySelector(`.dashboard-nav-link[data-section="${section}"]`).style.background = 'rgba(212, 175, 55, 0.08)';
+            document.querySelector(`.dashboard-nav-link[data-section="${section}"]`).style.borderLeftColor = 'var(--gold)';
+            document.querySelector(`.dashboard-nav-link[data-section="${section}"]`).style.color = 'var(--gold-dark)';
+            document.querySelector(`.dashboard-nav-mobile-link[data-section="${section}"]`)?.classList.add('active');
+            renderAll();
+        }
+
+        document.querySelectorAll('.dashboard-nav-link, .dashboard-nav-mobile-link').forEach(link => {
+            link.addEventListener('click', (e) => { e.preventDefault(); let section = link.getAttribute('data-section'); if (section) showSection(section); });
+        });
+
+        document.getElementById('addProductBtn')?.addEventListener('click', () => { editingProductId = null; document.getElementById('productModalTitle').innerText = 'Ajouter un produit'; document.getElementById('productForm').reset(); document.getElementById('productModal').classList.add('active'); });
+        document.getElementById('productForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            let product = { id: editingProductId || products.length + 1, name: document.getElementById('productName').value, category: document.getElementById('productCategory').value, price: parseInt(document.getElementById('productPrice').value), oldPrice: parseInt(document.getElementById('productOldPrice').value) || null, stock: parseInt(document.getElementById('productStock').value) };
+            if (editingProductId) { let index = products.findIndex(p => p.id === editingProductId); if (index !== -1) products[index] = product; showNotification('Produit modifié'); } else { products.push(product); showNotification('Produit ajouté'); }
+            renderAll(); updateStats(); document.getElementById('productModal').classList.remove('active');
+        });
+
+        document.querySelectorAll('[data-modal-close]').forEach(btn => btn.addEventListener('click', () => document.getElementById('productModal').classList.remove('active')));
+        document.getElementById('siteSettingsForm')?.addEventListener('submit', (e) => { e.preventDefault(); showNotification('Paramètres enregistrés'); });
+        document.getElementById('logoutBtn')?.addEventListener('click', () => { if (confirm('Déconnexion ?')) { showNotification('Déconnexion réussie'); setTimeout(() => window.location.href = 'index.html', 1500); } });
+        document.getElementById('mobileLogoutBtn')?.addEventListener('click', () => { if (confirm('Déconnexion ?')) { showNotification('Déconnexion réussie'); setTimeout(() => window.location.href = 'index.html', 1500); } });
+
+        // Menu latéral services
+        const openServicesBtn = document.getElementById('openServicesSidebar');
+        const servicesSidebar = document.getElementById('servicesSidebar');
+        const servicesSidebarOverlay = document.getElementById('servicesSidebarOverlay');
+        const closeServicesSidebar = document.getElementById('closeServicesSidebar');
+
+        function openServicesMenu() { servicesSidebar.classList.add('active'); servicesSidebarOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeServicesMenu() { servicesSidebar.classList.remove('active'); servicesSidebarOverlay.classList.remove('active'); document.body.style.overflow = ''; }
+        openServicesBtn?.addEventListener('click', openServicesMenu);
+        closeServicesSidebar?.addEventListener('click', closeServicesMenu);
+        servicesSidebarOverlay?.addEventListener('click', closeServicesMenu);
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && servicesSidebar?.classList.contains('active')) closeServicesMenu(); });
+
+        // Mobile menu
+        const hamburgerBtn = document.getElementById('hamburgerBtn'), mobileSidebar = document.getElementById('mobileSidebar'), menuOverlay = document.getElementById('menuOverlay'), sidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+        function openSidebar() { mobileSidebar?.classList.add('active'); menuOverlay?.classList.add('active'); hamburgerBtn?.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeSidebar() { mobileSidebar?.classList.remove('active'); menuOverlay?.classList.remove('active'); hamburgerBtn?.classList.remove('active'); document.body.style.overflow = ''; }
+        hamburgerBtn?.addEventListener('click', () => mobileSidebar.classList.contains('active') ? closeSidebar() : openSidebar());
+        sidebarCloseBtn?.addEventListener('click', closeSidebar);
+        menuOverlay?.addEventListener('click', closeSidebar);
+
+        // Recherche
+        document.getElementById('searchOrders')?.addEventListener('input', (e) => {
+            let term = e.target.value.toLowerCase();
+            let filtered = orders.filter(o => o.id.toLowerCase().includes(term) || o.customer.toLowerCase().includes(term));
+            document.getElementById('ordersList').innerHTML = filtered.map(o => `<tr><td>${o.id}</td><td>${o.customer}</td><td>${formatNumber(o.amount)} Fcfa</td><td><span class="status-badge status-${o.status}">${o.status === 'paid' ? 'Payée' : o.status === 'shipped' ? 'Expédiée' : 'En attente'}</span></td><td>${o.date}</td><td class="action-btns"><button class="action-btn-sm" onclick="updateOrderStatus('${o.id}', 'paid')"><i class="fas fa-check-circle"></i></button><button class="action-btn-sm" onclick="updateOrderStatus('${o.id}', 'shipped')"><i class="fas fa-truck"></i></button></td>`).join('');
+        });
+
+        document.getElementById('searchProducts')?.addEventListener('input', (e) => {
+            let term = e.target.value.toLowerCase();
+            let filtered = products.filter(p => p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term));
+            document.getElementById('productsList').innerHTML = filtered.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.category}</td><td>${formatNumber(p.price)} Fcfa</td><td>${p.stock}</td><td class="action-btns"><button class="action-btn-sm" onclick="editProduct(${p.id})"><i class="fas fa-edit"></i></button><button class="action-btn-sm" onclick="deleteProduct(${p.id})"><i class="fas fa-trash"></i></button></td>`).join('');
+        });
+
+        document.getElementById('searchCustomers')?.addEventListener('input', (e) => {
+            let term = e.target.value.toLowerCase();
+            let filtered = customers.filter(c => c.name.toLowerCase().includes(term) || c.email.toLowerCase().includes(term));
+            document.getElementById('customersList').innerHTML = filtered.map(c => `<tr><td>${c.id}</td><td>${c.name}</td><td>${c.email}</td><td>${c.phone}</td><td>${c.orders}</td>`).join('');
+        });
+
+        document.getElementById('currentDate').innerHTML = new Date().toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        
+        // INIT
+        updateStats(); updateCharts(); renderAll(); showSection('overview');
+        
+        // Mise à jour des compteurs panier/favoris
+        let savedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+        let cartCount = savedCart.reduce((sum, item) => sum + item.quantity, 0);
+        document.querySelectorAll('.cart-badge').forEach(el => { el.textContent = cartCount; el.style.display = cartCount > 0 ? 'flex' : 'none'; });
+        document.querySelectorAll('.wishlist-badge').forEach(el => { el.textContent = '0'; el.style.display = 'none'; });
+
+        console.log('👑 Dashboard administrateur - Interface complète avec menu et footer identiques !');
+        console.log('🔐 Identifiants admin: admin@lepaname.com / Admin123!');
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+Parafoudre solaire 63A
+ Parafoudre DC Suntree - Protection contre les surtensions pour systèmes solaires
+Ce dispositif de protection contre les surtensions (SPD) de la marque Suntree est spécifiquement conçu pour sécuriser les installations photovoltaïques (panneaux solaires) contre les effets de la foudre et les pics de tension électrique.
+
+Caractéristiques Techniques Principales
+Modèle : SUP2-PV.
+
+Tension de fonctionnement (Un) : 1000VDC.
+
+Tension maximale (Uc) : 1060VDC.
+
+Courant de décharge nominal (In) : 20kA.
+
+Courant de décharge maximal (Imax) : 40kA.
+
+Niveau de protection (Up) : ≤ 3.2kV.
+
+Fonctionnalités et Design
+Indicateurs d'état : Équipé de fenêtres de visualisation vertes en façade qui indiquent que le module est opérationnel. Si elles changent de couleur (généralement vers le rouge), le module doit être remplacé.
+
+Modules débrochables : La conception permet de remplacer facilement les cartouches de protection sans avoir à recâbler l'ensemble du dispositif.
+
+Marquage clair : Les bornes sont clairement identifiées (DC+, DC-) pour garantir une installation correcte et sécurisée.
+
+Certification : Présence du logo CE, attestant de sa conformité aux normes de sécurité européennes.
+
+Prix : 19 900 FCFA

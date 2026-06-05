@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée - Le Paname Service</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        .error-container { text-align: center; padding: 2rem; }
+        .error-code { font-size: 6rem; font-weight: 800; color: #D4AF37; margin-bottom: 1rem; }
+        .error-title { font-size: 1.5rem; margin-bottom: 1rem; }
+        .error-message { color: #aaa; margin-bottom: 2rem; }
+        .btn { display: inline-block; padding: 0.8rem 1.5rem; background: #D4AF37; color: #1a1a1a; text-decoration: none; border-radius: 2rem; font-weight: 600; transition: transform 0.3s; }
+        .btn:hover { transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <div class="error-title">Page non trouvée</div>
+        <div class="error-message">Désolé, la page que vous recherchez n'existe pas ou a été déplacée.</div>
+        <a href="/" class="btn"><i class="fas fa-home"></i> Retour à l'accueil</a>
+    </div>
+</body>
+</html>

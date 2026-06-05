@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <meta name="description" content="Votre panier - Le Paname Service. Consultez et gérez vos articles avant validation de commande.">
+    <meta name="keywords" content="panier, commande, achats, validation, Le Paname Service">
+    <meta name="author" content="Le Paname Service">
+    <meta name="theme-color" content="#D4AF37">
+    
+    <title>Mon Panier - Le Paname Service</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-black: #0a0a0a; --secondary-black: #111111; --dark-gray: #1a1a1a;
+            --gold: #D4AF37; --gold-light: #F4D03F; --gold-dark: #B8960C;
+            --gold-gradient: linear-gradient(135deg, #D4AF37 0%, #F4D03F 50%, #D4AF37 100%);
+            --white: #ffffff; --white-off: #f8f9fa; --gray-light: #e9ecef;
+            --gray-medium: #6c757d; --text-dark: #212529; --text-gray: #495057;
+            --success: #28a745; --danger: #dc3545;
+            --shadow: 0 4px 6px rgba(0,0,0,0.07);
+            --shadow-lg: 0 12px 24px rgba(0,0,0,0.12);
+            --gold-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-serif: 'Playfair Display', Georgia, serif;
+            --container-padding: 1rem; --container-max-width: 1280px;
+            --border-radius: 0.5rem; --border-radius-lg: 0.75rem; --border-radius-full: 9999px;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: var(--font-sans); color: var(--text-dark); background: #f5f7fa; line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; }
+        .container { max-width: var(--container-max-width); margin: 0 auto; padding: 0 var(--container-padding); width: 100%; }
+
+        /* ========== HEADER STYLES ========== */
+        .header-top { background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%); color: var(--white); padding: 0.5rem 0; border-bottom: 2px solid var(--gold); overflow: hidden; }
+        .header-top .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+        .scrolling-banner { flex: 1; overflow: hidden; position: relative; height: 36px; }
+        .scrolling-content { display: flex; animation: scrollBanner 20s linear infinite; white-space: nowrap; position: absolute; left: 0; top: 0; height: 100%; align-items: center; }
+        .scrolling-content:hover { animation-play-state: paused; }
+        .banner-item { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0 1.5rem; font-size: 0.75rem; color: var(--white); }
+        .banner-item i { color: var(--gold); font-size: 0.875rem; }
+        .banner-item strong { color: var(--gold); }
+        @keyframes scrollBanner { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .customer-service { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+        .service-item { display: flex; align-items: center; gap: 0.5rem; }
+        .service-item i { font-size: 0.875rem; color: var(--gold); }
+        .service-info h4 { font-size: 0.625rem; font-weight: 500; opacity: 0.8; }
+        .service-info a { color: var(--white); text-decoration: none; font-weight: 600; font-size: 0.688rem; transition: var(--transition); }
+        .service-info a:hover { color: var(--gold); }
+
+        .header-main { background: var(--white); box-shadow: var(--shadow); position: sticky; top: 0; z-index: 1000; }
+        .header-main .container { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 70px; padding: 0.5rem var(--container-padding); }
+        .logo { flex-shrink: 0; }
+        .logo img { height: 45px; width: auto; transition: var(--transition); }
+        .admin-badge-header { background: var(--gold-gradient); padding: 0.2rem 0.6rem; border-radius: var(--border-radius-full); font-size: 0.6rem; font-weight: 700; color: var(--primary-black); margin-left: 0.5rem; display: none; }
+        .search-wrapper { flex: 1; max-width: 450px; margin: 0 auto; }
+        .search-form { display: flex; border: 2px solid var(--gray-light); border-radius: var(--border-radius-full); overflow: hidden; transition: var(--transition); width: 100%; background: var(--white); }
+        .search-form:focus-within { border-color: var(--gold); box-shadow: var(--gold-shadow); }
+        .search-input { flex: 1; padding: 0.7rem 1.2rem; border: none; outline: none; font-size: 0.875rem; }
+        .search-btn { background: var(--gold-gradient); border: none; padding: 0.7rem 1.5rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; font-size: 0.813rem; white-space: nowrap; flex-shrink: 0; }
+        .header-actions { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+        .action-btn { position: relative; width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: transparent; border: 1px solid var(--gray-light); cursor: pointer; transition: var(--transition); color: var(--text-dark); font-size: 1.125rem; text-decoration: none; }
+        .action-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-black); transform: translateY(-2px); }
+        .cart-badge, .wishlist-badge { position: absolute; top: -5px; right: -5px; background: var(--gold-gradient); color: var(--primary-black); font-size: 0.7rem; font-weight: 800; min-width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--white); }
+
+        /* Navigation */
+        .nav-wrapper { background: var(--white); border-bottom: 1px solid var(--gray-light); position: sticky; top: 70px; z-index: 999; }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; padding: 0.5rem var(--container-padding); flex-wrap: wrap; gap: 1rem; }
+        .nav-links { display: flex; list-style: none; gap: 0; flex-wrap: wrap; }
+        .nav-link { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.75rem 1rem; color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.813rem; transition: var(--transition); border-bottom: 2px solid transparent; }
+        .nav-link:hover, .nav-link.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+        .menu-rectangles { display: flex; gap: 1rem; align-items: center; }
+        .large-rectangle { background: transparent; padding: 0.5rem 1rem; }
+        .social-icons-row { display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap; }
+        .social-icons-row a { width: 28px; height: 28px; border-radius: 50%; background: rgba(212, 175, 55, 0.1); display: inline-flex; align-items: center; justify-content: center; color: var(--gold); transition: var(--transition); font-size: 0.8rem; text-decoration: none; }
+        .social-icons-row a:hover { background: var(--gold); color: var(--primary-black); transform: translateY(-2px); }
+        .small-rectangle { background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%); border-radius: var(--border-radius); border: 1px solid var(--gold); overflow: hidden; cursor: pointer; }
+        .small-rectangle:hover { border-color: var(--gold-light); box-shadow: 0 0 10px rgba(212,175,55,0.3); }
+        .rectangle-header { padding: 0.6rem 1rem; display: flex; align-items: center; justify-content: space-between; background: rgba(212, 175, 55, 0.1); gap: 1rem; }
+        .rectangle-header span { color: var(--gold); font-size: 0.75rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; }
+        .hamburger-mini { display: flex; flex-direction: column; gap: 3px; cursor: pointer; }
+        .hamburger-mini span { width: 18px; height: 2px; background: var(--gold); border-radius: 2px; }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; background: none; border: none; z-index: 2001; }
+        .hamburger span { display: block; width: 26px; height: 2.5px; background: var(--primary-black); border-radius: 2px; transition: var(--transition); }
+        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.active span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+        .main-nav { flex: 1; display: flex; justify-content: flex-start; }
+
+        /* Services Sidebar */
+        .services-sidebar-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); z-index: 3000; opacity: 0; visibility: hidden; transition: var(--transition); backdrop-filter: blur(5px); }
+        .services-sidebar-overlay.active { opacity: 1; visibility: visible; }
+        .services-sidebar { position: fixed; top: 0; right: -100%; width: 100%; max-width: 420px; height: 100vh; background: linear-gradient(135deg, var(--white) 0%, var(--white-off) 100%); box-shadow: var(--shadow-lg); z-index: 3001; transition: right 0.4s ease; display: flex; flex-direction: column; overflow: hidden; }
+        .services-sidebar.active { right: 0; }
+        .services-sidebar-header { background: linear-gradient(135deg, var(--primary-black) 0%, var(--dark-gray) 100%); padding: 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--gold); }
+        .services-sidebar-header h3 { color: var(--gold); font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; gap: 0.75rem; font-family: var(--font-serif); }
+        .close-sidebar-btn { background: rgba(255,255,255,0.1); border: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--gold); font-size: 1.2rem; }
+        .close-sidebar-btn:hover { background: var(--gold); color: var(--primary-black); transform: rotate(90deg); }
+        .services-sidebar-content { flex: 1; overflow-y: auto; padding: 1.5rem; }
+        .service-category-sidebar { margin-bottom: 2rem; background: var(--white); border-radius: var(--border-radius); overflow: hidden; border: 1px solid rgba(212,175,55,0.1); }
+        .service-category-sidebar h4 { background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent); color: var(--gold-dark); font-size: 1rem; font-weight: 700; padding: 1rem 1.2rem; border-bottom: 1px solid rgba(212,175,55,0.2); display: flex; align-items: center; gap: 0.75rem; }
+        .service-category-sidebar ul { list-style: none; padding: 0.5rem 0; }
+        .service-category-sidebar ul li a { color: var(--text-dark); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.75rem; padding: 0.8rem 1.2rem; transition: var(--transition); border-left: 3px solid transparent; }
+        .service-category-sidebar ul li a:hover { background: rgba(212,175,55,0.08); color: var(--gold-dark); border-left-color: var(--gold); padding-left: 1.5rem; }
+        .services-sidebar-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--gray-light); background: var(--white-off); text-align: center; }
+        .services-sidebar-footer .contact-info { display: flex; justify-content: center; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap; }
+
+        /* Mobile Sidebar */
+        .menu-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 1999; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
+        .menu-overlay.active { display: block; opacity: 1; }
+        .mobile-sidebar { position: fixed; top: 0; left: -100%; width: 85%; max-width: 380px; height: 100vh; background: var(--white); box-shadow: var(--shadow-lg); z-index: 2000; transition: left 0.35s ease; overflow: hidden; display: flex; flex-direction: column; }
+        .mobile-sidebar.active { left: 0; }
+        .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.2rem; background: var(--primary-black); color: var(--gold); border-bottom: 2px solid var(--gold); }
+        .sidebar-close { background: rgba(255,255,255,0.1); border: none; font-size: 1.25rem; color: var(--gold); cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .sidebar-search { padding: 1rem 1.2rem; border-bottom: 1px solid var(--gray-light); }
+        .sidebar-search .search-form { border: 1px solid var(--gray-light); display: flex; border-radius: 50px; overflow: hidden; }
+        .sidebar-search .search-input { flex: 1; padding: 0.6rem 1rem; border: none; outline: none; font-size: 0.85rem; }
+        .sidebar-search .search-btn { background: var(--gold-gradient); border: none; padding: 0.6rem 1rem; cursor: pointer; color: var(--primary-black); }
+        .sidebar-nav-scroll { flex: 1; overflow-y: auto; }
+        .sidebar-nav { list-style: none; }
+        .sidebar-nav-item { border-bottom: 1px solid var(--gray-light); }
+        .sidebar-nav-link { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.2rem; color: var(--text-dark); text-decoration: none; font-weight: 500; font-size: 0.9rem; width: 100%; }
+        .sidebar-nav-link span { display: flex; align-items: center; gap: 0.85rem; flex: 1; }
+        .sidebar-nav-link span i { width: 26px; color: var(--gold-dark); font-size: 1rem; }
+        .sidebar-footer { padding: 1rem 1.2rem; border-top: 1px solid var(--gray-light); background: var(--white-off); }
+        .sidebar-auth-btn { width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.7rem; border-radius: var(--border-radius); background: var(--primary-black); color: var(--gold); border: none; font-weight: 600; cursor: pointer; margin-bottom: 0.75rem; }
+        .sidebar-auth-btn:hover { background: var(--gold); color: var(--primary-black); }
+        .sidebar-contact { margin-top: 0.75rem; }
+        .sidebar-contact-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.4rem 0; color: var(--text-gray); font-size: 0.8rem; }
+        .sidebar-contact-item i { color: var(--gold-dark); width: 20px; }
+        .sidebar-social { display: flex; gap: 10px; margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--gray-light); flex-wrap: wrap; }
+        .sidebar-social-link { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--gray-light); display: flex; align-items: center; justify-content: center; color: var(--gold-dark); text-decoration: none; font-size: 0.9rem; }
+        .sidebar-social-link:hover { background: var(--primary-black); border-color: var(--primary-black); color: var(--gold); }
+
+        /* Cart Section */
+        .cart-section { padding: 3rem 0; min-height: 60vh; }
+        .cart-header { text-align: center; margin-bottom: 2rem; }
+        .cart-title { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; font-family: var(--font-serif); position: relative; padding-bottom: 0.5rem; display: inline-block; }
+        .cart-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--gold-gradient); }
+        .cart-container { display: grid; grid-template-columns: 1fr 380px; gap: 2rem; }
+        .cart-items { background: var(--white); border-radius: var(--border-radius-lg); border: 1px solid var(--gray-light); overflow: hidden; }
+        .cart-items-header { display: grid; grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr; padding: 1rem; background: var(--white-off); font-weight: 600; border-bottom: 1px solid var(--gray-light); font-size: 0.875rem; }
+        .cart-item { display: grid; grid-template-columns: 3fr 1fr 1fr 1fr 0.5fr; align-items: center; padding: 1rem; border-bottom: 1px solid var(--gray-light); transition: var(--transition); }
+        .cart-item:hover { background: rgba(212,175,55,0.05); }
+        .cart-item-product { display: flex; align-items: center; gap: 1rem; }
+        .cart-item-image { width: 80px; height: 80px; background: var(--white-off); border-radius: var(--border-radius); overflow: hidden; flex-shrink: 0; }
+        .cart-item-image img { width: 100%; height: 100%; object-fit: cover; }
+        .cart-item-info h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; }
+        .cart-item-info p { font-size: 0.7rem; color: var(--gray-medium); }
+        .cart-item-price { font-weight: 600; color: var(--gold-dark); }
+        .cart-item-quantity { display: flex; align-items: center; gap: 0.5rem; }
+        .quantity-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--white); border: 1px solid var(--gray-light); cursor: pointer; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; transition: var(--transition); }
+        .quantity-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--primary-black); }
+        .quantity-input { width: 50px; text-align: center; padding: 0.3rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: 0.875rem; }
+        .cart-item-total { font-weight: 700; color: var(--gold-dark); }
+        .cart-item-remove { color: var(--danger); cursor: pointer; font-size: 1.2rem; text-align: center; transition: var(--transition); }
+        .cart-item-remove:hover { color: #c82333; transform: scale(1.1); }
+        .cart-empty { text-align: center; padding: 3rem; }
+        .cart-empty i { font-size: 4rem; color: var(--gray-light); margin-bottom: 1rem; }
+        .cart-empty h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .cart-empty p { color: var(--text-gray); margin-bottom: 1.5rem; }
+        .cart-summary { background: var(--white); border-radius: var(--border-radius-lg); border: 1px solid var(--gray-light); padding: 1.5rem; position: sticky; top: 100px; }
+        .cart-summary h3 { font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--gray-light); color: var(--gold-dark); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.75rem; font-size: 0.875rem; }
+        .summary-row.total { font-size: 1.1rem; font-weight: 700; color: var(--gold-dark); border-top: 1px solid var(--gray-light); padding-top: 0.75rem; margin-top: 0.75rem; }
+        .promo-code { margin: 1rem 0; }
+        .promo-input { display: flex; gap: 0.5rem; }
+        .promo-input input { flex: 1; padding: 0.6rem 0.8rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: 0.8rem; }
+        .promo-input button { padding: 0.6rem 1rem; background: var(--gold-gradient); border: none; border-radius: var(--border-radius); font-weight: 600; cursor: pointer; font-size: 0.75rem; }
+        .checkout-btn { width: 100%; padding: 1rem; background: var(--gold-gradient); border: none; border-radius: var(--border-radius); font-weight: 700; cursor: pointer; margin-top: 1rem; transition: var(--transition); }
+        .checkout-btn:hover { transform: translateY(-2px); box-shadow: var(--gold-shadow); }
+        .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--gold-gradient); color: var(--primary-black); text-decoration: none; border-radius: var(--border-radius-full); font-weight: 700; transition: var(--transition); border: none; cursor: pointer; font-size: 0.875rem; }
+        .btn:hover { transform: translateY(-2px); box-shadow: var(--gold-shadow); }
+        .payment-methods-summary { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--gray-light); }
+        .payment-icons { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+        .payment-icons img { height: 30px; width: auto; background: var(--white); padding: 0.2rem 0.4rem; border-radius: var(--border-radius); border: 1px solid var(--gray-light); }
+
+        /* Features */
+        .features-section { padding: 3rem 0; background: var(--white-off); }
+        .features-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; }
+        .feature-card { text-align: center; padding: 1.5rem; background: var(--white); border-radius: var(--border-radius-lg); border: 1px solid var(--gray-light); transition: var(--transition); }
+        .feature-card:hover { transform: translateY(-3px); box-shadow: var(--gold-shadow); border-color: var(--gold); }
+        .feature-icon { width: 60px; height: 60px; background: var(--gold-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; }
+        .feature-icon i { font-size: 1.5rem; color: var(--primary-black); }
+        .feature-card h4 { font-size: 0.875rem; font-weight: 700; margin-bottom: 0.25rem; }
+
+        /* Footer */
+        .footer { background: var(--primary-black); color: var(--white); padding: 3rem 0 0; margin-top: auto; border-top: 3px solid var(--gold); }
+        .footer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(212,175,55,0.2); }
+        .footer-about p { color: var(--gray-light); margin: 1rem 0; font-size: 0.813rem; }
+        .footer-logo img { height: 45px; width: auto; margin-bottom: 1rem; }
+        .footer-title { font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; position: relative; padding-bottom: 0.5rem; color: var(--gold); }
+        .footer-title::after { content: ''; position: absolute; bottom: 0; left: 0; width: 40px; height: 2px; background: var(--gold-gradient); }
+        .footer-links { list-style: none; }
+        .footer-link { margin-bottom: 0.7rem; }
+        .footer-link a { color: var(--gray-light); text-decoration: none; transition: var(--transition); font-size: 0.813rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+        .footer-link a:hover { color: var(--gold); transform: translateX(5px); }
+        .contact-item { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.7rem; color: var(--gray-light); font-size: 0.813rem; }
+        .contact-item i { color: var(--gold); width: 20px; }
+        .social-links { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+        .social-link { width: 36px; height: 36px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--gold); text-decoration: none; transition: var(--transition); }
+        .social-link:hover { background: var(--gold); color: var(--primary-black); transform: translateY(-3px); }
+        .footer-bottom { padding: 1.5rem 0; }
+        .footer-bottom .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+        .copyright { font-size: 0.75rem; color: var(--gray-light); }
+        .payment-methods { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+        .payment-methods img { height: 30px; width: auto; background: var(--white); padding: 0.25rem 0.5rem; border-radius: var(--border-radius); }
+
+        /* Floating Buttons */
+        .floating-buttons { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 0.5rem; z-index: 998; }
+        .whatsapp-btn { width: 50px; height: 50px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-lg); transition: var(--transition); }
+        .whatsapp-btn img { width: 28px; height: 28px; }
+        .whatsapp-btn:hover { transform: scale(1.1); }
+        .back-to-top { width: 50px; height: 50px; border-radius: 50%; background: var(--gold-gradient); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--primary-black); font-size: 1.125rem; cursor: pointer; opacity: 0; visibility: hidden; transition: var(--transition); }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-3px); }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 3002; opacity: 0; visibility: hidden; transition: var(--transition); }
+        .modal.active { opacity: 1; visibility: visible; }
+        .modal-content { background: var(--white); border-radius: var(--border-radius-lg); padding: 2rem; max-width: 440px; width: 90%; position: relative; transform: scale(0.95); transition: var(--transition); }
+        .modal.active .modal-content { transform: scale(1); }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.25rem; cursor: pointer; }
+        .auth-tabs { display: flex; gap: 1rem; margin: 1rem 0 1.5rem; border-bottom: 2px solid var(--gray-light); }
+        .auth-tab { flex: 1; padding: 0.7rem; background: none; border: none; font-weight: 600; cursor: pointer; border-bottom: 2px solid transparent; font-size: 0.875rem; }
+        .auth-tab.active { color: var(--gold-dark); border-bottom-color: var(--gold); }
+        .auth-form { display: none; }
+        .auth-form.active { display: block; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.35rem; font-weight: 500; font-size: 0.813rem; }
+        .form-group input { width: 100%; padding: 0.7rem 1rem; border: 1px solid var(--gray-light); border-radius: var(--border-radius); font-size: 0.875rem; }
+        .auth-submit { width: 100%; padding: 0.8rem; background: var(--gold-gradient); border: none; border-radius: var(--border-radius); font-weight: 700; cursor: pointer; margin-top: 0.5rem; }
+        .notification-container { position: fixed; top: 20px; right: 20px; z-index: 10000; }
+        .notification { background: white; padding: 0.8rem 1.2rem; border-radius: var(--border-radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 0.75rem; transform: translateX(400px); transition: transform 0.3s ease; max-width: 350px; border-left: 4px solid; }
+        .notification.show { transform: translateX(0); }
+        .notification-success { border-left-color: var(--success); }
+        .notification-error { border-left-color: var(--danger); }
+
+        @media (max-width: 992px) {
+            .features-grid { grid-template-columns: repeat(3, 1fr); }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); }
+            .menu-rectangles { width: 100%; justify-content: space-between; margin-top: 0.5rem; }
+        }
+        @media (max-width: 860px) {
+            .hamburger { display: flex; }
+            .main-nav { display: none; }
+            .header-main .container { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+            .header-main .container .logo { order: 1; align-self: flex-start; }
+            .header-main .container .header-actions { order: 2; align-self: flex-end; margin-top: -50px; }
+            .header-main .container .search-wrapper { order: 3; max-width: 100%; width: 100%; margin: 0; }
+            .search-btn span { display: none; }
+            .cart-container { grid-template-columns: 1fr; }
+            .cart-summary { position: static; margin-top: 1.5rem; }
+            .cart-items-header { display: none; }
+            .cart-item { display: flex; flex-direction: column; gap: 1rem; text-align: center; }
+            .cart-item-product { justify-content: center; flex-direction: column; }
+            .cart-item-quantity { justify-content: center; }
+            .features-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; text-align: center; }
+            .footer-title::after { left: 50%; transform: translateX(-50%); }
+            .menu-rectangles { flex-direction: column; }
+            .small-rectangle, .large-rectangle { width: 100%; }
+            .social-icons-row { justify-content: center; }
+        }
+        @media (max-width: 480px) {
+            .header-main .container { padding: 0.4rem 0.75rem; }
+            .header-main .container .header-actions { margin-top: -42px; }
+            .action-btn { width: 35px; height: 35px; font-size: 0.9rem; }
+            .logo img { height: 38px; }
+            .cart-item-image { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER TOP -->
+    <div class="header-top">
+        <div class="container">
+            <div class="scrolling-banner">
+                <div class="scrolling-content">
+                    <span class="banner-item"><i class="fas fa-truck"></i> Livraison gratuite dès <strong>5000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-percent"></i> <strong>-30%</strong> sur Paname Wedding</span>
+                    <span class="banner-item"><i class="fas fa-shield-alt"></i> Paiement <strong>100% sécurisé</strong></span>
+                    <span class="banner-item"><i class="fas fa-clock"></i> Livraison <strong>24h-48h</strong> à Yaoundé</span>
+                    <span class="banner-item"><i class="fas fa-gift"></i> Cadeau surprise dès <strong>10000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-truck"></i> Livraison gratuite dès <strong>5000 Fcfa</strong></span>
+                    <span class="banner-item"><i class="fas fa-percent"></i> <strong>-30%</strong> sur Paname Wedding</span>
+                    <span class="banner-item"><i class="fas fa-shield-alt"></i> Paiement <strong>100% sécurisé</strong></span>
+                    <span class="banner-item"><i class="fas fa-clock"></i> Livraison <strong>24h-48h</strong> à Yaoundé</span>
+                    <span class="banner-item"><i class="fas fa-gift"></i> Cadeau surprise dès <strong>10000 Fcfa</strong></span>
+                </div>
+            </div>
+            <div class="customer-service">
+                <div class="service-item">
+                    <i class="fas fa-headset"></i>
+                    <div class="service-info">
+                        <h4>Service Client</h4>
+                        <p><a href="tel:+237657715482">+237 657 71 54 82</a> / <a href="tel:+237676391816">+237 676 39 18 16</a></p>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <i class="fas fa-envelope"></i>
+                    <div class="service-info">
+                        <h4>Email</h4>
+                        <p><a href="mailto:lepanameservice@gmail.com">lepanameservice@gmail.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER MAIN -->
+    <div class="header-main">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html"><img src="../assets/logoPANSERV.png" alt="Le Paname Service" onerror="this.src='https://placehold.co/200x50?text=LPS'"></a>
+                <span class="admin-badge-header" id="adminBadge"><i class="fas fa-shield-alt"></i> ADMIN</span>
+            </div>
+            <div class="search-wrapper">
+                <form class="search-form" id="desktopSearchForm">
+                    <input type="search" class="search-input" placeholder="Rechercher un produit..." id="desktopSearchInput">
+                    <button type="submit" class="search-btn"><i class="fas fa-search"></i><span>Rechercher</span></button>
+                </form>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn" id="adminDashboardBtn" style="display: none;"><i class="fas fa-chart-line"></i></button>
+                <button class="action-btn" id="adminLogoutBtn" style="display: none;"><i class="fas fa-sign-out-alt"></i></button>
+                <button class="action-btn" data-modal="auth"><i class="far fa-user"></i></button>
+                <a href="wishlist.html" class="action-btn"><i class="far fa-heart"></i><span class="wishlist-badge" id="wishlistBadge">0</span></a>
+                <a href="cart.html" class="action-btn"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartBadge">0</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAVIGATION -->
+    <div class="nav-wrapper">
+        <div class="container nav-container">
+            <button class="hamburger" id="hamburgerBtn"><span></span><span></span><span></span></button>
+            <nav class="main-nav">
+                <ul class="nav-links">
+                    <li class="nav-item"><a href="../index.html" class="nav-link">Accueil</a></li>
+                    <li class="nav-item"><a href="paname-store.html" class="nav-link">Paname Store</a></li>
+                    <li class="nav-item"><a href="paname-market.html" class="nav-link">Paname Market</a></li>
+                    <li class="nav-item"><a href="sante.html" class="nav-link">Santé</a></li>
+                    <li class="nav-item"><a href="auto-moto.html" class="nav-link">Auto-Moto</a></li>
+                    <li class="nav-item"><a href="montres-bijoux.html" class="nav-link">Montres & Bijoux</a></li>
+                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="menu-rectangles">
+                <div class="large-rectangle">
+                    <div class="social-icons-row">
+                        <a href="https://www.facebook.com/profile.php?id=61557575415489" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/lepanameservice237" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/+237657715482" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.tiktok.com/@lepanameservice237" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+                <div class="small-rectangle" id="openServicesSidebar">
+                    <div class="rectangle-header">
+                        <span><i class="fas fa-concierge-bell"></i> Nos Services</span>
+                        <div class="hamburger-mini"><span></span><span></span><span></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SERVICES SIDEBAR -->
+    <div class="services-sidebar-overlay" id="servicesSidebarOverlay"></div>
+    <div class="services-sidebar" id="servicesSidebar">
+        <div class="services-sidebar-header">
+            <h3><i class="fas fa-crown"></i> Le Paname Service</h3>
+            <button class="close-sidebar-btn" id="closeServicesSidebar"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="services-sidebar-content">
+            <div class="service-category-sidebar"><h4><i class="fas fa-ring"></i> Événementiel</h4><ul><li><a href="panamewedding.html"><i class="fas fa-chevron-right"></i> Paname Wedding</a></li><li><a href="panameevent.html"><i class="fas fa-chevron-right"></i> Paname Event</a></li><li><a href="panameproduction.html"><i class="fas fa-chevron-right"></i> Paname Production</a></li></ul></div>
+            <div class="service-category-sidebar"><h4><i class="fas fa-home"></i> Habitat & Voyage</h4><ul><li><a href="panamehouse.html"><i class="fas fa-chevron-right"></i> Paname House</a></li><li><a href="panametravel.html"><i class="fas fa-chevron-right"></i> Paname Travel</a></li><li><a href="livraisonexpress.html"><i class="fas fa-chevron-right"></i> Livraison Express</a></li></ul></div>
+            <div class="service-category-sidebar"><h4><i class="fas fa-shield-alt"></i> Sécurité & Luxe</h4><ul><li><a href="panamesecurity.html"><i class="fas fa-chevron-right"></i> Paname Security</a></li><li><a href="panameluxury.html"><i class="fas fa-chevron-right"></i> Paname Luxury</a></li></ul></div>
+            <div class="service-category-sidebar"><h4><i class="fas fa-headset"></i> Support & Assistance</h4><ul><li><a href="contact.html"><i class="fas fa-chevron-right"></i> Contactez-nous</a></li><li><a href="#"><i class="fas fa-chevron-right"></i> FAQ</a></li><li><a href="#"><i class="fas fa-chevron-right"></i> Devis en ligne</a></li></ul></div>
+        </div>
+        <div class="services-sidebar-footer"><p><i class="fas fa-clock"></i> Disponible 24h/24 et 7j/7</p><div class="contact-info"><a href="tel:+237657715482"><i class="fas fa-phone"></i> +237 657 71 54 82</a><a href="mailto:lepanameservice@gmail.com"><i class="fas fa-envelope"></i> lepanameservice@gmail.com</a></div></div>
+    </div>
+
+    <!-- MOBILE SIDEBAR -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-header"><h3><i class="fas fa-crown"></i> Le Paname Service</h3><button class="sidebar-close" id="sidebarCloseBtn"><i class="fas fa-times"></i></button></div>
+        <div class="sidebar-search"><form class="search-form" id="mobileSearchForm"><input type="search" class="search-input" placeholder="Rechercher..." id="mobileSearchInput"><button type="submit" class="search-btn"><i class="fas fa-search"></i></button></form></div>
+        <div class="sidebar-nav-scroll"><ul class="sidebar-nav"><li class="sidebar-nav-item"><a href="../index.html" class="sidebar-nav-link"><span><i class="fas fa-home"></i> Accueil</span></a></li><li class="sidebar-nav-item"><a href="paname-store.html" class="sidebar-nav-link"><span><i class="fas fa-laptop"></i> Paname Store</span></a></li><li class="sidebar-nav-item"><a href="paname-market.html" class="sidebar-nav-link"><span><i class="fas fa-shopping-cart"></i> Paname Market</span></a></li><li class="sidebar-nav-item"><a href="sante.html" class="sidebar-nav-link"><span><i class="fas fa-heartbeat"></i> Santé</span></a></li><li class="sidebar-nav-item"><a href="auto-moto.html" class="sidebar-nav-link"><span><i class="fas fa-car"></i> Auto-Moto</span></a></li><li class="sidebar-nav-item"><a href="montres-bijoux.html" class="sidebar-nav-link"><span><i class="fas fa-gem"></i> Montres & Bijoux</span></a></li><li class="sidebar-nav-item"><a href="contact.html" class="sidebar-nav-link"><span><i class="fas fa-envelope"></i> Contact</span></a></li></ul></div>
+        <div class="sidebar-footer"><button class="sidebar-auth-btn" data-modal="auth"><i class="far fa-user"></i><span>Mon compte</span></button><div class="sidebar-contact"><div class="sidebar-contact-item"><i class="fas fa-phone"></i><span>+237 657 71 54 82</span></div><div class="sidebar-contact-item"><i class="fas fa-phone"></i><span>+237 676 39 18 16</span></div><div class="sidebar-contact-item"><i class="fas fa-envelope"></i><span>lepanameservice@gmail.com</span></div><div class="sidebar-contact-item"><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroun</span></div></div><div class="sidebar-social"><a href="https://www.facebook.com/profile.php?id=61557575415489" class="sidebar-social-link"><i class="fab fa-facebook-f"></i></a><a href="https://www.instagram.com/lepanameservice237" class="sidebar-social-link"><i class="fab fa-instagram"></i></a><a href="https://wa.me/+237657715482" class="sidebar-social-link"><i class="fab fa-whatsapp"></i></a><a href="https://www.tiktok.com/@lepanameservice237" class="sidebar-social-link"><i class="fab fa-tiktok"></i></a></div></div>
+    </div>
+
+    <!-- CART SECTION -->
+    <section class="cart-section">
+        <div class="container">
+            <div class="cart-header"><h1 class="cart-title">Mon Panier</h1></div>
+            <div class="cart-container">
+                <div class="cart-items" id="cartItemsContainer"></div>
+                <div class="cart-summary" id="cartSummary"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features-section">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-truck"></i></div><h4>Livraison Gratuite</h4><p>Dès 5000 Fcfa</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h4>Paiement sécurisé</h4><p>OM, MTN, PayPal</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-headset"></i></div><h4>Support 24/7</h4><p>Service client</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-store"></i></div><h4>Retrait magasin</h4><p>-10% dès 10 000 Fcfa</p></div>
+                <div class="feature-card"><div class="feature-icon"><i class="fas fa-undo-alt"></i></div><h4>Retour facile</h4><p>14 jours</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-about"><div class="footer-logo"><img src="../assets/logoPANSERV.png" alt="Le Paname Service" onerror="this.src='https://placehold.co/200x50?text=LPS'"></div><p>Le Paname Service - Votre partenaire de confiance pour tous vos besoins.</p><div class="contact-item"><a href="https://maps.app.goo.gl/CzziPJ2yLc8sPuuv7"><i class="fas fa-map-marker-alt"></i><span>Yaoundé, Cameroun</span></a></div></div>
+                <div><h4 class="footer-title">E-commerce</h4><ul class="footer-links"><li class="footer-link"><a href="../index.html"><i class="fas fa-chevron-right"></i> Accueil</a></li><li class="footer-link"><a href="paname-store.html"><i class="fas fa-chevron-right"></i> Paname Store</a></li><li class="footer-link"><a href="paname-market.html"><i class="fas fa-chevron-right"></i> Paname Market</a></li><li class="footer-link"><a href="sante.html"><i class="fas fa-chevron-right"></i> Santé</a></li><li class="footer-link"><a href="auto-moto.html"><i class="fas fa-chevron-right"></i> Auto-Moto</a></li><li class="footer-link"><a href="montres-bijoux.html"><i class="fas fa-chevron-right"></i> Montres & Bijoux</a></li><li class="footer-link"><a href="contact.html"><i class="fas fa-chevron-right"></i> Contact</a></li></ul></div>
+                <div><h4 class="footer-title">Nos services</h4><ul class="footer-links"><li class="footer-link"><a href="panamewedding.html"><i class="fas fa-chevron-right"></i> Paname Wedding</a></li><li class="footer-link"><a href="panamehouse.html"><i class="fas fa-chevron-right"></i> Paname House</a></li><li class="footer-link"><a href="panametravel.html"><i class="fas fa-chevron-right"></i> Paname Travel</a></li><li class="footer-link"><a href="panameevent.html"><i class="fas fa-chevron-right"></i> Paname Event</a></li><li class="footer-link"><a href="panameproduction.html"><i class="fas fa-chevron-right"></i> Paname Production</a></li><li class="footer-link"><a href="panamesecurity.html"><i class="fas fa-chevron-right"></i> Paname Security</a></li><li class="footer-link"><a href="livraisonexpress.html"><i class="fas fa-chevron-right"></i> Livraison Express</a></li></ul></div>
+                <div><h4 class="footer-title">Contact</h4><div class="contact-item"><i class="fas fa-phone"></i><span>+237 657 71 54 82</span></div><div class="contact-item"><i class="fas fa-phone"></i><span>+237 676 39 18 16</span></div><div class="contact-item"><i class="fas fa-envelope"></i><span>lepanameservice@gmail.com</span></div><div class="social-links"><a href="https://www.facebook.com/profile.php?id=61557575415489" class="social-link"><i class="fab fa-facebook-f"></i></a><a href="https://www.instagram.com/lepanameservice237" class="social-link"><i class="fab fa-instagram"></i></a><a href="https://wa.me/+237657715482" class="social-link"><i class="fab fa-whatsapp"></i></a><a href="https://www.tiktok.com/@lepanameservice237" class="social-link"><i class="fab fa-tiktok"></i></a></div></div>
+            </div>
+            <div class="footer-bottom"><div class="container"><div class="copyright">&copy; 2025 <a href="../index.html">Le Paname Service</a>. Tous droits réservés.</div><div class="payment-methods"><img src="../assets/om.jpg" alt="Orange Money" onerror="this.src='https://placehold.co/50x30?text=OM'"><img src="../assets/momo.jpg" alt="MTN Mobile Money" onerror="this.src='https://placehold.co/50x30?text=MTN'"><img src="../assets/paypal.jpg" alt="PayPal" onerror="this.src='https://placehold.co/50x30?text=PayPal'"></div></div></div>
+        </div>
+    </footer>
+
+    <!-- FLOATING BUTTONS -->
+    <div class="floating-buttons"><a href="https://wa.me/+237657715482" class="whatsapp-btn" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp"></a><a href="#" class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></a></div>
+
+    <!-- MODAL AUTH -->
+    <div class="modal" id="authModal"><div class="modal-content"><button class="modal-close" data-modal-close><i class="fas fa-times"></i></button><div class="modal-header"><h2>Bienvenue</h2><p>Connectez-vous ou créez un compte</p></div><div class="auth-tabs"><button class="auth-tab active" data-tab="login">Connexion</button><button class="auth-tab" data-tab="register">Inscription</button><button class="auth-tab" data-tab="admin"><i class="fas fa-shield-alt"></i> Admin</button></div><form class="auth-form active" id="loginForm"><div class="form-group"><label>Email</label><input type="email" id="loginEmail" required></div><div class="form-group"><label>Mot de passe</label><input type="password" id="loginPassword" required></div><button type="submit" class="auth-submit">Se connecter</button></form><form class="auth-form" id="registerForm"><div class="form-group"><label>Nom complet</label><input type="text" id="regName" required></div><div class="form-group"><label>Email</label><input type="email" id="regEmail" required></div><div class="form-group"><label>Téléphone</label><input type="tel" id="regPhone" required></div><div class="form-group"><label>Mot de passe</label><input type="password" id="regPassword" required></div><div class="form-group"><label>Confirmer</label><input type="password" id="regConfirmPassword" required></div><button type="submit" class="auth-submit">S'inscrire</button></form><form class="auth-form" id="adminForm"><div class="form-group"><label>Email admin</label><input type="email" id="adminEmail" placeholder="admin@lepaname.com" required></div><div class="form-group"><label>Mot de passe</label><input type="password" id="adminPassword" placeholder="••••••••" required></div><button type="submit" class="auth-submit"><i class="fas fa-sign-in-alt"></i> Se connecter</button></form></div></div>
+
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script>
+        // ==================== BASE DE DONNÉES DES PRODUITS ====================
+        // Catalogue complet des produits disponibles sur le site
+        const productsDatabase = {
+            1: { id: 1, name: 'Ordinateur Portable Ultrabook', price: 450000, category: 'Informatique', image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=200', stock: 10 },
+            2: { id: 2, name: 'Souris Gamer RGB', price: 25000, category: 'Périphériques', image: 'https://images.unsplash.com/photo-1527814050087-3793815479db?w=200', stock: 25 },
+            3: { id: 3, name: 'Écran 4K 27 pouces', price: 250000, category: 'Écrans', image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=200', stock: 5 },
+            4: { id: 4, name: 'Clavier Mécanique RGB', price: 55000, category: 'Périphériques', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=200', stock: 15 },
+            5: { id: 5, name: 'Tensiomètre Électronique', price: 35000, category: 'Santé', image: 'https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=200', stock: 8 },
+            6: { id: 6, name: 'Ananas Victoria', price: 2000, category: 'Alimentation', image: 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?w=200', stock: 50 },
+            7: { id: 7, name: 'Casque Audio Bluetooth', price: 45000, category: 'Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=200', stock: 12 },
+            8: { id: 8, name: 'Smart TV 55" 4K', price: 650000, category: 'TV', image: 'https://images.unsplash.com/photo-1593359677879-a4bb92f829d1?w=200', stock: 3 },
+            9: { id: 9, name: 'Apple iPhone 15 Pro', price: 950000, category: 'Smartphone', image: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?w=200', stock: 7 },
+            10: { id: 10, name: 'Tablette Samsung Galaxy', price: 250000, category: 'Tablette', image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=200', stock: 6 },
+            11: { id: 11, name: 'Enceinte JBL Bluetooth', price: 85000, category: 'Audio', image: 'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=200', stock: 20 },
+            12: { id: 12, name: 'Montre Connectée', price: 120000, category: 'Accessoires', image: 'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=200', stock: 15 }
+        };
+
+        // ==================== CONFIGURATION ====================
+        const STORAGE_KEYS = {
+            CART: 'paname_cart',
+            USER: 'paname_user',
+            TOKEN: 'paname_auth_token',
+            ADMIN_SESSION: 'paname_admin_session'
+        };
+
+        // ==================== ÉTAT ====================
+        let cartItems = [];
+
+        // ==================== ADMIN ====================
+        const ADMIN_CONFIG = {
+            email: 'admin@lepaname.com',
+            password: 'Admin123!',
+            sessionKey: STORAGE_KEYS.ADMIN_SESSION
+        };
+
+        function isAdminLoggedIn() {
+            const session = localStorage.getItem(ADMIN_CONFIG.sessionKey);
+            if (!session) return false;
+            try {
+                const data = JSON.parse(session);
+                if (Date.now() > data.expires) { logoutAdmin(); return false; }
+                return true;
+            } catch(e) { return false; }
+        }
+
+        function loginAdmin(email, password) {
+            if (email === ADMIN_CONFIG.email && password === ADMIN_CONFIG.password) {
+                localStorage.setItem(ADMIN_CONFIG.sessionKey, JSON.stringify({ loggedIn: true, expires: Date.now() + 86400000 }));
+                return true;
+            }
+            return false;
+        }
+
+        function logoutAdmin() {
+            localStorage.removeItem(ADMIN_CONFIG.sessionKey);
+            updateAdminUI();
+            showNotif('Déconnexion admin', 'Mode administrateur désactivé', 'success');
+        }
+
+        function updateAdminUI() {
+            const isAdmin = isAdminLoggedIn();
+            const adminBadge = document.getElementById('adminBadge');
+            const dashboardBtn = document.getElementById('adminDashboardBtn');
+            const logoutBtn = document.getElementById('adminLogoutBtn');
+            if (adminBadge) adminBadge.style.display = isAdmin ? 'inline-block' : 'none';
+            if (dashboardBtn) dashboardBtn.style.display = isAdmin ? 'flex' : 'none';
+            if (logoutBtn) logoutBtn.style.display = isAdmin ? 'flex' : 'none';
+        }
+
+        // ==================== UTILITAIRES ====================
+        function formatPrice(price) {
+            return (price || 0).toLocaleString() + ' Fcfa';
+        }
+
+        function showNotif(title, message, type = 'success') {
+            const container = document.getElementById('notificationContainer');
+            if (!container) return;
+            const n = document.createElement('div');
+            n.className = `notification notification-${type}`;
+            n.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i><div><strong>${title}</strong><p style="font-size:0.75rem;">${message}</p></div><button onclick="this.remove()"><i class="fas fa-times"></i></button>`;
+            container.appendChild(n);
+            setTimeout(() => n.classList.add('show'), 10);
+            setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 4000);
+        }
+
+        // ==================== GESTION DU PANIER ====================
+        function loadCart() {
+            const savedCart = localStorage.getItem(STORAGE_KEYS.CART);
+            if (savedCart) {
+                try {
+                    cartItems = JSON.parse(savedCart);
+                } catch(e) { cartItems = []; }
+            } else {
+                cartItems = [];
+            }
+            updateCartBadge();
+            renderCart();
+        }
+
+        function saveCart() {
+            localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(cartItems));
+            updateCartBadge();
+        }
+
+        function updateCartBadge() {
+            const totalItems = cartItems.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            const badge = document.getElementById('cartBadge');
+            if (badge) {
+                badge.textContent = totalItems;
+                badge.style.display = totalItems > 0 ? 'flex' : 'none';
+            }
+        }
+
+        // FONCTION PRINCIPALE POUR AJOUTER AU PANIER - Appelable depuis n'importe quelle page
+        window.addToCart = function(productId, quantity = 1) {
+            // Récupérer les informations du produit
+            const product = productsDatabase[productId];
+            
+            if (!product) {
+                console.error('Produit non trouvé ID:', productId);
+                showNotif('Erreur', 'Produit non trouvé', 'error');
+                return false;
+            }
+            
+            // Vérifier le stock
+            if (product.stock !== undefined && product.stock < quantity) {
+                showNotif('Stock insuffisant', `Désolé, seulement ${product.stock} exemplaire(s) disponible(s)`, 'error');
+                return false;
+            }
+            
+            // Chercher si le produit est déjà dans le panier
+            const existingItem = cartItems.find(item => item.id === productId);
+            
+            if (existingItem) {
+                // Vérifier le stock pour la nouvelle quantité
+                const newQuantity = existingItem.quantity + quantity;
+                if (product.stock !== undefined && product.stock < newQuantity) {
+                    showNotif('Stock insuffisant', `Vous ne pouvez pas ajouter plus que ${product.stock} exemplaires`, 'error');
+                    return false;
+                }
+                existingItem.quantity = newQuantity;
+                showNotif('Panier mis à jour', `${product.name} (x${existingItem.quantity})`, 'success');
+            } else {
+                // Ajouter un nouveau produit
+                cartItems.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    quantity: quantity,
+                    image: product.image,
+                    category: product.category
+                });
+                showNotif('Ajouté au panier', `${product.name} (x${quantity})`, 'success');
+            }
+            
+            saveCart();
+            renderCart();
+            
+            // Mettre à jour le badge sur toutes les pages
+            updateCartBadge();
+            
+            return true;
+        };
+
+        // Fonction pour ajouter avec des paramètres personnalisés (utilisée si le produit n'est pas dans la base)
+        window.addToCartCustom = function(id, name, price, quantity = 1, image = null, category = 'Produit') {
+            const existingItem = cartItems.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+                showNotif('Panier mis à jour', `${name} (x${existingItem.quantity})`, 'success');
+            } else {
+                cartItems.push({
+                    id: id,
+                    name: name,
+                    price: price,
+                    quantity: quantity,
+                    image: image || 'https://placehold.co/200x200?text=Produit',
+                    category: category
+                });
+                showNotif('Ajouté au panier', `${name} (x${quantity})`, 'success');
+            }
+            
+            saveCart();
+            renderCart();
+            updateCartBadge();
+            return true;
+        };
+
+        function updateQuantity(productId, change) {
+            const item = cartItems.find(i => i.id === productId);
+            if (item) {
+                const newQty = item.quantity + change;
+                if (newQty >= 1) {
+                    // Vérifier le stock
+                    const product = productsDatabase[productId];
+                    if (product && product.stock !== undefined && product.stock < newQty) {
+                        showNotif('Stock insuffisant', `Désolé, seulement ${product.stock} exemplaire(s) disponible(s)`, 'error');
+                        return;
+                    }
+                    item.quantity = newQty;
+                } else if (newQty === 0) {
+                    removeItem(productId);
+                    return;
+                }
+                saveCart();
+                renderCart();
+                showNotif('Panier', `Quantité mise à jour`, 'success');
+            }
+        }
+
+        function updateQuantityInput(productId, value) {
+            const item = cartItems.find(i => i.id === productId);
+            if (item) {
+                let newQty = parseInt(value);
+                if (isNaN(newQty) || newQty < 1) newQty = 1;
+                
+                // Vérifier le stock
+                const product = productsDatabase[productId];
+                if (product && product.stock !== undefined && product.stock < newQty) {
+                    showNotif('Stock insuffisant', `Désolé, seulement ${product.stock} exemplaire(s) disponible(s)`, 'error');
+                    renderCart();
+                    return;
+                }
+                item.quantity = newQty;
+                saveCart();
+                renderCart();
+            }
+        }
+
+        function removeItem(productId) {
+            const item = cartItems.find(i => i.id === productId);
+            cartItems = cartItems.filter(i => i.id !== productId);
+            saveCart();
+            renderCart();
+            if (item) {
+                showNotif('Produit supprimé', `${item.name} retiré du panier`, 'success');
+            }
+        }
+
+        function clearCart() {
+            if (cartItems.length === 0) return;
+            if (confirm('Vider tout le panier ?')) {
+                cartItems = [];
+                saveCart();
+                renderCart();
+                showNotif('Panier vidé', 'Tous les articles ont été supprimés', 'success');
+            }
+        }
+
+        function applyPromoCode() {
+            const input = document.getElementById('promoCodeInput');
+            const code = input?.value.trim().toUpperCase();
+            const promoCodes = {
+                'BIENVENUE10': { type: 'percentage', value: 10, message: 'Réduction de 10% appliquée' },
+                'LIVRAISON': { type: 'delivery', value: 0, message: 'Livraison gratuite offerte' },
+                'PROMO20': { type: 'percentage', value: 20, message: 'Réduction de 20% appliquée' },
+                'NOEL2024': { type: 'percentage', value: 15, message: 'Réduction de 15% appliquée' }
+            };
+            
+            if (promoCodes[code]) {
+                showNotif('Code promo', promoCodes[code].message, 'success');
+            } else if (code) {
+                showNotif('Code invalide', 'Ce code promo n\'existe pas', 'error');
+            }
+            if (input) input.value = '';
+        }
+
+        function proceedToCheckout() {
+            if (cartItems.length === 0) {
+                showNotif('Panier vide', 'Ajoutez des produits avant de commander', 'error');
+                return;
+            }
+            showNotif('Commande', 'Redirection vers la page de paiement', 'success');
+            setTimeout(() => { window.location.href = 'checkout.html'; }, 1500);
+        }
+
+        function getSubtotal() {
+            return cartItems.reduce((sum, item) => sum + ((item.price || 0) * (item.quantity || 1)), 0);
+        }
+
+        function getDeliveryFee() {
+            return getSubtotal() >= 5000 ? 0 : 1500;
+        }
+
+        function getTotal() {
+            return getSubtotal() + getDeliveryFee();
+        }
+
+        // ==================== AFFICHAGE ====================
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            const summaryContainer = document.getElementById('cartSummary');
+            
+            if (!container) return;
+            
+            if (cartItems.length === 0) {
+                container.innerHTML = `
+                    <div class="cart-empty">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Votre panier est vide</h3>
+                        <p>Découvrez nos produits et ajoutez-les à votre panier</p>
+                        <a href="../index.html" class="btn">Continuer mes achats</a>
+                    </div>
+                `;
+                if (summaryContainer) {
+                    summaryContainer.innerHTML = `
+                        <h3>Résumé de la commande</h3>
+                        <div class="summary-row"><span>Sous-total</span><span>0 Fcfa</span></div>
+                        <div class="summary-row"><span>Livraison</span><span>Gratuite</span></div>
+                        <div class="summary-row total"><span>Total</span><span>0 Fcfa</span></div>
+                        <button class="checkout-btn" onclick="proceedToCheckout()" disabled style="opacity:0.5">Passer commande</button>
+                    `;
+                }
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="cart-items-header">
+                    <span>Produit</span><span>Prix</span><span>Quantité</span><span>Total</span><span></span>
+                </div>
+                ${cartItems.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-product">
+                            <div class="cart-item-image"><img src="${item.image}" alt="${item.name}" onerror="this.src='https://placehold.co/200x200?text=Produit'"></div>
+                            <div class="cart-item-info"><h4>${item.name}</h4><p>${item.category || 'Produit'}</p></div>
+                        </div>
+                        <div class="cart-item-price">${formatPrice(item.price)}</div>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantityInput(${item.id}, this.value)">
+                            <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                        </div>
+                        <div class="cart-item-total">${formatPrice((item.price || 0) * (item.quantity || 1))}</div>
+                        <div class="cart-item-remove" onclick="removeItem(${item.id})"><i class="fas fa-trash-alt"></i></div>
+                    </div>
+                `).join('')}
+                <div style="padding:1rem; text-align:right;">
+                    <button class="btn" onclick="clearCart()" style="background:#dc3545; color:white;">Vider le panier</button>
+                </div>
+            `;
+            
+            const subtotal = getSubtotal();
+            const delivery = getDeliveryFee();
+            const total = getTotal();
+            
+            if (summaryContainer) {
+                summaryContainer.innerHTML = `
+                    <h3>Résumé de la commande</h3>
+                    <div class="summary-row"><span>Sous-total</span><span>${formatPrice(subtotal)}</span></div>
+                    <div class="summary-row"><span>Livraison</span><span>${delivery === 0 ? 'Gratuite' : formatPrice(delivery)}</span></div>
+                    <div class="promo-code">
+                        <div class="promo-input">
+                            <input type="text" id="promoCodeInput" placeholder="Code promo">
+                            <button onclick="applyPromoCode()">Appliquer</button>
+                        </div>
+                    </div>
+                    <div class="summary-row total"><span>Total</span><span>${formatPrice(total)}</span></div>
+                    <button class="checkout-btn" onclick="proceedToCheckout()"><i class="fas fa-lock"></i> Passer commande</button>
+                    <div class="payment-methods-summary">
+                        <div class="payment-icons">
+                            <img src="../assets/om.jpg" alt="Orange Money" onerror="this.src='https://placehold.co/50x30?text=OM'">
+                            <img src="../assets/momo.jpg" alt="MTN Mobile Money" onerror="this.src='https://placehold.co/50x30?text=MTN'">
+                            <img src="../assets/paypal.jpg" alt="PayPal" onerror="this.src='https://placehold.co/50x30?text=PayPal'">
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // ==================== RECHERCHE ====================
+        function searchProducts(query) {
+            if (!query || query.trim() === '') {
+                showNotif('Recherche', 'Veuillez entrer un terme de recherche', 'error');
+                return;
+            }
+            const term = query.toLowerCase().trim();
+            const found = Object.values(productsDatabase).filter(p => 
+                p.name.toLowerCase().includes(term) || p.category.toLowerCase().includes(term)
+            );
+            if (found.length > 0) {
+                showNotif('Recherche', `${found.length} produit(s) trouvé(s)`, 'success');
+            } else {
+                showNotif('Recherche', 'Aucun produit trouvé', 'error');
+            }
+        }
+
+        // ==================== SIDEBARS ====================
+        const openServicesBtn = document.getElementById('openServicesSidebar');
+        const servicesSidebar = document.getElementById('servicesSidebar');
+        const servicesOverlay = document.getElementById('servicesSidebarOverlay');
+        const closeServicesBtn = document.getElementById('closeServicesSidebar');
+
+        function openServicesMenu() {
+            servicesSidebar?.classList.add('active');
+            servicesOverlay?.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeServicesMenu() {
+            servicesSidebar?.classList.remove('active');
+            servicesOverlay?.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        if (openServicesBtn) openServicesBtn.addEventListener('click', openServicesMenu);
+        if (closeServicesBtn) closeServicesBtn.addEventListener('click', closeServicesMenu);
+        if (servicesOverlay) servicesOverlay.addEventListener('click', closeServicesMenu);
+
+        const hamburger = document.getElementById('hamburgerBtn');
+        const mobileSidebar = document.getElementById('mobileSidebar');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const sidebarClose = document.getElementById('sidebarCloseBtn');
+
+        function openMobileSidebar() { mobileSidebar?.classList.add('active'); menuOverlay?.classList.add('active'); hamburger?.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeMobileSidebar() { mobileSidebar?.classList.remove('active'); menuOverlay?.classList.remove('active'); hamburger?.classList.remove('active'); document.body.style.overflow = ''; }
+        if (hamburger) hamburger.addEventListener('click', () => mobileSidebar?.classList.contains('active') ? closeMobileSidebar() : openMobileSidebar());
+        if (sidebarClose) sidebarClose.addEventListener('click', closeMobileSidebar);
+        if (menuOverlay) menuOverlay.addEventListener('click', closeMobileSidebar);
+
+        // ==================== MODAL ====================
+        const modal = document.getElementById('authModal');
+        const modalTriggers = document.querySelectorAll('[data-modal="auth"]');
+        const modalCloseBtn = document.querySelector('[data-modal-close]');
+        function openModal() { modal?.classList.add('active'); document.body.style.overflow = 'hidden'; }
+        function closeModal() { modal?.classList.remove('active'); document.body.style.overflow = ''; }
+        modalTriggers.forEach(t => t.addEventListener('click', openModal));
+        if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+        if (modal) modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+        document.querySelectorAll('.auth-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`${target}Form`)?.classList.add('active');
+            });
+        });
+
+        document.getElementById('loginForm')?.addEventListener('submit', e => { e.preventDefault(); showNotif('Connexion', 'Connexion réussie !', 'success'); setTimeout(closeModal, 1500); });
+        document.getElementById('registerForm')?.addEventListener('submit', e => {
+            e.preventDefault();
+            const pwd = document.getElementById('regPassword');
+            const confirm = document.getElementById('regConfirmPassword');
+            if (pwd && confirm && pwd.value !== confirm.value) {
+                showNotif('Erreur', 'Les mots de passe ne correspondent pas', 'error');
+                return;
+            }
+            showNotif('Inscription', 'Compte créé avec succès !', 'success');
+            document.querySelector('.auth-tab[data-tab="login"]')?.click();
+        });
+        document.getElementById('adminForm')?.addEventListener('submit', e => {
+            e.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const pwd = document.getElementById('adminPassword').value;
+            if (loginAdmin(email, pwd)) {
+                showNotif('Admin', 'Connexion administrateur réussie', 'success');
+                updateAdminUI();
+                closeModal();
+            } else {
+                showNotif('Erreur', 'Email ou mot de passe incorrect', 'error');
+            }
+        });
+
+        document.getElementById('adminDashboardBtn')?.addEventListener('click', () => { window.location.href = 'dashboard.html'; });
+        document.getElementById('adminLogoutBtn')?.addEventListener('click', () => { if (confirm('Déconnexion admin ?')) { logoutAdmin(); } });
+
+        // ==================== BACK TO TOP ====================
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => { if (backToTop) backToTop.classList.toggle('visible', window.scrollY > 300); });
+        if (backToTop) backToTop.addEventListener('click', e => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+        // ==================== RECHERCHE ====================
+        document.getElementById('desktopSearchForm')?.addEventListener('submit', e => { e.preventDefault(); searchProducts(document.getElementById('desktopSearchInput').value); });
+        document.getElementById('mobileSearchForm')?.addEventListener('submit', e => { e.preventDefault(); searchProducts(document.getElementById('mobileSearchInput').value); closeMobileSidebar(); });
+
+        // ==================== INITIALISATION ====================
+        loadCart();
+        updateAdminUI();
+
+        // Exposer les fonctions globalement pour les autres pages
+        window.updateQuantity = updateQuantity;
+        window.updateQuantityInput = updateQuantityInput;
+        window.removeItem = removeItem;
+        window.clearCart = clearCart;
+        window.applyPromoCode = applyPromoCode;
+        window.proceedToCheckout = proceedToCheckout;
+        window.searchProducts = searchProducts;
+        window.addToCart = addToCart;
+        window.addToCartCustom = addToCartCustom;
+        window.productsDatabase = productsDatabase;
+
+        console.log('🛒 Page Panier - Prête - Panier initialement vide');
+        console.log('📦 Utilisez window.addToCart(id, quantité) pour ajouter des produits');
+        console.log('📦 Exemple: addToCart(1, 2) pour ajouter 2 ordinateurs');
+        console.log('🔐 Identifiants admin: admin@lepaname.com / Admin123!');
+    </script>
+</body>
+</html>

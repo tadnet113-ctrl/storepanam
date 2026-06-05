@@ -1,0 +1,245 @@
+# ==================== .htaccess - Configuration Apache pour Le Paname Service ====================
+
+# Activation du moteur de réécriture d'URL
+RewriteEngine On
+
+# ==================== SÉCURITÉ ====================
+
+# Désactiver l'affichage des répertoires
+Options -Indexes
+
+# Protection des fichiers sensibles
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+<FilesMatch "\.(ini|log|sql|bak|config|json|md|gitignore)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protection du fichier .htaccess lui-même
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protection des dossiers sensibles
+<IfModule mod_authz_core.c>
+    <DirectoryMatch "^/.*/(?:admin|payment|assets|data|config|includes)/">
+        Options -Indexes
+    </DirectoryMatch>
+</IfModule>
+
+# ==================== HEADERS DE SÉCURITÉ ====================
+
+<IfModule mod_headers.c>
+    # Protection XSS
+    Header set X-XSS-Protection "1; mode=block"
+    
+    # Protection contre le MIME sniffing
+    Header set X-Content-Type-Options "nosniff"
+    
+    # Clickjacking protection
+    Header set X-Frame-Options "SAMEORIGIN"
+    
+    # Referrer Policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    
+    # Content Security Policy (CSP) de base
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com https://placehold.co; connect-src 'self' http://localhost:8080 https://api.lepaname.com"
+    
+    # HSTS (HTTP Strict Transport Security) - à activer uniquement en HTTPS
+    # Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" env=HTTPS
+    
+    # Cache-Control pour les fichiers statiques
+    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf|woff|woff2|ttf|svg)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+    
+    # Désactiver le cache pour les fichiers HTML
+    <FilesMatch "\.(html|htm|php)$">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
+# ==================== RÉÉCRITURE D'URL ====================
+
+# Redirection des erreurs
+ErrorDocument 404 /error/404.html
+ErrorDocument 403 /error/403.html
+ErrorDocument 500 /error/500.html
+
+# Redirection WWW vers non-WWW (ou l'inverse)
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ https://%1/$1 [R=301,L]
+
+# Redirection HTTP vers HTTPS (décommenter en production)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# ==================== ROUTES DE L'APPLICATION ====================
+
+# Page d'accueil
+RewriteRule ^$ index.html [L]
+
+# Pages principales
+RewriteRule ^accueil$ index.html [L,QSA]
+RewriteRule ^boutique$ pages/panamestore.html [L,QSA]
+RewriteRule ^market$ pages/panamemarket.html [L,QSA]
+RewriteRule ^sante$ pages/sante.html [L,QSA]
+RewriteRule ^auto-moto$ pages/auto_moto.html [L,QSA]
+RewriteRule ^bijoux$ pages/montres-bijoux.html [L,QSA]
+RewriteRule ^contact$ pages/contact.html [L,QSA]
+RewriteRule ^panier$ pages/cart.html [L,QSA]
+RewriteRule ^commande$ pages/checkout.html [L,QSA]
+RewriteRule ^profil$ pages/profile.html [L,QSA]
+RewriteRule ^commandes$ pages/orders.html [L,QSA]
+
+# Services
+RewriteRule ^wedding$ services/panamewedding.html [L,QSA]
+RewriteRule ^event$ services/panameevent.html [L,QSA]
+RewriteRule ^production$ services/panameproduction.html [L,QSA]
+RewriteRule ^house$ services/panamehouse.html [L,QSA]
+RewriteRule ^travel$ services/panametravel.html [L,QSA]
+RewriteRule ^security$ services/panamesecurity.html [L,QSA]
+RewriteRule ^luxury$ services/panameluxury.html [L,QSA]
+RewriteRule ^livraison$ services/livraisonexpress.html [L,QSA]
+
+# Paiements
+RewriteRule ^paiement/orange$ payment/orange-money.html [L,QSA]
+RewriteRule ^paiement/mtn$ payment/mtn-money.html [L,QSA]
+RewriteRule ^paiement/paypal$ payment/paypal.html [L,QSA]
+RewriteRule ^paiement/carte$ payment/visa-mastercard.html [L,QSA]
+RewriteRule ^paiement/livraison$ payment/cash-on-delivery.html [L,QSA]
+RewriteRule ^confirmation$ payment/confirmation.html [L,QSA]
+
+# Administration
+RewriteRule ^admin$ admin/dashboard.html [L,QSA]
+RewriteRule ^admin/produits$ admin/products.html [L,QSA]
+RewriteRule ^admin/commandes$ admin/orders.html [L,QSA]
+RewriteRule ^admin/utilisateurs$ admin/users.html [L,QSA]
+RewriteRule ^admin/stats$ admin/stats.html [L,QSA]
+
+# ==================== API PROXY (décommenter pour utiliser le proxy) ====================
+# Rediriger les appels API vers le backend Spring Boot
+# RewriteCond %{REQUEST_URI} ^/api/
+# RewriteRule ^api/(.*)$ http://localhost:8080/api/$1 [P,L]
+
+# ==================== COMPRESSION ====================
+
+<IfModule mod_deflate.c>
+    # Compression des fichiers texte
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript text/x-js
+    AddOutputFilterByType DEFLATE application/javascript application/json application/xml application/rss+xml
+    
+    # Compression des polices
+    AddOutputFilterByType DEFLATE font/ttf font/otf font/x-woff
+    
+    # Exclusion des fichiers déjà compressés
+    SetEnvIfNoCase Request_URI \.(?:gif|jpe?g|png|zip|gz|bz2|rar|pdf)$ no-gzip dont-vary
+</IfModule>
+
+# ==================== EXPIRATION DES CACHES ====================
+
+<IfModule mod_expires.c>
+    ExpiresActive On
+    
+    # Images
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+    
+    # CSS et JavaScript
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # Polices
+    ExpiresByType font/ttf "access plus 1 year"
+    ExpiresByType font/otf "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+    ExpiresByType font/woff2 "access plus 1 year"
+    
+    # Fichiers HTML
+    ExpiresByType text/html "access plus 0 seconds"
+</IfModule>
+
+# ==================== SÉCURITÉ ADDITIONNELLE ====================
+
+# Bloquer l'accès aux fichiers sensibles
+<FilesMatch "^(config|database|\.env|\.git|\.svn)">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Bloquer les mauvais bots
+RewriteCond %{HTTP_USER_AGENT} (ahrefs|majestic|rogerbot|semrush|dotbot|bot|spider|crawler) [NC]
+RewriteRule .* - [F,L]
+
+# Protection contre le hotlinking (liens directs vers les images)
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^https?://(www\.)?lepaname.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|webp)$ - [F,NC,L]
+
+# Limiter la taille des fichiers uploadés
+LimitRequestBody 10485760
+
+# ==================== PERFORMANCES ====================
+
+# Keep-Alive
+<IfModule mod_headers.c>
+    Header set Connection keep-alive
+</IfModule>
+
+# Désactiver ETags pour les fichiers statiques
+<IfModule mod_headers.c>
+    Header unset ETag
+</IfModule>
+FileETag None
+
+# ==================== RÈGLES PERSONNALISÉES POUR LE SITE ====================
+
+# Rediriger les URLs avec extension .html vers sans extension
+RewriteCond %{THE_REQUEST} \s/([^.]+)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# Si le fichier demandé n'existe pas, rediriger vers index.html (pour SPA)
+# RewriteCond %{REQUEST_FILENAME} !-f
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteRule ^ index.html [L]
+
+# ==================== ENCODAGE ====================
+
+# Définir l'encodage par défaut
+AddDefaultCharset UTF-8
+AddCharset UTF-8 .html .css .js .json .xml
+
+# ==================== SERVEUR SIGNATURE ====================
+
+# Masquer la version du serveur Apache
+ServerSignature Off
+<IfModule mod_security2.c>
+    SecServerSignature " "
+</IfModule>
+
+# ==================== PHP CONFIGURATION ====================
+# (si vous utilisez PHP pour certaines pages)
+
+<IfModule mod_php7.c>
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    php_value memory_limit 256M
+    php_flag display_errors off
+    php_flag log_errors on
+</IfModule>
+
+# ==================== FIN ====================
